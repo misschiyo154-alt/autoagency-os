@@ -3,384 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VICKYAI AGENCY | Leading AI Solutions in Bhilai</title>
-    <meta name="description" content="VICKYAI AGENCY provides cutting-edge AI automation, chatbots, and consulting services for businesses in Bhilai and beyond.">
+    <title>Graduate Momo Wala | Authentic Momos in Bhilai</title>
+    <meta name="description" content="Savor the best handcrafted momos in Bhilai. Hygiene, quality, and taste graduated to the next level.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: '#0F172A',
-                        accent: '#38BDF8',
-                        secondary: '#818CF8'
+                        primary: '#E63946',
+                        secondary: '#F1FAEE',
+                        accent: '#A8DADC',
+                        dark: '#1D3557',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        .glass-nav {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #38BDF8, #818CF8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-pattern {
-            background-image: radial-gradient(#1e293b 1px, transparent 1px);
-            background-size: 40px 40px;
+        .momo-gradient {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
-<body class="bg-primary text-slate-200 font-sans antialiased">
+<body class="bg-white text-dark font-sans leading-relaxed">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-extrabold tracking-tighter text-white">VICKYAI<span class="text-accent">.</span></span>
+                    <span class="text-2xl font-extrabold text-primary tracking-tighter">GRADUATE <span class="text-dark">MOMO WALA</span></span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">Home</a>
-                        <a href="#about" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">About</a>
-                        <a href="#services" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">Services</a>
-                        <a href="#faq" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">FAQ</a>
-                        <a href="#contact" class="bg-accent text-primary px-6 py-2.5 rounded-full text-sm font-bold hover:bg-white transition-all transform hover:scale-105">Get Started</a>
-                    </div>
+                <div class="hidden md:flex space-x-8 font-semibold text-sm uppercase tracking-wider">
+                    <a href="#home" class="hover:text-primary transition">Home</a>
+                    <a href="#about" class="hover:text-primary transition">Our Story</a>
+                    <a href="#menu" class="hover:text-primary transition">Menu</a>
+                    <a href="#testimonials" class="hover:text-primary transition">Reviews</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-dark transition shadow-lg shadow-primary/20">Order Now</a>
                 </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-slate-300 hover:text-white focus:outline-none">
-                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    <button class="text-dark focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-primary border-b border-slate-800 px-4 py-6 space-y-4">
-            <a href="#home" class="block text-lg font-medium">Home</a>
-            <a href="#about" class="block text-lg font-medium">About</a>
-            <a href="#services" class="block text-lg font-medium">Services</a>
-            <a href="#contact" class="block text-lg font-medium text-accent">Contact Us</a>
-        </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-pattern">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-            <div class="absolute top-20 left-1/4 w-72 h-72 bg-accent/20 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-20 right-1/4 w-72 h-72 bg-secondary/20 rounded-full blur-[120px]"></div>
+    <section id="home" class="momo-gradient min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center md:text-left">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-white space-y-6">
+                    <span class="inline-block px-4 py-1 bg-primary rounded-full text-xs font-bold uppercase tracking-widest">Bhilai's #1 Choice</span>
+                    <h1 class="text-5xl md:text-7xl font-serif leading-tight">Handcrafted <span class="text-accent italic text-4xl md:text-6xl block mt-2">Momos with a Degree in Taste</span></h1>
+                    <p class="text-lg text-gray-200 max-w-xl">Where traditional flavors meet modern hygiene. We don't just make momos; we craft experiences that keep Bhilai coming back for more.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="#menu" class="bg-primary hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-center transition-all transform hover:scale-105 shadow-xl">Explore Our Menu</a>
+                        <a href="#contact" class="bg-white hover:bg-gray-100 text-dark px-8 py-4 rounded-xl font-bold text-center transition-all">Find Our Stall</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-4xl mx-auto">
-                <span class="inline-block py-1 px-4 rounded-full border border-slate-700 bg-slate-800/50 text-accent text-xs font-bold uppercase tracking-widest mb-6">Based in Bhilai, Serving the World</span>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
-                    Scale Your Business with <span class="gradient-text">Intelligent AI</span>
-                </h1>
-                <p class="text-xl text-slate-400 mb-10 leading-relaxed">
-                    VICKYAI Agency builds custom AI infrastructure that automates your workflows, captures leads, and boosts revenue while you sleep.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#contact" class="bg-accent text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-white transition-all flex items-center justify-center">
-                        Free AI Audit <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </a>
-                    <a href="#services" class="border border-slate-700 bg-slate-800/30 hover:bg-slate-800 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center">
-                        Our Solutions
-                    </a>
-                </div>
-                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
-                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">24/7</span><span class="text-xs uppercase tracking-tighter">Support</span></div>
-                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">100%</span><span class="text-xs uppercase tracking-tighter">Automated</span></div>
-                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">50+</span><span class="text-xs uppercase tracking-tighter">Tools Integrated</span></div>
-                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">3x</span><span class="text-xs uppercase tracking-tighter">Efficiency Growth</span></div>
-                </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-12 bg-secondary">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <i class="fas fa-certificate text-primary text-3xl mb-3"></i>
+                <h4 class="font-bold">Hygienic Prep</h4>
+            </div>
+            <div>
+                <i class="fas fa-pepper-hot text-primary text-3xl mb-3"></i>
+                <h4 class="font-bold">Secret Spicy Chutney</h4>
+            </div>
+            <div>
+                <i class="fas fa-leaf text-primary text-3xl mb-3"></i>
+                <h4 class="font-bold">Fresh Ingredients</h4>
+            </div>
+            <div>
+                <i class="fas fa-truck-fast text-primary text-3xl mb-3"></i>
+                <h4 class="font-bold">Quick Delivery</h4>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-slate-900/50">
+    <section id="about" class="py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div class="relative">
-                    <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
-                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" alt="AI Technology" class="w-full h-full object-cover">
-                    </div>
-                    <div class="absolute -bottom-6 -right-6 bg-accent p-8 rounded-2xl hidden md:block">
-                        <p class="text-primary font-black text-4xl">5+</p>
-                        <p class="text-primary/80 text-sm font-bold uppercase tracking-wide">Years of AI Expertise</p>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c170db06?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fresh Momos" class="rounded-2xl shadow-2xl relative z-10">
+                    <div class="absolute -bottom-6 -right-6 w-64 h-64 bg-primary rounded-2xl -z-0 opacity-10"></div>
                 </div>
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">The Bridge Between <span class="text-accent">Human Vision</span> and AI Performance.</h2>
-                    <p class="text-slate-400 text-lg mb-6">
-                        Located in the heart of Bhilai, VICKYAI AGENCY was founded with a single mission: to democratize artificial intelligence for businesses of all sizes.
-                    </p>
-                    <p class="text-slate-400 text-lg mb-8">
-                        We don't just provide tools; we engineer custom ecosystems that integrate seamlessly with your existing team, turning complex data into actionable growth strategies.
-                    </p>
-                    <ul class="space-y-4">
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-accent mt-1 mr-3"></i> <span>Customized Roadmaps for Local & Global Scale</span></li>
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-accent mt-1 mr-3"></i> <span>Dedicated In-house Development in Bhilai</span></li>
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-accent mt-1 mr-3"></i> <span>ROI-Focused Implementation</span></li>
-                    </ul>
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-serif font-bold text-dark italic">Why "Graduate" Momo Wala?</h2>
+                    <p class="text-gray-600 leading-relaxed text-lg">Founded by a visionary graduate who believed that street food deserves professional standards. We brought academic precision to the kitchen—measuring every spice and sourcing only the premium flour and freshest vegetables.</p>
+                    <p class="text-gray-600 leading-relaxed text-lg">In the heart of Bhilai, we’ve created a spot where students, office-goers, and families gather for that perfect plate of happiness. Every dumpling is hand-folded with love and served with our signature graduate-level hospitality.</p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <span class="block text-3xl font-bold text-primary italic">5000+</span>
+                            <span class="text-sm text-gray-500 font-semibold uppercase">Daily Dumplings</span>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <span class="block text-3xl font-bold text-primary italic">100%</span>
+                            <span class="text-sm text-gray-500 font-semibold uppercase">Fresh Promise</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Our Intelligence Suite</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto">High-impact AI solutions tailored to solve your specific bottlenecks.</p>
-            </div>
+    <!-- Menu/Services -->
+    <section id="menu" class="py-24 bg-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-serif font-bold mb-16">The Graduate's Specials</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="p-8 rounded-3xl bg-slate-800/30 border border-slate-800 hover:border-accent/50 transition-all group">
-                    <div class="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-primary transition-colors">
-                        <i class="fa-solid fa-robot text-3xl"></i>
+                <!-- Menu Item 1 -->
+                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-primary transition group">
+                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition">
+                        <i class="fas fa-cloud text-primary text-3xl group-hover:text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4">AI Chatbots</h3>
-                    <p class="text-slate-400 mb-6">Intelligent 24/7 customer support and lead qualification agents that sound exactly like your best salesperson.</p>
-                    <a href="#contact" class="text-accent font-bold hover:underline">Learn More →</a>
+                    <h3 class="text-2xl font-bold mb-4">Classic Steamed</h3>
+                    <p class="text-gray-400 mb-6">Light, airy, and stuffed with our secret protein-rich filling. Served with fiery red garlic chutney.</p>
+                    <span class="text-primary font-bold text-xl">₹60 / plate</span>
                 </div>
-                <!-- Card 2 -->
-                <div class="p-8 rounded-3xl bg-slate-800/30 border border-slate-800 hover:border-secondary/50 transition-all group">
-                    <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-secondary group-hover:text-primary transition-colors">
-                        <i class="fa-solid fa-bolt text-3xl"></i>
+                <!-- Menu Item 2 -->
+                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-primary transition group">
+                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition">
+                        <i class="fas fa-fire-flame-curved text-primary text-3xl group-hover:text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4">Workflow Automation</h3>
-                    <p class="text-slate-400 mb-6">Connect your favorite apps and automate repetitive tasks. Save 20+ hours of manual work every week.</p>
-                    <a href="#contact" class="text-secondary font-bold hover:underline">Learn More →</a>
+                    <h3 class="text-2xl font-bold mb-4">Kurkure Momos</h3>
+                    <p class="text-gray-400 mb-6">Double coated with a secret crunchy crust and deep-fried to perfection. Bhilai's favorite snack.</p>
+                    <span class="text-primary font-bold text-xl">₹100 / plate</span>
                 </div>
-                <!-- Card 3 -->
-                <div class="p-8 rounded-3xl bg-slate-800/30 border border-slate-800 hover:border-accent/50 transition-all group">
-                    <div class="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-primary transition-colors">
-                        <i class="fa-solid fa-magnifying-glass-chart text-3xl"></i>
+                <!-- Menu Item 3 -->
+                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-primary transition group">
+                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition">
+                        <i class="fas fa-bowl-hot text-primary text-3xl group-hover:text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4">AI Consulting</h3>
-                    <p class="text-slate-400 mb-6">Bespoke AI strategy development to help you understand where to implement AI for the highest ROI.</p>
-                    <a href="#contact" class="text-accent font-bold hover:underline">Learn More →</a>
+                    <h3 class="text-2xl font-bold mb-4">Graduate Pan-Fried</h3>
+                    <p class="text-gray-400 mb-6">Sautéed in our special schezwan gravy with capsicum and onions. A complete meal in itself.</p>
+                    <span class="text-primary font-bold text-xl">₹120 / plate</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="py-24 bg-slate-900/50">
+    <section id="testimonials" class="py-24 bg-secondary">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-3xl font-extrabold mb-16">Trusted by Forward-Thinking Brands</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-primary p-8 rounded-2xl border border-slate-800 italic">
-                    <p class="mb-6 text-slate-300">"VICKYAI built an automation system for our real estate business that handles all our initial inquiries. Our conversion rate jumped by 40% in just two months!"</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-slate-700 mr-4"></div>
-                        <div>
-                            <h4 class="font-bold text-white">Rahul Sharma</h4>
-                            <p class="text-xs text-accent">Real Estate Group, Bhilai</p>
-                        </div>
+            <h2 class="text-4xl font-serif font-bold text-center mb-16 text-dark italic">Bhilai Residents Love Us</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="italic text-gray-600 mb-6">"Finally, a momo place in Bhilai that actually cares about hygiene. The Kurkure momos are to die for!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-accent rounded-full"></div>
+                        <span class="font-bold">Rahul Sharma, IIT Bhilai</span>
                     </div>
                 </div>
-                <div class="bg-primary p-8 rounded-2xl border border-slate-800 italic">
-                    <p class="mb-6 text-slate-300">"The custom chatbot they developed for our e-commerce site is incredible. It handles complex queries with ease and has significantly reduced our support overhead."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-slate-700 mr-4"></div>
-                        <div>
-                            <h4 class="font-bold text-white">Anita Desai</h4>
-                            <p class="text-xs text-accent">Retail Founder</p>
-                        </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="italic text-gray-600 mb-6">"The chutney is actually spicy! Not just red water like other places. Truly a graduate level kitchen."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-primary rounded-full"></div>
+                        <span class="font-bold">Priya Verma, Civic Centre</span>
                     </div>
                 </div>
-                <div class="bg-primary p-8 rounded-2xl border border-slate-800 italic">
-                    <p class="mb-6 text-slate-300">"Best decision we made this year. Their AI consulting opened our eyes to opportunities we didn't even know existed within our data."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-slate-700 mr-4"></div>
-                        <div>
-                            <h4 class="font-bold text-white">James Wilson</h4>
-                            <p class="text-xs text-accent">Tech Startup CEO</p>
-                        </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="italic text-gray-600 mb-6">"I order every weekend for my family. The quality is consistent and the packaging is very clean."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-dark rounded-full"></div>
+                        <span class="font-bold">Amit Deshmukh, Sector 10</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="py-24">
+    <!-- FAQ -->
+    <section class="py-24">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12">Common Questions</h2>
+            <h2 class="text-4xl font-serif font-bold text-center mb-12">Frequent Inquiries</h2>
             <div class="space-y-4">
-                <div class="border border-slate-800 rounded-xl overflow-hidden">
-                    <button class="w-full p-6 text-left font-bold flex justify-between items-center bg-slate-800/20 hover:bg-slate-800/40 transition-all faq-toggle">
-                        <span>Is AI suitable for small businesses?</span>
-                        <i class="fa-solid fa-chevron-down text-accent"></i>
-                    </button>
-                    <div class="p-6 text-slate-400 border-t border-slate-800 hidden">
-                        Absolutely. In fact, AI provides the biggest advantage to small businesses by allowing them to operate with the efficiency of much larger teams without the massive headcount.
-                    </div>
-                </div>
-                <div class="border border-slate-800 rounded-xl overflow-hidden">
-                    <button class="w-full p-6 text-left font-bold flex justify-between items-center bg-slate-800/20 hover:bg-slate-800/40 transition-all faq-toggle">
-                        <span>How long does it take to implement?</span>
-                        <i class="fa-solid fa-chevron-down text-accent"></i>
-                    </button>
-                    <div class="p-6 text-slate-400 border-t border-slate-800 hidden">
-                        Simple automations and chatbots can be deployed in as little as 7-14 days. More complex, custom-trained enterprise models typically take 4-8 weeks.
-                    </div>
-                </div>
-                <div class="border border-slate-800 rounded-xl overflow-hidden">
-                    <button class="w-full p-6 text-left font-bold flex justify-between items-center bg-slate-800/20 hover:bg-slate-800/40 transition-all faq-toggle">
-                        <span>Do you provide local support in Bhilai?</span>
-                        <i class="fa-solid fa-chevron-down text-accent"></i>
-                    </button>
-                    <div class="p-6 text-slate-400 border-t border-slate-800 hidden">
-                        Yes! We are proud to be based in Bhilai. We offer both remote global support and on-site consultations for local businesses in the Chhattisgarh region.
-                    </div>
-                </div>
+                <details class="group bg-gray-50 rounded-xl p-6" open>
+                    <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-lg">
+                        Do you offer party catering?
+                        <i class="fas fa-plus group-open:rotate-45 transition text-primary"></i>
+                    </summary>
+                    <p class="mt-4 text-gray-600">Yes! We cater for birthdays, corporate events, and kitty parties in Bhilai and Durg. Contact us for bulk pricing.</p>
+                </details>
+                <details class="group bg-gray-50 rounded-xl p-6">
+                    <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-lg">
+                        What are your operating hours?
+                        <i class="fas fa-plus group-open:rotate-45 transition text-primary"></i>
+                    </summary>
+                    <p class="mt-4 text-gray-600">We are open every day from 4:00 PM to 11:00 PM to satisfy your late-night cravings.</p>
+                </details>
+                <details class="group bg-gray-50 rounded-xl p-6">
+                    <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-lg">
+                        Are your ingredients fresh?
+                        <i class="fas fa-plus group-open:rotate-45 transition text-primary"></i>
+                    </summary>
+                    <p class="mt-4 text-gray-600">Absolutely. We source vegetables daily from the local Mandi and use zero frozen items in our fillings.</p>
+                </details>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-slate-900">
+    <!-- Contact & Map -->
+    <section id="contact" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16">
-                <div>
-                    <h2 class="text-4xl font-extrabold text-white mb-6">Let's Build the <span class="text-accent">Future</span> Together.</h2>
-                    <p class="text-slate-400 text-lg mb-8">Ready to automate your growth? Reach out for a free consultation and let's explore how AI can revolutionize your operations.</p>
-                    
+            <div class="bg-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-12 text-white">
+                    <h2 class="text-4xl font-serif font-bold mb-6 italic">Visit Us Today</h2>
+                    <p class="text-gray-400 mb-8">Located at the heart of Bhilai. Come for the food, stay for the vibe.</p>
                     <div class="space-y-6">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 text-accent">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">Location</h4>
-                                <p class="text-slate-400">Civic Center, Bhilai, Chhattisgarh, India</p>
-                            </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-location-dot text-primary text-xl"></i>
+                            <span>Shop No. 12, Chowpati, Sector 6, Bhilai, Chhattisgarh</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 text-accent">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">Email</h4>
-                                <p class="text-slate-400">hello@vickyai.agency</p>
-                            </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-phone text-primary text-xl"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-envelope text-primary text-xl"></i>
+                            <span>hello@graduatemomowala.com</span>
                         </div>
                     </div>
-
-                    <!-- Map Placeholder -->
-                    <div class="mt-12 rounded-2xl overflow-hidden h-64 border border-slate-800 bg-slate-800/50 flex items-center justify-center text-slate-500 relative">
-                        <iframe class="absolute inset-0 w-full h-full grayscale opacity-50" 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14876.626887554907!2d81.3361405!3d21.18596645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293cc9671f6521%3A0x6a05e26715f530d!2sCivic%20Center%2C%20Bhilai%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" 
-                                style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                        <span class="relative z-10 font-bold bg-primary/80 px-4 py-2 rounded">VICKYAI BHILAI HQ</span>
-                    </div>
-                </div>
-
-                <div class="bg-primary p-8 rounded-3xl border border-slate-800 shadow-xl">
-                    <form action="#" class="space-y-6">
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Full Name</label>
-                                <input type="text" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="John Doe">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Business Email</label>
-                                <input type="email" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="john@company.com">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Service Interested In</label>
-                            <select class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent transition-all">
-                                <option>AI Chatbot Development</option>
-                                <option>Workflow Automation</option>
-                                <option>AI Strategy Consulting</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Message</label>
-                            <textarea class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 h-32 focus:outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="How can we help you scale?"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-accent text-primary font-bold py-4 rounded-xl hover:bg-white transition-all transform hover:translate-y-[-2px]">
-                            Send Inquiry
-                        </button>
+                    <!-- Form -->
+                    <form class="mt-10 space-y-4">
+                        <input type="text" placeholder="Your Name" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary">
+                        <input type="email" placeholder="Email Address" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary">
+                        <textarea placeholder="Message" rows="4" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary"></textarea>
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 rounded-lg transition shadow-lg">Send Message</button>
                     </form>
+                </div>
+                <div class="md:w-1/2 h-[400px] md:h-auto relative">
+                    <!-- Google Maps Placeholder -->
+                    <div class="absolute inset-0 bg-gray-300 flex items-center justify-center text-gray-500">
+                        <div class="text-center p-8">
+                            <i class="fas fa-map-location-dot text-6xl mb-4"></i>
+                            <p class="font-bold">Interactive Map Loading...</p>
+                            <p class="text-sm">Sector 6 Market, Bhilai, Chhattisgarh 490006</p>
+                        </div>
+                    </div>
+                    <!-- Real iframe would go here -->
+                    <iframe class="absolute inset-0 w-full h-full grayscale" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14878.894273822188!2d81.3323067!3d21.1833075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293ce8347f3f11%3A0x673c683796ec11f7!2sSector%206%2C%20Bhilai%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-slate-800">
+    <footer class="bg-secondary py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-8 md:mb-0">
-                    <span class="text-2xl font-extrabold text-white">VICKYAI<span class="text-accent">.</span></span>
-                    <p class="text-slate-500 mt-2 text-sm">Empowering Bhilai's businesses with Intelligence.</p>
-                </div>
-                <div class="flex space-x-6 text-2xl">
-                    <a href="#" class="text-slate-500 hover:text-accent transition-colors"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-accent transition-colors"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-accent transition-colors"><i class="fa-brands fa-instagram"></i></a>
+            <div class="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-8 mb-8">
+                <div class="text-2xl font-extrabold text-primary mb-6 md:mb-0">GRADUATE <span class="text-dark">MOMO WALA</span></div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-dark hover:text-primary transition text-2xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-dark hover:text-primary transition text-2xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-dark hover:text-primary transition text-2xl"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
-            <div class="mt-12 pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between text-slate-500 text-xs">
-                <p>&copy; 2023 VICKYAI AGENCY. All rights reserved.</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white">Privacy Policy</a>
-                    <a href="#" class="hover:text-white">Terms of Service</a>
-                </div>
+            <div class="text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Graduate Momo Wala Bhilai. All Rights Reserved. Crafted with <i class="fas fa-heart text-primary"></i> for Bhilaians.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // FAQ Accordion
-        const faqToggles = document.querySelectorAll('.faq-toggle');
-        
-        faqToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                const content = toggle.nextElementSibling;
-                const icon = toggle.querySelector('i');
-                
-                content.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
-            });
-        });
-
-        // Smooth Scroll handling for mobile menu closing
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                mobileMenu.classList.add('hidden');
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>

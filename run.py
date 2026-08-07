@@ -1,101 +1,103 @@
+import csv
 import subprocess
 import sys
-import csv
 from datetime import datetime
 
 python = sys.executable
 
 print("🚀 Starting AI Agency...\n")
 
-# -------------------------
-# Business Details
-# -------------------------
-business_name = input("Business Name: ")
-business_type = input("Business Type: ")
-location = input("Location: ")
+DEMO_URL = "https://autoagency-os.pages.dev"
 
-# -------------------------
-# Generate Website
-# -------------------------
-result = subprocess.run([
-    python,
-    "08-scripts/generate_website.py",
-    business_name,
-    business_type,
-    location
-])
+with open("05-leads/leads.csv", newline="", encoding="utf-8") as file:
 
-if result.returncode != 0:
-    print("\n❌ Website Generation Failed!")
-    exit()
+    reader = csv.DictReader(file)
 
-if result.returncode != 0:
-    print("\n❌ Website Generation Failed!")
-    sys.exit(1)
+    for lead in reader:
 
-print("✅ Website Generated")
-# -------------------------
-# Generate Email
-# -------------------------
-demo_url = "https://autoagency-os.pages.dev"
+        business_name = lead["Business Name"]
+        business_type = lead["Business Type"]
+        location = lead["Location"]
 
-result = subprocess.run([
-    python,
-    "04-emails/generate_email.py",
-    business_name,
-    business_type,
-    location,
-    demo_url
-])
+        print("\n====================================")
+        print(f"Business : {business_name}")
+        print(f"Type     : {business_type}")
+        print(f"Location : {location}")
+        print("====================================\n")
 
-if result.returncode != 0:
-    print("\n❌ Email Generation Failed!")
-    exit()
+        # -------------------------
+        # Website
+        # -------------------------
 
-if result.returncode != 0:
-    print("\n❌ Email Generation Failed!")
-    sys.exit(1)
+        result = subprocess.run([
+            python,
+            "08-scripts/generate_website.py",
+            business_name,
+            business_type,
+            location
+        ])
 
-print("✅ Email Generated")
+        if result.returncode != 0:
+            print("❌ Website Failed")
+            continue
 
-# -------------------------
-# Git Push
-# -------------------------
-result = subprocess.run([python, "08-scripts/git_push.py"])
+        print("✅ Website Generated")
 
-if result.returncode != 0:
-    print("\n❌ Git Push Failed!")
-    exit()
+        # -------------------------
+        # Email
+        # -------------------------
 
-if result.returncode != 0:
-    print("\n❌ Email Generation Failed!")
-    sys.exit(1)
+        result = subprocess.run([
+            python,
+            "04-emails/generate_email.py",
+            business_name,
+            business_type,
+            location,
+            DEMO_URL
+        ])
 
-print("✅ Email Generated")
+        if result.returncode != 0:
+            print("❌ Email Failed")
+            continue
 
-# -------------------------
-# Save History
-# -------------------------
-with open(
-    "09-history/history.csv",
-    "a",
-    newline="",
-    encoding="utf-8"
-) as file:
+        print("✅ Email Generated")
 
-    writer = csv.writer(file)
+        # -------------------------
+        # Git Push
+        # -------------------------
 
-    writer.writerow([
-        datetime.now().strftime("%Y-%m-%d %H:%M"),
-        business_name,
-        business_type,
-        location,
-        "SUCCESS"
-    ])
+        result = subprocess.run([
+            python,
+            "08-scripts/git_push.py"
+        ])
+
+        if result.returncode != 0:
+            print("❌ Git Push Failed")
+            continue
+
+        print("✅ GitHub Updated")
+
+        # -------------------------
+        # History
+        # -------------------------
+
+        with open(
+            "09-history/history.csv",
+            "a",
+            newline="",
+            encoding="utf-8"
+        ) as history:
+
+            writer = csv.writer(history)
+
+            writer.writerow([
+                datetime.now().strftime("%Y-%m-%d %H:%M"),
+                business_name,
+                business_type,
+                location,
+                "SUCCESS"
+            ])
 
 print("\n====================================")
-print("✅ AI Agency Finished Successfully!")
+print("🎉 ALL LEADS COMPLETED")
 print("====================================")
-print(f"Business : {business_name}")
-print(f"Location : {location}")
-print("Status   : SUCCESS")
