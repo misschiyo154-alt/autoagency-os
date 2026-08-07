@@ -3,373 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bright Smile Dental | Expert Family Dentistry in Dallas, TX</title>
-    <meta name="description" content="Experience world-class dental care at Bright Smile Dental Dallas. From routine cleanings to cosmetic transformations, we make your smile shine. Book your visit today!">
+    <title>Graduate Momos | Best Authentic Momos in Bhilai</title>
+    <meta name="description" content="Savor the finest, most authentic momos in Bhilai. From classic steamed to spicy tandoori, Graduate Momos brings you the degree of taste you deserve.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+        .font-heading { font-family: 'Playfair Display', serif; }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .momo-gradient {
+            background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+        }
     </style>
 </head>
-<body class="bg-white text-slate-800 antialiased" x-data="{ mobileMenuOpen: false }">
+<body class="bg-gray-50 text-gray-900 overflow-x-hidden">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold text-blue-600 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Bright Smile
-                    </span>
-                </div>
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#about" class="text-slate-600 hover:text-blue-600 font-medium transition">About</a>
-                    <a href="#services" class="text-slate-600 hover:text-blue-600 font-medium transition">Services</a>
-                    <a href="#testimonials" class="text-slate-600 hover:text-blue-600 font-medium transition">Reviews</a>
-                    <a href="#faq" class="text-slate-600 hover:text-blue-600 font-medium transition">FAQ</a>
-                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200">Book Appointment</a>
-                </div>
-                <div class="md:hidden">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-slate-600">
-                        <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                        <svg x-show="mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </div>
+    <!-- Header / Navigation -->
+    <header class="fixed w-full z-50 glass-nav" x-data="{ open: false }">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 momo-gradient rounded-full flex items-center justify-center text-white font-bold">G</div>
+                <span class="text-2xl font-extrabold tracking-tight text-gray-800 uppercase">Graduate <span class="text-orange-600">Momos</span></span>
             </div>
-        </div>
+            
+            <div class="hidden md:flex space-x-8 font-semibold items-center">
+                <a href="#home" class="hover:text-orange-600 transition">Home</a>
+                <a href="#about" class="hover:text-orange-600 transition">Our Story</a>
+                <a href="#menu" class="hover:text-orange-600 transition">Menu</a>
+                <a href="#testimonials" class="hover:text-orange-600 transition">Reviews</a>
+                <a href="#contact" class="px-6 py-2 momo-gradient text-white rounded-full hover:shadow-lg transition transform hover:-translate-y-0.5">Order Now</a>
+            </div>
+
+            <button class="md:hidden text-gray-800" @click="open = !open">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </nav>
+
         <!-- Mobile Menu -->
-        <div x-show="mobileMenuOpen" class="md:hidden bg-white border-b border-slate-100" x-transition>
-            <div class="px-4 pt-2 pb-6 space-y-1">
-                <a href="#about" @click="mobileMenuOpen = false" class="block px-3 py-2 text-slate-600">About</a>
-                <a href="#services" @click="mobileMenuOpen = false" class="block px-3 py-2 text-slate-600">Services</a>
-                <a href="#testimonials" @click="mobileMenuOpen = false" class="block px-3 py-2 text-slate-600">Reviews</a>
-                <a href="#contact" @click="mobileMenuOpen = false" class="block px-3 py-2 text-blue-600 font-bold">Book Now</a>
+        <div class="md:hidden bg-white border-t" x-show="open" @click.away="open = false">
+            <div class="flex flex-col p-6 space-y-4 font-semibold">
+                <a href="#home" @click="open = false">Home</a>
+                <a href="#about" @click="open = false">Our Story</a>
+                <a href="#menu" @click="open = false">Menu</a>
+                <a href="#contact" @click="open = false">Contact</a>
             </div>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 gradient-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="text-center lg:text-left">
-                    <span class="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-blue-600 uppercase bg-blue-100 rounded-full">
-                        Accepting New Patients in Dallas
-                    </span>
-                    <h1 class="text-4xl lg:text-6xl font-bold leading-tight text-slate-900 mb-6">
-                        Your Journey to a <span class="text-blue-600 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Perfect Smile</span> Starts Here.
-                    </h1>
-                    <p class="text-lg text-slate-600 mb-8 max-w-xl mx-auto lg:mx-0">
-                        Modern dentistry with a gentle touch. Join thousands of Dallas families who trust Bright Smile Dental for pain-free, world-class oral health.
-                    </p>
-                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                        <a href="#contact" class="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-200 text-center">Schedule Your Visit</a>
-                        <a href="tel:+12145550123" class="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-lg hover:border-blue-600 hover:text-blue-600 transition text-center flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                            (214) 555-0123
-                        </a>
-                    </div>
-                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-4">
-                        <div class="flex -space-x-2">
-                            <img class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" src="https://i.pravatar.cc/100?u=1" alt="Patient">
-                            <img class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" src="https://i.pravatar.cc/100?u=2" alt="Patient">
-                            <img class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" src="https://i.pravatar.cc/100?u=3" alt="Patient">
-                        </div>
-                        <div class="text-sm font-medium">
-                            <span class="text-yellow-500 font-bold">★★★★★</span>
-                            <span class="text-slate-600 ml-1">500+ Happy Dallas Patients</span>
-                        </div>
-                    </div>
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 z-10">
+                <span class="inline-block py-1 px-4 rounded-full bg-orange-100 text-orange-600 font-bold text-sm mb-4">🎓 The Masterclass in Taste</span>
+                <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6">
+                    Bhilai's Most <br><span class="text-transparent bg-clip-text momo-gradient">Educated Flavors.</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-lg leading-relaxed">
+                    We've graduated from basic street food to gourmet excellence. Hand-crafted, fresh ingredients, and the spiciest chutney in Bhilai.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#menu" class="px-8 py-4 momo-gradient text-white rounded-xl font-bold text-center shadow-xl hover:scale-105 transition">Explore Menu</a>
+                    <a href="#contact" class="px-8 py-4 bg-white border-2 border-gray-200 text-gray-800 rounded-xl font-bold text-center hover:bg-gray-50 transition">Find Us</a>
                 </div>
-                <div class="relative">
-                    <div class="w-full h-[400px] lg:h-[500px] rounded-3xl bg-slate-200 overflow-hidden shadow-2xl relative">
-                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Modern Dental Office" class="w-full h-full object-cover">
-                        <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-4 rounded-2xl shadow-lg border border-white/50">
-                            <p class="text-sm font-bold text-slate-900">Dr. Sarah Jenkins, DDS</p>
-                            <p class="text-xs text-blue-600">Lead Practitioner & Dallas Native</p>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="lg:w-1/2 mt-12 lg:mt-0 relative">
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+                <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+                <img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&q=80&w=800" alt="Delicious Momos" class="rounded-3xl shadow-2xl relative z-10 transform -rotate-2 hover:rotate-0 transition duration-500">
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row gap-16 items-center">
-                <div class="lg:w-1/2 order-2 lg:order-1">
-                    <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Our Practice</h2>
-                    <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-6 leading-snug">Compassionate Dental Care Tailored to You.</h3>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        At Bright Smile Dental, we believe a visit to the dentist should be stress-free and empowering. Located in the heart of Dallas, our clinic uses state-of-the-art technology to provide precise diagnoses and painless treatments.
-                    </p>
-                    <p class="text-slate-600 mb-8 leading-relaxed">
-                        Whether you're here for a routine check-up or a full smile restoration, our team is dedicated to your comfort and long-term oral health.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span class="font-semibold text-slate-800">Advanced Tech</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span class="font-semibold text-slate-800">Emergency Care</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span class="font-semibold text-slate-800">Sedation Options</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <span class="font-semibold text-slate-800">All Insurances</span>
-                        </div>
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1534422298391-e4f8c170db76?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg mt-8" alt="Kitchen Prep">
+                        <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&q=80&w=400" class="rounded-2xl shadow-lg" alt="Steaming Momos">
                     </div>
                 </div>
-                <div class="lg:w-1/2 order-1 lg:order-2">
-                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Comfortable Clinic" class="rounded-3xl shadow-2xl">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-extrabold mb-6">Why "Graduate" Momos?</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed text-lg">
+                        It started with a simple vision: Bhilai deserves better than average street food. We spent months researching authentic Himalayan spices and perfecting our dough-to-filling ratio.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center space-x-3">
+                            <span class="text-green-500">✔</span>
+                            <span class="font-semibold">Zero Preservatives used in our fillings</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="text-green-500">✔</span>
+                            <span class="font-semibold">Signature 3-Chilli Chutney</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="text-green-500">✔</span>
+                            <span class="font-semibold">Hygienic open-kitchen concept</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="text-orange-600 font-bold border-b-2 border-orange-600 pb-1 hover:text-orange-700">Learn more about our heritage</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Services / Menu Section -->
+    <section id="menu" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">What We Offer</h2>
-                <h3 class="text-3xl lg:text-4xl font-bold text-slate-900">Comprehensive Dental Solutions</h3>
+                <h2 class="text-4xl font-extrabold mb-4">Our Specialty Majors</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">From light snacks to heavy meals, our menu is curated to satisfy every craving in Bhilai.</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Preventive -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Preventive Care</h4>
-                    <p class="text-slate-600">Routine cleanings, digital X-rays, and comprehensive exams to keep your natural smile healthy for life.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Menu Item 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition">🥟</div>
+                    <h3 class="text-2xl font-bold mb-3">Classic Steamed</h3>
+                    <p class="text-gray-600 mb-6">The purist's choice. Thin wrappers filled with juicy vegetables or seasoned chicken, served with fiery tomato dip.</p>
+                    <span class="text-orange-600 font-bold">Starting from ₹80</span>
                 </div>
-                <!-- Cosmetic -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Cosmetic Dentistry</h4>
-                    <p class="text-slate-600">Teeth whitening, porcelain veneers, and bonding. Get the radiant, confident smile you’ve always wanted.</p>
+                <!-- Menu Item 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition group">
+                    <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition">🔥</div>
+                    <h3 class="text-2xl font-bold mb-3">Tandoori Zinger</h3>
+                    <p class="text-gray-600 mb-6">Marinated in secret spices and charred in a clay oven for that perfect smoky aroma and crunch.</p>
+                    <span class="text-orange-600 font-bold">Starting from ₹120</span>
                 </div>
-                <!-- Restoration -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.183.108l-1.13.514a2 2 0 00-.907 2.503l.433 1.324a2 2 0 002.34 1.155l.44-.104a2 2 0 011.272.103l.317.162a2 2 0 002.029 0l.317-.162a2 2 0 011.272-.103l.44.104a2 2 0 002.34-1.155l.433-1.324a2 2 0 00-.907-2.503l-1.13-.514z"></path></svg>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Dental Implants</h4>
-                    <p class="text-slate-600">Permanent solutions for missing teeth. Our high-quality implants look, feel, and function like real teeth.</p>
+                <!-- Menu Item 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition group">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition">🍲</div>
+                    <h3 class="text-2xl font-bold mb-3">Jhol / Soup Momos</h3>
+                    <p class="text-gray-600 mb-6">Perfect for Bhilai winters. Momos submerged in a tangy, spicy, and warm sesame-based broth.</p>
+                    <span class="text-orange-600 font-bold">Starting from ₹100</span>
                 </div>
-            </div>
-            <div class="text-center mt-12">
-                <a href="#contact" class="text-blue-600 font-bold hover:underline">View all services →</a>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-24 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-blue-600 font-bold uppercase tracking-widest text-sm mb-4">Testimonials</h2>
-            <h3 class="text-center text-3xl lg:text-4xl font-bold text-slate-900 mb-16">Why Dallas Trusts Us</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                    <div class="text-yellow-500 mb-4 font-bold">★★★★★</div>
-                    <p class="italic text-slate-600 mb-6">"I’ve always been terrified of the dentist, but Dr. Jenkins and her team made me feel so relaxed. The cleaning was painless!"</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-200 overflow-hidden">
-                            <img src="https://i.pravatar.cc/100?u=4" alt="Client">
-                        </div>
-                        <div>
-                            <p class="font-bold text-slate-900">Michael R.</p>
-                            <p class="text-xs text-slate-500">Dallas Resident</p>
-                        </div>
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-extrabold text-center mb-16">Loved by the Locals</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 italic text-gray-700 relative">
+                    "Finally, a place in Bhilai that understands the balance of spice and flavor. The chicken tandoori momos are to die for!"
+                    <div class="mt-6 flex items-center not-italic">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3"></div>
+                        <div><p class="font-bold">Rahul Verma</p><p class="text-sm opacity-60">Civic Center Regular</p></div>
                     </div>
                 </div>
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 transform md:scale-105 bg-white shadow-xl relative z-10">
-                    <div class="text-yellow-500 mb-4 font-bold">★★★★★</div>
-                    <p class="italic text-slate-600 mb-6">"The whitening results are incredible! I get compliments on my smile every day now. Best dental experience in Texas, hands down."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-200 overflow-hidden">
-                            <img src="https://i.pravatar.cc/100?u=5" alt="Client">
-                        </div>
-                        <div>
-                            <p class="font-bold text-slate-900">Jessica T.</p>
-                            <p class="text-xs text-slate-500">Business Owner</p>
-                        </div>
+                <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 italic text-gray-700 relative">
+                    "Graduate Momos is my go-to for weekend snacks. Their hygiene standards are way above anything else in the city."
+                    <div class="mt-6 flex items-center not-italic">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3"></div>
+                        <div><p class="font-bold">Priya S.</p><p class="text-sm opacity-60">Food Blogger</p></div>
                     </div>
                 </div>
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                    <div class="text-yellow-500 mb-4 font-bold">★★★★★</div>
-                    <p class="italic text-slate-600 mb-6">"Our whole family comes here. They are amazing with kids and the office is so modern and clean. Highly recommend!"</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-200 overflow-hidden">
-                            <img src="https://i.pravatar.cc/100?u=6" alt="Client">
-                        </div>
-                        <div>
-                            <p class="font-bold text-slate-900">David S.</p>
-                            <p class="text-xs text-slate-500">Father of Three</p>
-                        </div>
+                <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50 italic text-gray-700 relative">
+                    "That chutney! It's legendary. I've graduated from every other momo stall to only ordering from here."
+                    <div class="mt-6 flex items-center not-italic">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3"></div>
+                        <div><p class="font-bold">Ankit Mishra</p><p class="text-sm opacity-60">IIT Bhilai Student</p></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="py-24 bg-slate-50" x-data="{ activeFaq: 1 }">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-3xl font-bold text-slate-900 mb-12">Frequently Asked Questions</h2>
-            <div class="space-y-4">
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
-                    <button @click="activeFaq = 1" class="w-full flex justify-between items-center p-5 text-left font-bold text-slate-800">
-                        <span>Do you accept my dental insurance?</span>
-                        <svg :class="{'rotate-180': activeFaq === 1}" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+    <!-- FAQ -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-4xl font-extrabold text-center mb-12">Frequent Questions</h2>
+            <div class="space-y-4" x-data="{ active: null }">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <button @click="active = active === 0 ? null : 0" class="w-full flex justify-between items-center p-6 text-left font-bold">
+                        <span>Do you offer home delivery in Bhilai?</span>
+                        <span class="text-orange-600" x-text="active === 0 ? '-' : '+'"></span>
                     </button>
-                    <div x-show="activeFaq === 1" class="p-5 pt-0 text-slate-600 leading-relaxed">
-                        Yes! We accept most major PPO dental insurance plans. Our team will handle all the paperwork for you to ensure you maximize your benefits.
+                    <div x-show="active === 0" class="p-6 pt-0 text-gray-600 border-t">
+                        Yes! We deliver across Bhilai and Durg through Zomato and Swiggy, or you can call us directly for bulk orders.
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
-                    <button @click="activeFaq = 2" class="w-full flex justify-between items-center p-5 text-left font-bold text-slate-800">
-                        <span>Are you accepting new patients?</span>
-                        <svg :class="{'rotate-180': activeFaq === 2}" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <button @click="active = active === 1 ? null : 1" class="w-full flex justify-between items-center p-6 text-left font-bold">
+                        <span>Are there Jain/Vegetarian options?</span>
+                        <span class="text-orange-600" x-text="active === 1 ? '-' : '+'"></span>
                     </button>
-                    <div x-show="activeFaq === 2" class="p-5 pt-0 text-slate-600 leading-relaxed">
-                        Absolutely! We love meeting new members of the Dallas community. We even offer a special introductory cleaning and exam for new patients.
+                    <div x-show="active === 1" class="p-6 pt-0 text-gray-600 border-t">
+                        Absolutely. We have a dedicated section for Veg momos and can prepare specific batches without onion/garlic on advance request.
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
-                    <button @click="activeFaq = 3" class="w-full flex justify-between items-center p-5 text-left font-bold text-slate-800">
-                        <span>What should I bring to my first visit?</span>
-                        <svg :class="{'rotate-180': activeFaq === 3}" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <button @click="active = active === 2 ? null : 2" class="w-full flex justify-between items-center p-6 text-left font-bold">
+                        <span>Do you take party orders?</span>
+                        <span class="text-orange-600" x-text="active === 2 ? '-' : '+'"></span>
                     </button>
-                    <div x-show="activeFaq === 3" class="p-5 pt-0 text-slate-600 leading-relaxed">
-                        Please bring your ID, insurance card, and any relevant medical history. We also recommend arriving 15 minutes early to complete your registration.
+                    <div x-show="active === 2" class="p-6 pt-0 text-gray-600 border-t">
+                        We love catering! From birthdays to office parties, we offer special platter rates for orders above 50 plates.
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact & Map Section -->
-    <section id="contact" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div class="bg-blue-600 rounded-3xl p-8 lg:p-12 text-white">
-                    <h3 class="text-3xl font-bold mb-6">Schedule Your Visit</h3>
-                    <p class="mb-8 opacity-90 font-medium">Ready for your best smile? Fill out the form and our friendly team will contact you to confirm your appointment within 2 hours.</p>
+    <!-- Contact & Map -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-extrabold mb-6">Visit Our Campus</h2>
+                    <p class="text-gray-600 mb-8">Drop by for a hot plate of happiness or send us a message for catering inquiries.</p>
                     
                     <form class="space-y-4">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <input type="text" placeholder="Full Name" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white">
-                            <input type="email" placeholder="Email Address" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="Name" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <input type="tel" placeholder="Phone" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500">
                         </div>
-                        <input type="tel" placeholder="Phone Number" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white">
-                        <select class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 text-blue-200 focus:outline-none focus:ring-2 focus:ring-white appearance-none">
-                            <option>Select Service</option>
-                            <option>General Checkup</option>
-                            <option>Teeth Whitening</option>
-                            <option>Emergency Service</option>
-                        </select>
-                        <textarea rows="4" placeholder="How can we help?" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white"></textarea>
-                        <button type="submit" class="w-full bg-white text-blue-600 font-bold py-4 rounded-xl hover:bg-slate-100 transition shadow-lg text-lg">Send Request Now</button>
+                        <textarea placeholder="Your Message" rows="4" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                        <button class="w-full py-4 momo-gradient text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition">Send Message</button>
                     </form>
-                </div>
 
-                <div class="flex flex-col h-full">
-                    <div class="mb-8">
-                        <h4 class="text-2xl font-bold text-slate-900 mb-4">Visit Us in Dallas</h4>
-                        <div class="flex flex-col gap-4 text-slate-600">
-                            <div class="flex items-start gap-4">
-                                <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <p>123 Smile Boulevard, Suite 101<br>Dallas, Texas 75201</p>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <p>Mon - Fri: 8:00 AM - 5:00 PM<br>Saturday: By Appointment</p>
-                            </div>
+                    <div class="mt-12 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">📍</div>
+                            <p class="font-medium">Near Civic Center, Bhilai, Chhattisgarh</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">📞</div>
+                            <p class="font-medium">+91 98765 43210</p>
                         </div>
                     </div>
+                </div>
+                <div class="lg:w-1/2 h-[500px] bg-gray-200 rounded-3xl overflow-hidden relative shadow-inner">
                     <!-- Google Maps Placeholder -->
-                    <div class="flex-grow min-h-[300px] bg-slate-200 rounded-3xl overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107297.020054707!2d-96.852934!3d32.776664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c19f77b45974b%3A0xb9ec9ba5f647678f!2sDallas%2C%20TX!5e0!3m2!1sen!2susa!4v1625000000000!5m2!1sen!2susa" 
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                        </iframe>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-500 p-8 text-center">
+                        <svg class="w-16 h-16 mb-4 opacity-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                        <p class="text-xl font-bold">Find us in the heart of Bhilai</p>
+                        <p class="mt-2 text-sm italic">[Google Maps Integration Placeholder]</p>
+                        <div class="mt-6 w-full h-full bg-gray-300 opacity-30 rounded-xl"></div>
                     </div>
+                    <!-- Real Map Embed Mockup -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118983.33083656717!2d81.2829241!3d21.1822495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293cc3d3b76963%3A0x3f538561d2d09f7a!2sBhilai%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                        class="w-full h-full border-0 grayscale" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <span class="text-2xl font-bold text-white flex items-center gap-2 mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Bright Smile
-                    </span>
-                    <p class="text-sm leading-relaxed">Providing world-class dentistry for the Dallas community. Your comfort is our priority.</p>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold mb-6">Quick Links</h5>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#about" class="hover:text-blue-400 transition">About Us</a></li>
-                        <li><a href="#services" class="hover:text-blue-400 transition">Services</a></li>
-                        <li><a href="#testimonials" class="hover:text-blue-400 transition">Patient Reviews</a></li>
-                        <li><a href="#contact" class="hover:text-blue-400 transition">Book Online</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold mb-6">Services</h5>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#" class="hover:text-blue-400 transition">General Dentistry</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition">Teeth Whitening</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition">Dental Implants</a></li>
-                        <li><a href="#" class="hover:text-blue-400 transition">Emergency Care</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold mb-6">Newsletter</h5>
-                    <p class="text-xs mb-4">Get dental health tips and Dallas community updates.</p>
-                    <div class="flex">
-                        <input type="email" placeholder="Email" class="bg-slate-800 border-none rounded-l-lg px-4 py-2 w-full focus:ring-2 focus:ring-blue-500">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition">→</button>
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 momo-gradient rounded-full flex items-center justify-center font-bold text-sm">G</div>
+                        <span class="text-xl font-bold tracking-tight uppercase">Graduate <span class="text-orange-500">Momos</span></span>
                     </div>
+                    <p class="mt-4 text-gray-400 max-w-xs">Serving the most educated flavors in town since 2021.</p>
+                </div>
+                <div class="flex space-x-6 text-gray-400">
+                    <a href="#" class="hover:text-white transition">Instagram</a>
+                    <a href="#" class="hover:text-white transition">Facebook</a>
+                    <a href="#" class="hover:text-white transition">Zomato</a>
                 </div>
             </div>
-            <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                <p>&copy; 2023 Bright Smile Dental Dallas. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition">Terms of Service</a>
-                </div>
+            <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Graduate Momos Bhilai. Handcrafted with love and spice.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Fixed Bottom Mobile CTA -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 p-4 z-40">
+        <a href="tel:+919876543210" class="block w-full momo-gradient text-white text-center py-4 rounded-2xl font-bold shadow-2xl">
+            Order Now: +91 98765 43210
+        </a>
+    </div>
 
 </body>
 </html>
