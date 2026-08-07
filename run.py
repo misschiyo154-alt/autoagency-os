@@ -30,7 +30,7 @@ if result.returncode != 0:
 # -------------------------
 # Generate Email
 # -------------------------
-demo_url = input("Demo Website URL: ")
+demo_url = input("https://autoagency-os.pages.dev")
 
 result = subprocess.run(
     [python, "04-emails/generate_email.py"],

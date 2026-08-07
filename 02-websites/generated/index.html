@@ -4,87 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graduate Momo Wala | Best Momos in Bhilai</title>
-    <meta name="description" content="Experience the finest, most hygienic, and delicious momos in Bhilai. From Steamed to Kurkure, Graduate Momo Wala serves authentic taste with a professional touch.">
+    <meta name="description" content="Savor the taste of authentic, hygiene-first momos in Bhilai. From Steamed to Kurkure, Graduate Momo Wala brings academic precision to street food.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF4C01',
-                        secondary: '#1A1A1A',
-                        accent: '#FFB800',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script defer src="https://unpkg.com/lucide@latest"></script>
     <style>
-        .momo-gradient { background: linear-gradient(135deg, #FF4C01 0%, #FFB800 100%); }
-        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
-        .momo-card:hover { transform: translateY(-10px); transition: all 0.3s ease; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .momo-gradient { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="font-sans text-gray-900 bg-gray-50">
+<body class="bg-stone-50 text-slate-900">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav border-b border-gray-100">
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center gap-2">
-                    <div class="bg-primary text-white p-2 rounded-lg font-bold text-xl">GM</div>
-                    <span class="font-extrabold text-2xl tracking-tight text-secondary uppercase">Graduate <span class="text-primary">Momo</span></span>
+                    <div class="bg-orange-600 p-2 rounded-lg">
+                        <i data-lucide="utensils-crossed" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-extrabold tracking-tight text-slate-900">GRADUATE<span class="text-orange-600">MOMO</span></span>
                 </div>
-                <div class="hidden md:flex space-x-8 font-semibold">
-                    <a href="#home" class="hover:text-primary transition">Home</a>
-                    <a href="#about" class="hover:text-primary transition">Our Story</a>
-                    <a href="#menu" class="hover:text-primary transition">Menu</a>
-                    <a href="#faq" class="hover:text-primary transition">FAQ</a>
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <a href="#home" class="hover:text-orange-600 transition">Home</a>
+                    <a href="#about" class="hover:text-orange-600 transition">Our Story</a>
+                    <a href="#menu" class="hover:text-orange-600 transition">Menu</a>
+                    <a href="#testimonials" class="hover:text-orange-600 transition">Reviews</a>
+                    <a href="#contact" class="hover:text-orange-600 transition">Location</a>
                 </div>
-                <a href="#contact" class="bg-primary text-white px-6 py-3 rounded-full font-bold hover:bg-orange-600 transition shadow-lg shadow-orange-200">Order Now</a>
+                <a href="#menu" class="bg-orange-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-orange-700 transition shadow-lg shadow-orange-200">Order Now</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center">
-            <div class="lg:w-1/2 z-10 text-center lg:text-left">
-                <span class="inline-block px-4 py-2 bg-orange-100 text-primary rounded-full font-bold text-sm mb-6 uppercase tracking-widest italic">Degrees in Flavor, Masters in Spice</span>
-                <h1 class="text-5xl lg:text-7xl font-extrabold text-secondary leading-tight mb-6">
-                    Bhilai's Most <span class="text-primary">Educated</span> Momos
-                </h1>
-                <p class="text-xl text-gray-600 mb-10 max-w-lg mx-auto lg:mx-0">
-                    Why settle for street food when you can have a "Graduate" experience? We combine hygiene, innovation, and authentic Himalayan spices right here in Bhilai.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#menu" class="bg-secondary text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-800 transition">View Menu</a>
-                    <a href="#contact" class="bg-white text-secondary border-2 border-secondary px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition">Visit Stall</a>
-                </div>
-                <div class="mt-8 flex items-center justify-center lg:justify-start gap-4">
-                    <div class="flex -space-x-3">
-                        <img src="https://i.pravatar.cc/100?u=1" class="w-12 h-12 rounded-full border-4 border-white" alt="User">
-                        <img src="https://i.pravatar.cc/100?u=2" class="w-12 h-12 rounded-full border-4 border-white" alt="User">
-                        <img src="https://i.pravatar.cc/100?u=3" class="w-12 h-12 rounded-full border-4 border-white" alt="User">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-orange-700 uppercase bg-orange-100 rounded-full">🎓 Degrees in Taste, Masters in Momos</span>
+                    <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6">
+                        Bhilai's Favorite <span class="text-orange-600 underline decoration-orange-200 underline-offset-8">Street Treats</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
+                        Hand-crafted with love and academic precision. Experience the perfect blend of hygiene, authentic spices, and the thinnest momo skin in town.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#menu" class="flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition transform hover:-translate-y-1">
+                            Explore Menu <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#contact" class="flex items-center justify-center gap-2 bg-white border-2 border-slate-200 px-8 py-4 rounded-xl font-bold text-lg hover:border-orange-600 hover:text-orange-600 transition transform hover:-translate-y-1">
+                            Find Our Stall
+                        </a>
                     </div>
-                    <p class="text-sm font-semibold text-gray-500">Joined by 500+ daily foodies in Bhilai</p>
-                </div>
-            </div>
-            <div class="lg:w-1/2 mt-16 lg:mt-0 relative">
-                <div class="absolute -top-20 -right-20 w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-50"></div>
-                <img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&q=80&w=800" alt="Delicious Momos" class="relative rounded-[2rem] shadow-2xl rotate-3 hover:rotate-0 transition duration-500">
-                <div class="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4">
-                    <div class="bg-green-100 p-3 rounded-full">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <div class="mt-10 flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full border-4 border-white object-cover" alt="User">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full border-4 border-white object-cover" alt="User">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full border-4 border-white object-cover" alt="User">
+                        </div>
+                        <p class="text-slate-500 font-medium"><span class="text-slate-900 font-bold">500+</span> happy foodies daily</p>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-500 font-bold uppercase tracking-widest">Quality Check</p>
-                        <p class="font-bold text-secondary italic">100% Fresh & Hygienic</p>
+                </div>
+                <div class="relative">
+                    <div class="absolute -top-20 -right-20 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+                    <img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=800&h=800&fit=crop" alt="Delicious Momos" class="relative z-10 rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-[12px] border-white">
+                    <div class="absolute -bottom-6 -left-6 z-20 bg-white p-6 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-4">
+                        <div class="bg-green-100 p-3 rounded-full"><i data-lucide="shield-check" class="text-green-600 w-8 h-8"></i></div>
+                        <div>
+                            <p class="text-sm text-slate-500 font-bold uppercase tracking-wide">Quality Assured</p>
+                            <p class="text-xl font-extrabold text-slate-900 underline decoration-green-500">100% Hygienic</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,112 +86,146 @@
     <section id="about" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="grid grid-cols-2 gap-4">
-                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c170db06?auto=format&fit=crop&q=80&w=400" class="rounded-2xl h-64 w-full object-cover" alt="Cooking">
-                    <img src="https://images.unsplash.com/photo-1614088685112-0a760b71a3c8?auto=format&fit=crop&q=80&w=400" class="rounded-2xl h-64 w-full object-cover mt-12" alt="Ingredients">
+                <div class="order-2 lg:order-1">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1599481238640-4c1288750d7a?w=400&h=500&fit=crop" class="rounded-2xl mt-8" alt="Street Food Culture">
+                        <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?w=400&h=500&fit=crop" class="rounded-2xl" alt="Preparation">
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-4xl font-extrabold text-secondary mb-6">The Story of <span class="text-primary italic">Graduate Momo Wala</span></h2>
-                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
-                        Started by a passionate graduate who believed that street food deserves the same dedication as a corporate career. We don't just sell momos; we sell a promise of quality.
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-4xl font-extrabold text-slate-900 mb-6">Why "Graduate" Momo Wala?</h2>
+                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                        Started by a passionate graduate who decided to trade the corporate desk for the culinary art of steaming. We believe that street food doesn't have to compromise on quality or hygiene.
                     </p>
-                    <ul class="space-y-4 mb-10">
-                        <li class="flex items-center gap-3 font-semibold text-secondary">
-                            <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">✓</span> No MSG or artificial colors used
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <i data-lucide="check-circle" class="text-orange-600"></i> Freshly sourced local ingredients
                         </li>
-                        <li class="flex items-center gap-3 font-semibold text-secondary">
-                            <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">✓</span> Sourced from local Bhilai markets
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <i data-lucide="check-circle" class="text-orange-600"></i> Secret Graduate Chutney recipes
                         </li>
-                        <li class="flex items-center gap-3 font-semibold text-secondary">
-                            <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">✓</span> Secret recipe "Teekhi" Chutney
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <i data-lucide="check-circle" class="text-orange-600"></i> Strict hygiene & cleanliness standards
                         </li>
                     </ul>
-                    <div class="flex gap-8 border-t border-gray-100 pt-8">
-                        <div>
-                            <p class="text-3xl font-bold text-primary italic">50k+</p>
-                            <p class="text-gray-500 font-medium italic">Momos Served</p>
-                        </div>
-                        <div>
-                            <p class="text-3xl font-bold text-primary italic">4.9/5</p>
-                            <p class="text-gray-500 font-medium italic">Google Rating</p>
-                        </div>
+                    <div class="p-6 border-l-4 border-orange-600 bg-stone-50 italic text-slate-700">
+                        "Our goal was simple: provide the people of Bhilai with momos that taste like home but feel like a gourmet experience."
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services / Menu -->
-    <section id="menu" class="py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-extrabold text-secondary mb-4">Our Specialty Menu</h2>
-            <p class="text-gray-600 mb-16 max-w-2xl mx-auto italic">Crafted with precision, served with love.</p>
+    <!-- Menu Section -->
+    <section id="menu" class="py-24 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Our Specialties</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto italic">Warning: Highly Addictive. Try them all!</p>
+            </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition momo-card border border-gray-100">
-                    <div class="w-20 h-20 momo-gradient rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <!-- Item 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-stone-100 group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1534422298391-e4f8c170db06?w=600&h=400&fit=crop" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" alt="Steamed Momos">
+                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase">Bestseller</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3 italic">Classic Steamed</h3>
-                    <p class="text-gray-600 mb-6 italic">Thin wrap, juicy filling. Served with our signature graduate chutney.</p>
-                    <p class="text-primary font-bold text-xl italic">Starting @ ₹60</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition momo-card border border-gray-100">
-                    <div class="w-20 h-20 bg-secondary rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-slate-900">Classic Steamed Momos</h3>
+                            <span class="text-orange-600 font-bold">₹80</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-6">Authentic Himalayan thin-crust dumplings served with spicy garlic chutney.</p>
+                        <button class="w-full py-3 bg-stone-900 text-white rounded-xl font-bold hover:bg-orange-600 transition">Add to Order</button>
                     </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3 italic">Kurkure Momos</h3>
-                    <p class="text-gray-600 mb-6 italic">Extra crunch for the extra soul. A Bhilai student favorite!</p>
-                    <p class="text-primary font-bold text-xl italic">Starting @ ₹90</p>
                 </div>
-                <!-- Card 3 -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition momo-card border border-gray-100">
-                    <div class="w-20 h-20 momo-gradient rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+
+                <!-- Item 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-stone-100 group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1626074353765-517a681e40be?w=600&h=400&fit=crop" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" alt="Fried Momos">
+                        <span class="absolute top-4 left-4 bg-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Hot</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-secondary mb-3 italic">Afghani Creamy</h3>
-                    <p class="text-gray-600 mb-6 italic">Tossed in rich cream and butter for those who like it smooth.</p>
-                    <p class="text-primary font-bold text-xl italic">Starting @ ₹120</p>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-slate-900">Kurkure Momos</h3>
+                            <span class="text-orange-600 font-bold">₹120</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-6">Extra crunchy exterior with a juicy heart. Double fried for that perfect snap.</p>
+                        <button class="w-full py-3 bg-stone-900 text-white rounded-xl font-bold hover:bg-orange-600 transition">Add to Order</button>
+                    </div>
                 </div>
+
+                <!-- Item 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-stone-100 group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ef4a4f8?w=600&h=400&fit=crop" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" alt="Gravy Momos">
+                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase">Chef's Choice</span>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-slate-900">Afghani Gravy Momos</h3>
+                            <span class="text-orange-600 font-bold">₹150</span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-6">Dipped in a rich, creamy, and smoky white gravy with charcoal infusion.</p>
+                        <button class="w-full py-3 bg-stone-900 text-white rounded-xl font-bold hover:bg-orange-600 transition">Add to Order</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 text-center">
+                <p class="text-slate-500">View Full Menu at our Bhilai outlet</p>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="py-24 bg-secondary text-white">
+    <section id="testimonials" class="py-24 bg-slate-900 text-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-extrabold text-center mb-16 italic">What Bhilai Says</h2>
+            <div class="mb-16">
+                <h2 class="text-4xl font-extrabold mb-4 text-center">What Bhilai Says</h2>
+            </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-gray-800 p-8 rounded-2xl italic">
-                    <p class="text-gray-300 mb-6 leading-relaxed">"The hygiene level here is unmatched. Finally, a place where I don't have to worry about the quality of the chicken."</p>
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <div class="flex text-orange-400 mb-4">
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    </div>
+                    <p class="italic mb-6 text-slate-300">"The Kurkure momos are a game changer. Hands down the best I've had in Bhilai. Clean, tasty, and affordable."</p>
                     <div class="flex items-center gap-4">
-                        <img src="https://i.pravatar.cc/50?u=a" class="rounded-full" alt="Reviewer">
-                        <div>
-                            <p class="font-bold">Rahul Sharma</p>
-                            <p class="text-xs text-primary font-bold">IIT Bhilai Student</p>
-                        </div>
+                        <div class="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center font-bold">A</div>
+                        <span class="font-bold">Animesh Verma</span>
                     </div>
                 </div>
-                <div class="bg-gray-800 p-8 rounded-2xl italic border-t-4 border-primary">
-                    <p class="text-gray-300 mb-6 leading-relaxed">"That Graduate Chutney is literal fire! Best momos in the Civic Center area by far. Worth every rupee."</p>
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <div class="flex text-orange-400 mb-4">
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    </div>
+                    <p class="italic mb-6 text-slate-300">"Finally a place that cares about hygiene as much as the taste. Their red chutney is legendary!"</p>
                     <div class="flex items-center gap-4">
-                        <img src="https://i.pravatar.cc/50?u=b" class="rounded-full" alt="Reviewer">
-                        <div>
-                            <p class="font-bold">Ananya Singh</p>
-                            <p class="text-xs text-primary font-bold">Local Foodie</p>
-                        </div>
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold">S</div>
+                        <span class="font-bold">Sneha Singh</span>
                     </div>
                 </div>
-                <div class="bg-gray-800 p-8 rounded-2xl italic">
-                    <p class="text-gray-300 mb-6 leading-relaxed">"Fast service and amazing taste. Their Kurkure Paneer momos are a game changer for vegetarians."</p>
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <div class="flex text-orange-400 mb-4">
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    </div>
+                    <p class="italic mb-6 text-slate-300">"The Afghani Momos are so creamy. The Graduate Momo Wala has definitely raised the bar for street food."</p>
                     <div class="flex items-center gap-4">
-                        <img src="https://i.pravatar.cc/50?u=c" class="rounded-full" alt="Reviewer">
-                        <div>
-                            <p class="font-bold">Vikram Patel</p>
-                            <p class="text-xs text-primary font-bold">Professional</p>
-                        </div>
+                        <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center font-bold">R</div>
+                        <span class="font-bold">Rahul Mishra</span>
                     </div>
                 </div>
             </div>
@@ -208,103 +233,136 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="py-24 bg-white">
+    <section class="py-24 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-extrabold text-secondary mb-12 text-center italic">Hungry for Info?</h2>
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-12 text-center">Frequently Asked Questions</h2>
             <div class="space-y-6">
-                <div class="border-b border-gray-100 pb-6">
-                    <h3 class="text-xl font-bold text-secondary mb-2 italic">Do you take bulk orders for parties?</h3>
-                    <p class="text-gray-600 italic">Yes! We cater to birthdays, college fests, and office parties across Bhilai and Durg.</p>
+                <div class="p-6 rounded-2xl bg-stone-50">
+                    <h4 class="text-lg font-bold mb-2">Do you provide home delivery in Bhilai?</h4>
+                    <p class="text-slate-600">Yes! We are available on Zomato and Swiggy within a 10km radius of Bhilai.</p>
                 </div>
-                <div class="border-b border-gray-100 pb-6">
-                    <h3 class="text-xl font-bold text-secondary mb-2 italic">Is your kitchen visible?</h3>
-                    <p class="text-gray-600 italic">Absolutely. We maintain an open-kitchen policy because we have nothing to hide when it comes to hygiene.</p>
+                <div class="p-6 rounded-2xl bg-stone-50">
+                    <h4 class="text-lg font-bold mb-2">Are your momos vegetarian?</h4>
+                    <p class="text-slate-600">We offer both Veg and Non-Veg options. We ensure separate preparation areas to respect dietary preferences.</p>
                 </div>
-                <div class="border-b border-gray-100 pb-6">
-                    <h3 class="text-xl font-bold text-secondary mb-2 italic">What are your timings?</h3>
-                    <p class="text-gray-600 italic">We are open from 4:00 PM to 11:00 PM every day.</p>
+                <div class="p-6 rounded-2xl bg-stone-50">
+                    <h4 class="text-lg font-bold mb-2">Do you accept bulk orders for parties?</h4>
+                    <p class="text-slate-600">Absolutely! Please contact us 24 hours in advance for bulk orders at discounted rates.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-gray-50">
+    <!-- Contact & Map -->
+    <section id="contact" class="py-24 bg-stone-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-                <div class="lg:w-1/2 p-12 lg:p-20">
-                    <h2 class="text-4xl font-extrabold text-secondary mb-8">Visit Our <span class="text-primary italic">Stall</span></h2>
-                    <form action="#" class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2 italic">Name</label>
-                            <input type="text" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" placeholder="Your Name">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-stone-100">
+                <div class="grid lg:grid-cols-2">
+                    <div class="p-12 lg:p-16">
+                        <h2 class="text-4xl font-extrabold text-slate-900 mb-8">Visit Our Stall</h2>
+                        <div class="space-y-8">
+                            <div class="flex gap-6">
+                                <div class="bg-orange-100 p-4 rounded-2xl shrink-0"><i data-lucide="map-pin" class="text-orange-600"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-900">Address</p>
+                                    <p class="text-slate-600 leading-relaxed">Near Civic Center, Shop No. 12, Bhilai, Chhattisgarh 490006</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="bg-orange-100 p-4 rounded-2xl shrink-0"><i data-lucide="phone" class="text-orange-600"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-900">Phone</p>
+                                    <p class="text-slate-600">+91 98765 43210</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-6">
+                                <div class="bg-orange-100 p-4 rounded-2xl shrink-0"><i data-lucide="clock" class="text-orange-600"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-900">Hours</p>
+                                    <p class="text-slate-600">Everyday: 4:00 PM – 11:00 PM</p>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2 italic">Message / Pre-order</label>
-                            <textarea rows="4" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" placeholder="Tell us your order..."></textarea>
-                        </div>
-                        <button class="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-orange-600 transition shadow-lg shadow-orange-200">Send Message</button>
-                    </form>
-                    <div class="mt-10 flex items-center gap-6">
-                        <div class="flex items-center gap-2">
-                            <span class="text-primary font-bold italic">Call Us:</span>
-                            <span class="font-extrabold">+91 98765 43210</span>
+                        
+                        <form class="mt-12 space-y-4">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Your Name" class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-orange-600">
+                                <input type="tel" placeholder="Phone Number" class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-orange-600">
+                            </div>
+                            <textarea placeholder="Tell us about your event or query..." rows="4" class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-orange-600"></textarea>
+                            <button class="w-full py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition shadow-lg shadow-orange-200 uppercase tracking-widest">Send Inquiry</button>
+                        </form>
+                    </div>
+                    <div class="relative bg-stone-200 min-h-[400px]">
+                        <!-- Google Maps Placeholder -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 bg-[url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/77.34,21.19,13/800x800?access_token=MAPBOX_TOKEN')] bg-cover">
+                            <div class="bg-white/90 backdrop-blur p-8 rounded-2xl text-center shadow-xl">
+                                <i data-lucide="map" class="w-12 h-12 text-orange-600 mx-auto mb-4"></i>
+                                <p class="font-bold text-slate-900">Interactive Map</p>
+                                <p class="text-sm">Locate us at the heart of Bhilai</p>
+                                <button class="mt-4 text-orange-600 font-bold hover:underline">Open in Maps</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="lg:w-1/2 min-h-[400px] bg-gray-200 relative">
-                    <!-- Google Maps Placeholder -->
-                    <div class="absolute inset-0 bg-gray-300 flex items-center justify-center">
-                        <div class="text-center p-8">
-                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <p class="font-bold text-gray-600">Location: Near Nehru Art Gallery, Civic Center, Bhilai</p>
-                            <p class="text-gray-500 text-sm">Map would load here in production</p>
-                        </div>
-                    </div>
-                    <!-- Real map embed can be added here -->
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-secondary pt-20 pb-10 text-white">
+    <footer class="bg-slate-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-12 mb-16">
-                <div class="col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="bg-primary text-white p-2 rounded-lg font-bold text-xl">GM</div>
-                        <span class="font-extrabold text-2xl tracking-tight uppercase">Graduate <span class="text-primary italic">Momo</span></span>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-12 mb-12">
+                <div class="flex items-center gap-2">
+                    <div class="bg-orange-600 p-2 rounded-lg">
+                        <i data-lucide="utensils-crossed" class="text-white w-6 h-6"></i>
                     </div>
-                    <p class="text-gray-400 max-w-sm italic">
-                        Revolutionizing the street food scene in Bhilai with academic precision and authentic Himalayan taste.
-                    </p>
+                    <span class="text-2xl font-extrabold tracking-tight">GRADUATE<span class="text-orange-600">MOMO</span></span>
+                </div>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-orange-600 transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                    <a href="#" class="hover:text-orange-600 transition"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                    <a href="#" class="hover:text-orange-600 transition"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-4 gap-12 text-slate-400">
+                <div class="col-span-2">
+                    <h5 class="text-white font-bold mb-4">About Graduate Momo Wala</h5>
+                    <p class="max-w-md">The original graduate-run momo stall in Bhilai. We combine traditional recipes with modern hygiene standards to serve the best street food experience.</p>
                 </div>
                 <div>
-                    <h4 class="font-bold text-lg mb-6 italic">Quick Links</h4>
-                    <ul class="space-y-4 text-gray-400">
-                        <li><a href="#home" class="hover:text-primary transition">Home</a></li>
-                        <li><a href="#menu" class="hover:text-primary transition">Menu</a></li>
-                        <li><a href="#about" class="hover:text-primary transition">Our Story</a></li>
+                    <h5 class="text-white font-bold mb-4">Quick Links</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#menu" class="hover:text-white transition">Menu</a></li>
+                        <li><a href="#about" class="hover:text-white transition">Story</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Location</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold text-lg mb-6 italic">Follow Us</h4>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </a>
-                    </div>
+                    <h5 class="text-white font-bold mb-4">Contact</h5>
+                    <p>hello@graduatemomo.com</p>
+                    <p>+91 98765 43210</p>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-                <p>© 2023 Graduate Momo Wala Bhilai. All Rights Reserved. Designed for Taste Buds.</p>
+            <div class="mt-12 text-center text-sm text-slate-500">
+                &copy; 2023 Graduate Momo Wala. All rights reserved. Made for the foodies of Bhilai.
             </div>
         </div>
     </footer>
 
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Simple sticky nav change
+        window.onscroll = function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        };
+    </script>
 </body>
 </html>
