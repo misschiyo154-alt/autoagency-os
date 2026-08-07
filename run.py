@@ -1,3 +1,4 @@
+from config import *
 import csv
 import subprocess
 import sys
@@ -7,7 +8,7 @@ python = sys.executable
 
 print("🚀 Starting AI Agency...\n")
 
-DEMO_URL = "https://autoagency-os.pages.dev"
+DEMO_URL = "DEMO_URL"
 
 with open("05-leads/leads.csv", newline="", encoding="utf-8") as file:
 

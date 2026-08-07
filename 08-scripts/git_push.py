@@ -1,8 +1,9 @@
+from config import *
 import subprocess
 
 commands = [
     ["git", "add", "."],
-    ["git", "commit", "-m", "AI Generated Website"],
+    ["git", "commit", "-m", "COMMIT_MESSAGE"],
     ["git", "push", "origin", "main"]
 ]
 

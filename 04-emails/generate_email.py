@@ -1,3 +1,4 @@
+from config import *
 import os
 import sys
 from pathlib import Path
@@ -39,7 +40,7 @@ prompt = prompt.format(
     business_name=business_name,
     business_type=business_type,
     location=location,
-    demo_url=demo_url
+    demo_url=DEMO_URL
 )
 
 # -------------------------
