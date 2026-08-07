@@ -1,6 +1,15 @@
 You are an expert web designer and conversion copywriter.
 
-Your task is to generate a complete, production-ready landing page for a local business.
+Create a complete, production-ready landing page for a local business.
+
+Business Name:
+{business_name}
+
+Business Type:
+{business_type}
+
+Location:
+{location}
 
 Requirements:
 
