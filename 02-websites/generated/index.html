@@ -3,231 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smile Dental Care | Top-Rated Family Dentistry in Dallas</title>
-    <meta name="description" content="Experience world-class dental care in Dallas. From cosmetic dentistry to routine checkups, Smile Dental Care offers pain-free treatments for the whole family.">
+    <title>Bright Smile Dental | Expert Family Dentistry in Dallas, TX</title>
+    <meta name="description" content="Experience world-class dental care at Bright Smile Dental Dallas. From routine cleanings to cosmetic transformations, we make your smile shine. Book your visit today!">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .gradient-bg { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
-        .service-card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-white text-slate-800 antialiased" x-data="{ mobileMenuOpen: false }">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-2">
-                    <div class="bg-blue-600 p-2 rounded-lg">
-                        <i data-lucide="sparkles" class="text-white w-6 h-6"></i>
-                    </div>
-                    <span class="text-2xl font-bold tracking-tight text-slate-800">Smile<span class="text-blue-600">Dental</span></span>
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-blue-600 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Bright Smile
+                    </span>
                 </div>
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#services" class="text-slate-600 hover:text-blue-600 font-medium">Services</a>
-                    <a href="#about" class="text-slate-600 hover:text-blue-600 font-medium">About</a>
-                    <a href="#faq" class="text-slate-600 hover:text-blue-600 font-medium">FAQ</a>
-                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition-colors">Book Appointment</a>
+                    <a href="#about" class="text-slate-600 hover:text-blue-600 font-medium transition">About</a>
+                    <a href="#services" class="text-slate-600 hover:text-blue-600 font-medium transition">Services</a>
+                    <a href="#testimonials" class="text-slate-600 hover:text-blue-600 font-medium transition">Reviews</a>
+                    <a href="#faq" class="text-slate-600 hover:text-blue-600 font-medium transition">FAQ</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200">Book Appointment</a>
                 </div>
-                <button class="md:hidden text-slate-600" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-slate-600">
+                        <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                        <svg x-show="mobileMenuOpen" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b px-4 py-4 space-y-3">
-            <a href="#services" class="block text-slate-600 py-2">Services</a>
-            <a href="#about" class="block text-slate-600 py-2">About</a>
-            <a href="#faq" class="block text-slate-600 py-2">FAQ</a>
-            <a href="#contact" class="block bg-blue-600 text-white text-center py-3 rounded-lg">Book Now</a>
+        <div x-show="mobileMenuOpen" class="md:hidden bg-white border-b border-slate-100" x-transition>
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#about" @click="mobileMenuOpen = false" class="block px-3 py-2 text-slate-600">About</a>
+                <a href="#services" @click="mobileMenuOpen = false" class="block px-3 py-2 text-slate-600">Services</a>
+                <a href="#testimonials" @click="mobileMenuOpen = false" class="block px-3 py-2 text-slate-600">Reviews</a>
+                <a href="#contact" @click="mobileMenuOpen = false" class="block px-3 py-2 text-blue-600 font-bold">Book Now</a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 md:pt-48 md:pb-32 gradient-bg overflow-hidden">
+    <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 gradient-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-8">
-                    <div class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider">
-                        <i data-lucide="award" class="w-4 h-4"></i> Dallas's #1 Family Dentist
-                    </div>
-                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-slate-900">
-                        A Brighter Smile <br><span class="text-blue-600 underline decoration-blue-200">Starts Here.</span>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <span class="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-blue-600 uppercase bg-blue-100 rounded-full">
+                        Accepting New Patients in Dallas
+                    </span>
+                    <h1 class="text-4xl lg:text-6xl font-bold leading-tight text-slate-900 mb-6">
+                        Your Journey to a <span class="text-blue-600 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Perfect Smile</span> Starts Here.
                     </h1>
-                    <p class="text-xl text-slate-600 max-w-lg leading-relaxed">
-                        Experience advanced, pain-free dental care in a relaxing environment. From routine cleanings to cosmetic transformations, we help Dallas smile with confidence.
+                    <p class="text-lg text-slate-600 mb-8 max-w-xl mx-auto lg:mx-0">
+                        Modern dentistry with a gentle touch. Join thousands of Dallas families who trust Bright Smile Dental for pain-free, world-class oral health.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#contact" class="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-                            Book Online <i data-lucide="calendar" class="w-5 h-5"></i>
-                        </a>
-                        <a href="tel:2145550123" class="flex items-center justify-center gap-2 bg-white text-slate-700 border-2 border-slate-200 px-8 py-4 rounded-xl text-lg font-bold hover:border-blue-300 transition-all">
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="#contact" class="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-200 text-center">Schedule Your Visit</a>
+                        <a href="tel:+12145550123" class="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-lg hover:border-blue-600 hover:text-blue-600 transition text-center flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                             (214) 555-0123
                         </a>
                     </div>
-                    <div class="flex items-center gap-4 text-sm text-slate-500 pt-4">
+                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-4">
                         <div class="flex -space-x-2">
-                            <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white" alt="Patient">
-                            <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white" alt="Patient">
-                            <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white" alt="Patient">
+                            <img class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" src="https://i.pravatar.cc/100?u=1" alt="Patient">
+                            <img class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" src="https://i.pravatar.cc/100?u=2" alt="Patient">
+                            <img class="w-10 h-10 rounded-full border-2 border-white bg-slate-200" src="https://i.pravatar.cc/100?u=3" alt="Patient">
                         </div>
-                        <p><strong>500+</strong> 5-Star Reviews in Dallas</p>
+                        <div class="text-sm font-medium">
+                            <span class="text-yellow-500 font-bold">★★★★★</span>
+                            <span class="text-slate-600 ml-1">500+ Happy Dallas Patients</span>
+                        </div>
                     </div>
                 </div>
                 <div class="relative">
-                    <div class="absolute -inset-4 bg-blue-400/20 blur-3xl rounded-full"></div>
-                    <img src="https://images.unsplash.com/photo-1629909608135-ca29a002ce9d?auto=format&fit=crop&q=80&w=1000" 
-                         alt="Modern Dental Clinic" class="relative rounded-3xl shadow-2xl z-10 w-full object-cover aspect-square md:aspect-auto h-[500px]">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Our Expertise</h2>
-                <p class="text-4xl font-bold text-slate-900 mb-6">Comprehensive Care for Every Patient</p>
-                <p class="text-slate-600 text-lg">We combine state-of-the-art technology with a gentle touch to provide the best dental experience in Dallas.</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="service-card p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all">
-                    <div class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-100">
-                        <i data-lucide="stethoscope" class="text-white w-7 h-7"></i>
+                    <div class="w-full h-[400px] lg:h-[500px] rounded-3xl bg-slate-200 overflow-hidden shadow-2xl relative">
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Modern Dental Office" class="w-full h-full object-cover">
+                        <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-4 rounded-2xl shadow-lg border border-white/50">
+                            <p class="text-sm font-bold text-slate-900">Dr. Sarah Jenkins, DDS</p>
+                            <p class="text-xs text-blue-600">Lead Practitioner & Dallas Native</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">General Dentistry</h3>
-                    <p class="text-slate-600 mb-6">Routine exams, cleanings, and digital X-rays to keep your natural teeth healthy for life.</p>
-                    <a href="#contact" class="text-blue-600 font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all">Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                </div>
-                <!-- Service 2 -->
-                <div class="service-card p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all">
-                    <div class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-100">
-                        <i data-lucide="smile" class="text-white w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Cosmetic Services</h3>
-                    <p class="text-slate-600 mb-6">Veneers, professional whitening, and bonding to give you the Hollywood smile you've always wanted.</p>
-                    <a href="#contact" class="text-blue-600 font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all">Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                </div>
-                <!-- Service 3 -->
-                <div class="service-card p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all">
-                    <div class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-100">
-                        <i data-lucide="shield-check" class="text-white w-7 h-7"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Emergency Care</h3>
-                    <p class="text-slate-600 mb-6">Toothache? Broken tooth? We offer same-day emergency appointments to get you out of pain fast.</p>
-                    <a href="#contact" class="text-blue-600 font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all">Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-slate-900 text-white overflow-hidden relative">
+    <section id="about" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?auto=format&fit=crop&q=80&w=1000" 
-                         alt="Our Lead Dentist" class="rounded-3xl shadow-2xl relative z-10 grayscale-[20%] hover:grayscale-0 transition-all duration-500">
-                    <div class="absolute -bottom-6 -right-6 bg-blue-600 p-8 rounded-2xl z-20 hidden lg:block">
-                        <p class="text-4xl font-bold">15+</p>
-                        <p class="text-sm uppercase tracking-widest opacity-80">Years Experience</p>
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2 order-2 lg:order-1">
+                    <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">Our Practice</h2>
+                    <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-6 leading-snug">Compassionate Dental Care Tailored to You.</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        At Bright Smile Dental, we believe a visit to the dentist should be stress-free and empowering. Located in the heart of Dallas, our clinic uses state-of-the-art technology to provide precise diagnoses and painless treatments.
+                    </p>
+                    <p class="text-slate-600 mb-8 leading-relaxed">
+                        Whether you're here for a routine check-up or a full smile restoration, our team is dedicated to your comfort and long-term oral health.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="font-semibold text-slate-800">Advanced Tech</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="font-semibold text-slate-800">Emergency Care</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="font-semibold text-slate-800">Sedation Options</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="font-semibold text-slate-800">All Insurances</span>
+                        </div>
                     </div>
                 </div>
-                <div class="space-y-6">
-                    <h2 class="text-blue-400 font-bold uppercase tracking-widest text-sm">About Smile Dental Care</h2>
-                    <h3 class="text-4xl md:text-5xl font-bold leading-tight">We Care for Your Smile Like Our Own.</h3>
-                    <p class="text-slate-400 text-lg">
-                        Founded by Dr. Sarah Mitchell, Smile Dental Care has been serving the Dallas community for over a decade. We believe that a trip to the dentist should be stress-free, informative, and comfortable.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6 pt-4">
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6 shrink-0"></i>
-                            <p class="text-slate-300 font-medium">Advanced 3D Imaging</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6 shrink-0"></i>
-                            <p class="text-slate-300 font-medium">Sedation Options</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6 shrink-0"></i>
-                            <p class="text-slate-300 font-medium">Insurance Accepted</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6 shrink-0"></i>
-                            <p class="text-slate-300 font-medium">Comfort Amenities</p>
-                        </div>
-                    </div>
-                    <button class="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold transition-all">
-                        Meet Our Team
-                    </button>
+                <div class="lg:w-1/2 order-1 lg:order-2">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Comfortable Clinic" class="rounded-3xl shadow-2xl">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-24 bg-white">
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-3">Testimonials</h2>
-                <p class="text-4xl font-bold text-slate-900">What Our Patients Say</p>
+                <h2 class="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4">What We Offer</h2>
+                <h3 class="text-3xl lg:text-4xl font-bold text-slate-900">Comprehensive Dental Solutions</h3>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 border border-slate-200 rounded-2xl bg-white shadow-sm">
-                    <div class="flex text-yellow-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
+                <!-- Preventive -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
-                    <p class="text-slate-600 italic mb-6">"I've always been terrified of the dentist, but the team here made me feel so at ease. The procedure was painless and the results are amazing!"</p>
+                    <h4 class="text-xl font-bold mb-4">Preventive Care</h4>
+                    <p class="text-slate-600">Routine cleanings, digital X-rays, and comprehensive exams to keep your natural smile healthy for life.</p>
+                </div>
+                <!-- Cosmetic -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Cosmetic Dentistry</h4>
+                    <p class="text-slate-600">Teeth whitening, porcelain veneers, and bonding. Get the radiant, confident smile you’ve always wanted.</p>
+                </div>
+                <!-- Restoration -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.183.108l-1.13.514a2 2 0 00-.907 2.503l.433 1.324a2 2 0 002.34 1.155l.44-.104a2 2 0 011.272.103l.317.162a2 2 0 002.029 0l.317-.162a2 2 0 011.272-.103l.44.104a2 2 0 002.34-1.155l.433-1.324a2 2 0 00-.907-2.503l-1.13-.514z"></path></svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4">Dental Implants</h4>
+                    <p class="text-slate-600">Permanent solutions for missing teeth. Our high-quality implants look, feel, and function like real teeth.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#contact" class="text-blue-600 font-bold hover:underline">View all services →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-center text-blue-600 font-bold uppercase tracking-widest text-sm mb-4">Testimonials</h2>
+            <h3 class="text-center text-3xl lg:text-4xl font-bold text-slate-900 mb-16">Why Dallas Trusts Us</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                    <div class="text-yellow-500 mb-4 font-bold">★★★★★</div>
+                    <p class="italic text-slate-600 mb-6">"I’ve always been terrified of the dentist, but Dr. Jenkins and her team made me feel so relaxed. The cleaning was painless!"</p>
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-blue-600">JD</div>
+                        <div class="w-12 h-12 rounded-full bg-blue-200 overflow-hidden">
+                            <img src="https://i.pravatar.cc/100?u=4" alt="Client">
+                        </div>
                         <div>
-                            <p class="font-bold">James D.</p>
-                            <p class="text-xs text-slate-500 uppercase">Dallas Local</p>
+                            <p class="font-bold text-slate-900">Michael R.</p>
+                            <p class="text-xs text-slate-500">Dallas Resident</p>
                         </div>
                     </div>
                 </div>
-                <div class="p-8 border border-slate-200 rounded-2xl bg-white shadow-sm">
-                    <div class="flex text-yellow-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                    </div>
-                    <p class="text-slate-600 italic mb-6">"Smile Dental Care handled my cosmetic veneers perfectly. I can't stop smiling! High-tech equipment and a very professional staff."</p>
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 transform md:scale-105 bg-white shadow-xl relative z-10">
+                    <div class="text-yellow-500 mb-4 font-bold">★★★★★</div>
+                    <p class="italic text-slate-600 mb-6">"The whitening results are incredible! I get compliments on my smile every day now. Best dental experience in Texas, hands down."</p>
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-blue-600">SR</div>
+                        <div class="w-12 h-12 rounded-full bg-blue-200 overflow-hidden">
+                            <img src="https://i.pravatar.cc/100?u=5" alt="Client">
+                        </div>
                         <div>
-                            <p class="font-bold">Sarah R.</p>
-                            <p class="text-xs text-slate-500 uppercase">Uptown Dallas</p>
+                            <p class="font-bold text-slate-900">Jessica T.</p>
+                            <p class="text-xs text-slate-500">Business Owner</p>
                         </div>
                     </div>
                 </div>
-                <div class="p-8 border border-slate-200 rounded-2xl bg-white shadow-sm">
-                    <div class="flex text-yellow-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                    </div>
-                    <p class="text-slate-600 italic mb-6">"Best emergency care in Dallas. They squeezed me in at 8 AM for a chipped tooth and had me out by 9 AM fixed up. Incredible."</p>
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                    <div class="text-yellow-500 mb-4 font-bold">★★★★★</div>
+                    <p class="italic text-slate-600 mb-6">"Our whole family comes here. They are amazing with kids and the office is so modern and clean. Highly recommend!"</p>
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-blue-600">MK</div>
+                        <div class="w-12 h-12 rounded-full bg-blue-200 overflow-hidden">
+                            <img src="https://i.pravatar.cc/100?u=6" alt="Client">
+                        </div>
                         <div>
-                            <p class="font-bold">Marcus K.</p>
-                            <p class="text-xs text-slate-500 uppercase">Highland Park</p>
+                            <p class="font-bold text-slate-900">David S.</p>
+                            <p class="text-xs text-slate-500">Father of Three</p>
                         </div>
                     </div>
                 </div>
@@ -235,108 +234,87 @@
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section id="faq" class="py-24 bg-slate-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16">Frequently Asked Questions</h2>
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-slate-50" x-data="{ activeFaq: 1 }">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-center text-3xl font-bold text-slate-900 mb-12">Frequently Asked Questions</h2>
             <div class="space-y-4">
-                <details class="group bg-white border border-slate-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer" open>
-                    <summary class="flex items-center justify-between font-bold text-lg text-slate-900">
-                        Do you accept dental insurance?
-                        <i data-lucide="chevron-down" class="group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <p class="mt-4 text-slate-600 leading-relaxed">
-                        Yes! We accept most major PPO dental insurance plans. Our team will handle all the paperwork and help you maximize your benefits.
-                    </p>
-                </details>
-                <details class="group bg-white border border-slate-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
-                    <summary class="flex items-center justify-between font-bold text-lg text-slate-900">
-                        Are you accepting new patients?
-                        <i data-lucide="chevron-down" class="group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <p class="mt-4 text-slate-600 leading-relaxed">
-                        Absolutely! We love welcoming new patients to our Dallas clinic. We have special introductory offers for new patient exams and cleanings.
-                    </p>
-                </details>
-                <details class="group bg-white border border-slate-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
-                    <summary class="flex items-center justify-between font-bold text-lg text-slate-900">
-                        How often should I visit the dentist?
-                        <i data-lucide="chevron-down" class="group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <p class="mt-4 text-slate-600 leading-relaxed">
-                        We generally recommend a professional cleaning and exam every six months to prevent major issues and maintain optimal oral health.
-                    </p>
-                </details>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                    <button @click="activeFaq = 1" class="w-full flex justify-between items-center p-5 text-left font-bold text-slate-800">
+                        <span>Do you accept my dental insurance?</span>
+                        <svg :class="{'rotate-180': activeFaq === 1}" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="activeFaq === 1" class="p-5 pt-0 text-slate-600 leading-relaxed">
+                        Yes! We accept most major PPO dental insurance plans. Our team will handle all the paperwork for you to ensure you maximize your benefits.
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                    <button @click="activeFaq = 2" class="w-full flex justify-between items-center p-5 text-left font-bold text-slate-800">
+                        <span>Are you accepting new patients?</span>
+                        <svg :class="{'rotate-180': activeFaq === 2}" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="activeFaq === 2" class="p-5 pt-0 text-slate-600 leading-relaxed">
+                        Absolutely! We love meeting new members of the Dallas community. We even offer a special introductory cleaning and exam for new patients.
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                    <button @click="activeFaq = 3" class="w-full flex justify-between items-center p-5 text-left font-bold text-slate-800">
+                        <span>What should I bring to my first visit?</span>
+                        <svg :class="{'rotate-180': activeFaq === 3}" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="activeFaq === 3" class="p-5 pt-0 text-slate-600 leading-relaxed">
+                        Please bring your ID, insurance card, and any relevant medical history. We also recommend arriving 15 minutes early to complete your registration.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact & Map -->
+    <!-- Contact & Map Section -->
     <section id="contact" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-16">
-                <div>
-                    <h2 class="text-4xl font-bold text-slate-900 mb-6">Book Your Visit</h2>
-                    <p class="text-slate-600 mb-8">Ready for your best smile? Fill out the form below or call us directly. Our team will contact you within 24 hours to confirm.</p>
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="bg-blue-600 rounded-3xl p-8 lg:p-12 text-white">
+                    <h3 class="text-3xl font-bold mb-6">Schedule Your Visit</h3>
+                    <p class="mb-8 opacity-90 font-medium">Ready for your best smile? Fill out the form and our friendly team will contact you to confirm your appointment within 2 hours.</p>
                     
                     <form class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">First Name</label>
-                                <input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="John">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Last Name</label>
-                                <input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Doe">
-                            </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" placeholder="Full Name" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                            <input type="email" placeholder="Email Address" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white">
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Email Address</label>
-                            <input type="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="john@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Service Needed</label>
-                            <select class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-white">
-                                <option>Routine Cleaning</option>
-                                <option>Cosmetic Consultation</option>
-                                <option>Teeth Whitening</option>
-                                <option>Emergency Service</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Message</label>
-                            <textarea class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none h-32" placeholder="Tell us about your needs..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all">Send Message</button>
+                        <input type="tel" placeholder="Phone Number" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white">
+                        <select class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 text-blue-200 focus:outline-none focus:ring-2 focus:ring-white appearance-none">
+                            <option>Select Service</option>
+                            <option>General Checkup</option>
+                            <option>Teeth Whitening</option>
+                            <option>Emergency Service</option>
+                        </select>
+                        <textarea rows="4" placeholder="How can we help?" class="w-full bg-blue-700/50 border border-blue-400 rounded-xl px-5 py-4 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white"></textarea>
+                        <button type="submit" class="w-full bg-white text-blue-600 font-bold py-4 rounded-xl hover:bg-slate-100 transition shadow-lg text-lg">Send Request Now</button>
                     </form>
                 </div>
-                
-                <div class="space-y-8">
-                    <div class="h-96 w-full rounded-3xl bg-slate-200 overflow-hidden relative grayscale">
-                        <!-- Map Placeholder -->
-                        <div class="absolute inset-0 flex items-center justify-center flex-col text-slate-500">
-                            <i data-lucide="map-pin" class="w-12 h-12 mb-2 text-blue-600"></i>
-                            <p class="font-bold">Interactive Map Placeholder</p>
-                            <p class="text-sm">Main St, Dallas, TX 75201</p>
+
+                <div class="flex flex-col h-full">
+                    <div class="mb-8">
+                        <h4 class="text-2xl font-bold text-slate-900 mb-4">Visit Us in Dallas</h4>
+                        <div class="flex flex-col gap-4 text-slate-600">
+                            <div class="flex items-start gap-4">
+                                <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <p>123 Smile Boulevard, Suite 101<br>Dallas, Texas 75201</p>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <p>Mon - Fri: 8:00 AM - 5:00 PM<br>Saturday: By Appointment</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Location</h4>
-                            <p class="text-slate-600">123 Dentistry Way<br>Dallas, TX 75201</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Hours</h4>
-                            <p class="text-slate-600">Mon - Fri: 8am - 6pm<br>Sat: 9am - 2pm</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Call Us</h4>
-                            <p class="text-blue-600 font-bold text-xl">(214) 555-0123</p>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Email</h4>
-                            <p class="text-slate-600">hello@smiledallas.com</p>
-                        </div>
+                    <!-- Google Maps Placeholder -->
+                    <div class="flex-grow min-h-[300px] bg-slate-200 rounded-3xl overflow-hidden relative grayscale hover:grayscale-0 transition-all duration-500">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d107297.020054707!2d-96.852934!3d32.776664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c19f77b45974b%3A0xb9ec9ba5f647678f!2sDallas%2C%20TX!5e0!3m2!1sen!2susa!4v1625000000000!5m2!1sen!2susa" 
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
                     </div>
                 </div>
             </div>
@@ -344,58 +322,54 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
+    <footer class="bg-slate-900 text-slate-300 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                <div class="flex items-center gap-2">
-                    <div class="bg-blue-600 p-2 rounded-lg">
-                        <i data-lucide="sparkles" class="text-white w-6 h-6"></i>
-                    </div>
-                    <span class="text-2xl font-bold tracking-tight text-white">Smile<span class="text-blue-600">Dental</span></span>
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <span class="text-2xl font-bold text-white flex items-center gap-2 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Bright Smile
+                    </span>
+                    <p class="text-sm leading-relaxed">Providing world-class dentistry for the Dallas community. Your comfort is our priority.</p>
                 </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-blue-500 transition-colors"><i data-lucide="facebook"></i></a>
-                    <a href="#" class="hover:text-blue-500 transition-colors"><i data-lucide="instagram"></i></a>
-                    <a href="#" class="hover:text-blue-500 transition-colors"><i data-lucide="twitter"></i></a>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm border-t border-slate-800 pt-12">
                 <div>
-                    <h5 class="text-white font-bold mb-4 uppercase tracking-widest text-xs">Services</h5>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white">Cleanings</a></li>
-                        <li><a href="#" class="hover:text-white">Teeth Whitening</a></li>
-                        <li><a href="#" class="hover:text-white">Implants</a></li>
-                        <li><a href="#" class="hover:text-white">Invisalign</a></li>
+                    <h5 class="text-white font-bold mb-6">Quick Links</h5>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="#about" class="hover:text-blue-400 transition">About Us</a></li>
+                        <li><a href="#services" class="hover:text-blue-400 transition">Services</a></li>
+                        <li><a href="#testimonials" class="hover:text-blue-400 transition">Patient Reviews</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400 transition">Book Online</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-white font-bold mb-4 uppercase tracking-widest text-xs">Patient Info</h5>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white">New Patient Form</a></li>
-                        <li><a href="#" class="hover:text-white">Insurance</a></li>
-                        <li><a href="#" class="hover:text-white">Finance Plans</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                    <h5 class="text-white font-bold mb-6">Services</h5>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="#" class="hover:text-blue-400 transition">General Dentistry</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Teeth Whitening</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Dental Implants</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Emergency Care</a></li>
                     </ul>
                 </div>
-                <div class="col-span-2">
-                    <h5 class="text-white font-bold mb-4 uppercase tracking-widest text-xs">Newsletter</h5>
-                    <p class="mb-4">Get dental tips and exclusive offers in your inbox.</p>
-                    <div class="flex gap-2">
-                        <input type="email" placeholder="Email address" class="bg-slate-800 border-none rounded-lg px-4 py-2 w-full focus:ring-1 focus:ring-blue-500">
-                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">Join</button>
+                <div>
+                    <h5 class="text-white font-bold mb-6">Newsletter</h5>
+                    <p class="text-xs mb-4">Get dental health tips and Dallas community updates.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Email" class="bg-slate-800 border-none rounded-l-lg px-4 py-2 w-full focus:ring-2 focus:ring-blue-500">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition">→</button>
                     </div>
                 </div>
             </div>
-            <div class="mt-16 text-center text-xs opacity-50">
-                &copy; 2023 Smile Dental Care Dallas. All rights reserved.
+            <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2023 Bright Smile Dental Dallas. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-    </script>
 </body>
 </html>
