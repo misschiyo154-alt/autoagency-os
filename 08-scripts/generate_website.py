@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
@@ -12,9 +13,14 @@ api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
 # User Inputs
-business_name = input("Business Name: ")
-business_type = input("Business Type: ")
-location = input("Location: ")
+if len(sys.argv) == 4:
+    business_name = sys.argv[1]
+    business_type = sys.argv[2]
+    location = sys.argv[3]
+else:
+    business_name = input("Business Name: ")
+    business_type = input("Business Type: ")
+    location = input("Location: ")
 
 # Read Prompt File
 with open("03-prompts/website-generator.md", "r", encoding="utf-8") as f:

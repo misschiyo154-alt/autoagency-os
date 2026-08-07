@@ -17,30 +17,46 @@ location = input("Location: ")
 # -------------------------
 # Generate Website
 # -------------------------
-result = subprocess.run(
-    [python, "08-scripts/generate_website.py"],
-    input=f"{business_name}\n{business_type}\n{location}\n",
-    text=True
-)
+result = subprocess.run([
+    python,
+    "08-scripts/generate_website.py",
+    business_name,
+    business_type,
+    location
+])
 
 if result.returncode != 0:
     print("\n❌ Website Generation Failed!")
     exit()
 
+if result.returncode != 0:
+    print("\n❌ Website Generation Failed!")
+    sys.exit(1)
+
+print("✅ Website Generated")
 # -------------------------
 # Generate Email
 # -------------------------
-demo_url = input("https://autoagency-os.pages.dev")
+demo_url = "https://autoagency-os.pages.dev"
 
-result = subprocess.run(
-    [python, "04-emails/generate_email.py"],
-    input=f"{business_name}\n{business_type}\n{location}\n{demo_url}\n",
-    text=True
-)
+result = subprocess.run([
+    python,
+    "04-emails/generate_email.py",
+    business_name,
+    business_type,
+    location,
+    demo_url
+])
 
 if result.returncode != 0:
     print("\n❌ Email Generation Failed!")
     exit()
+
+if result.returncode != 0:
+    print("\n❌ Email Generation Failed!")
+    sys.exit(1)
+
+print("✅ Email Generated")
 
 # -------------------------
 # Git Push
@@ -50,6 +66,12 @@ result = subprocess.run([python, "08-scripts/git_push.py"])
 if result.returncode != 0:
     print("\n❌ Git Push Failed!")
     exit()
+
+if result.returncode != 0:
+    print("\n❌ Email Generation Failed!")
+    sys.exit(1)
+
+print("✅ Email Generated")
 
 # -------------------------
 # Save History

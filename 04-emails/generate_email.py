@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
@@ -15,10 +16,16 @@ client = genai.Client(
 # -------------------------
 # Business Details
 # -------------------------
-business_name = input("Business Name: ")
-business_type = input("Business Type: ")
-location = input("Location: ")
-demo_url = input("Demo Website URL: ")
+if len(sys.argv) == 5:
+    business_name = sys.argv[1]
+    business_type = sys.argv[2]
+    location = sys.argv[3]
+    demo_url = sys.argv[4]
+else:
+    business_name = input("Business Name: ")
+    business_type = input("Business Type: ")
+    location = input("Location: ")
+    demo_url = input("Demo Website URL: ")
 
 # -------------------------
 # Load Prompt Template

@@ -3,305 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graduate Momo Wala | Best Momos in Bhilai</title>
-    <meta name="description" content="Savor the taste of authentic, hygiene-first momos in Bhilai. From Steamed to Kurkure, Graduate Momo Wala brings academic precision to street food.">
+    <title>Bright Smile Dental | Expert Family Dentistry in Dallas, TX</title>
+    <meta name="description" content="Experience world-class dental care at Bright Smile Dental in Dallas. From routine cleanings to cosmetic transformations, our expert team ensures a comfortable visit.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
     <script defer src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .momo-gradient { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Lexend', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; }
     </style>
 </head>
-<body class="bg-stone-50 text-slate-900">
+<body class="bg-slate-50 text-slate-900">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center gap-2">
-                    <div class="bg-orange-600 p-2 rounded-lg">
-                        <i data-lucide="utensils-crossed" class="text-white w-6 h-6"></i>
+                    <div class="bg-blue-600 p-2 rounded-lg text-white">
+                        <i data-lucide="sparkles"></i>
                     </div>
-                    <span class="text-2xl font-extrabold tracking-tight text-slate-900">GRADUATE<span class="text-orange-600">MOMO</span></span>
+                    <span class="text-xl font-bold text-slate-800 tracking-tight">Bright Smile <span class="text-blue-600">Dental</span></span>
                 </div>
-                <div class="hidden md:flex space-x-8 font-medium">
-                    <a href="#home" class="hover:text-orange-600 transition">Home</a>
-                    <a href="#about" class="hover:text-orange-600 transition">Our Story</a>
-                    <a href="#menu" class="hover:text-orange-600 transition">Menu</a>
-                    <a href="#testimonials" class="hover:text-orange-600 transition">Reviews</a>
-                    <a href="#contact" class="hover:text-orange-600 transition">Location</a>
+                
+                <div class="hidden md:flex space-x-8 font-medium text-slate-600">
+                    <a href="#home" class="hover:text-blue-600 transition-colors">Home</a>
+                    <a href="#services" class="hover:text-blue-600 transition-colors">Services</a>
+                    <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
+                    <a href="#faq" class="hover:text-blue-600 transition-colors">FAQ</a>
                 </div>
-                <a href="#menu" class="bg-orange-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-orange-700 transition shadow-lg shadow-orange-200">Order Now</a>
+
+                <div class="hidden md:block">
+                    <a href="#contact" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
+                        Book Appointment
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-slate-600 focus:outline-none">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
             </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 py-6 space-y-4">
+            <a href="#home" class="block text-slate-600">Home</a>
+            <a href="#services" class="block text-slate-600">Services</a>
+            <a href="#about" class="block text-slate-600">About</a>
+            <a href="#contact" class="block text-blue-600 font-bold">Book Now</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="home" class="pt-32 pb-20 lg:pt-48 lg:pb-32 gradient-bg overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <span class="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-orange-700 uppercase bg-orange-100 rounded-full">🎓 Degrees in Taste, Masters in Momos</span>
-                    <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6">
-                        Bhilai's Favorite <span class="text-orange-600 underline decoration-orange-200 underline-offset-8">Street Treats</span>
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-bold">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> Dallas's Top-Rated Dental Clinic
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-bold leading-tight text-slate-900">
+                        Experience a Brighter, <br><span class="text-blue-600 underline decoration-blue-200">Healthier Smile</span>
                     </h1>
-                    <p class="text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
-                        Hand-crafted with love and academic precision. Experience the perfect blend of hygiene, authentic spices, and the thinnest momo skin in town.
+                    <p class="text-lg text-slate-600 max-w-lg leading-relaxed">
+                        State-of-the-art dental care designed for your comfort. From routine cleanings to complete smile makeovers, we provide personalized care for the Dallas community.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#menu" class="flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition transform hover:-translate-y-1">
-                            Explore Menu <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        <a href="#contact" class="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-center hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 text-lg">
+                            Schedule Your Visit
                         </a>
-                        <a href="#contact" class="flex items-center justify-center gap-2 bg-white border-2 border-slate-200 px-8 py-4 rounded-xl font-bold text-lg hover:border-orange-600 hover:text-orange-600 transition transform hover:-translate-y-1">
-                            Find Our Stall
-                        </a>
-                    </div>
-                    <div class="mt-10 flex items-center gap-4">
-                        <div class="flex -space-x-3">
-                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full border-4 border-white object-cover" alt="User">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full border-4 border-white object-cover" alt="User">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-12 h-12 rounded-full border-4 border-white object-cover" alt="User">
+                        <div class="flex items-center gap-4 bg-white px-6 py-4 rounded-full border border-slate-200">
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-[10px] font-bold">JD</div>
+                                <div class="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-bold">AS</div>
+                                <div class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white flex items-center justify-center text-[10px] font-bold">MK</div>
+                            </div>
+                            <span class="text-sm font-semibold text-slate-700">500+ Happy Dallas Patients</span>
                         </div>
-                        <p class="text-slate-500 font-medium"><span class="text-slate-900 font-bold">500+</span> happy foodies daily</p>
                     </div>
                 </div>
                 <div class="relative">
-                    <div class="absolute -top-20 -right-20 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-                    <img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=800&h=800&fit=crop" alt="Delicious Momos" class="relative z-10 rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 border-[12px] border-white">
-                    <div class="absolute -bottom-6 -left-6 z-20 bg-white p-6 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-4">
-                        <div class="bg-green-100 p-3 rounded-full"><i data-lucide="shield-check" class="text-green-600 w-8 h-8"></i></div>
-                        <div>
-                            <p class="text-sm text-slate-500 font-bold uppercase tracking-wide">Quality Assured</p>
-                            <p class="text-xl font-extrabold text-slate-900 underline decoration-green-500">100% Hygienic</p>
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1629909608135-ca908ed9d5a0?auto=format&fit=crop&q=80&w=800" alt="Modern Dentist Office" class="w-full h-auto">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl z-20 hidden sm:block border border-slate-100">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-100 p-3 rounded-full text-green-600">
+                                <i data-lucide="check-circle"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">New Patient Special</p>
+                                <p class="text-xl font-bold text-slate-800">$99 Full Exam</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-blue-600 font-bold tracking-wide uppercase text-sm mb-3">Our Expertise</h2>
+                <p class="text-4xl font-bold text-slate-900 mb-6">Comprehensive Care for Every Patient</p>
+                <p class="text-slate-600 text-lg">We combine advanced technology with a gentle touch to ensure your visit is stress-free and effective.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service Card 1 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+                        <i data-lucide="stethoscope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">General Care</h3>
+                    <p class="text-slate-600 leading-relaxed">Routine cleanings, fillings, and digital x-rays to keep your foundation strong.</p>
+                </div>
+                <!-- Service Card 2 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+                        <i data-lucide="smile"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cosmetic</h3>
+                    <p class="text-slate-600 leading-relaxed">Teeth whitening, veneers, and bonding for the perfect Hollywood smile.</p>
+                </div>
+                <!-- Service Card 3 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+                        <i data-lucide="shield-plus"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Restorative</h3>
+                    <p class="text-xl font-bold mb-3 invisible hidden">Spacer</p>
+                    <p class="text-slate-600 leading-relaxed">Implants, crowns, and bridges that look and feel like your natural teeth.</p>
+                </div>
+                <!-- Service Card 4 -->
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+                        <i data-lucide="alarm-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Emergency</h3>
+                    <p class="text-slate-600 leading-relaxed">Sudden toothache? We offer same-day appointments for urgent dental needs.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
+    <section id="about" class="py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1">
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1599481238640-4c1288750d7a?w=400&h=500&fit=crop" class="rounded-2xl mt-8" alt="Street Food Culture">
-                        <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?w=400&h=500&fit=crop" class="rounded-2xl" alt="Preparation">
+                <div class="order-2 lg:order-1 relative">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=800" alt="Our Dentist" class="rounded-3xl shadow-2xl">
+                    <div class="absolute -top-10 -right-10 bg-white p-8 rounded-2xl shadow-xl hidden lg:block">
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-blue-600">15+</p>
+                            <p class="text-sm font-semibold text-slate-500">Years in Dallas</p>
+                        </div>
                     </div>
                 </div>
-                <div class="order-1 lg:order-2">
-                    <h2 class="text-4xl font-extrabold text-slate-900 mb-6">Why "Graduate" Momo Wala?</h2>
-                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-                        Started by a passionate graduate who decided to trade the corporate desk for the culinary art of steaming. We believe that street food doesn't have to compromise on quality or hygiene.
-                    </p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-slate-700 font-medium">
-                            <i data-lucide="check-circle" class="text-orange-600"></i> Freshly sourced local ingredients
+                <div class="order-1 lg:order-2 space-y-6">
+                    <h2 class="text-blue-600 font-bold tracking-wide uppercase text-sm">About Bright Smile</h2>
+                    <h3 class="text-4xl font-bold text-slate-900 leading-tight">Patient-First Care You Can Trust.</h3>
+                    <p class="text-lg text-slate-600">Led by Dr. Sarah Mitchell, our team is dedicated to providing high-quality dental care in a welcoming and friendly environment.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-1 rounded-full text-blue-600"><i data-lucide="check" class="w-4 h-4"></i></div>
+                            <span class="font-medium text-slate-700">Latest Dental Technology (3D Imaging)</span>
                         </li>
-                        <li class="flex items-center gap-3 text-slate-700 font-medium">
-                            <i data-lucide="check-circle" class="text-orange-600"></i> Secret Graduate Chutney recipes
+                        <li class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-1 rounded-full text-blue-600"><i data-lucide="check" class="w-4 h-4"></i></div>
+                            <span class="font-medium text-slate-700">Flexible Financing & Insurance Plans</span>
                         </li>
-                        <li class="flex items-center gap-3 text-slate-700 font-medium">
-                            <i data-lucide="check-circle" class="text-orange-600"></i> Strict hygiene & cleanliness standards
+                        <li class="flex items-center gap-3">
+                            <div class="bg-blue-100 p-1 rounded-full text-blue-600"><i data-lucide="check" class="w-4 h-4"></i></div>
+                            <span class="font-medium text-slate-700">Pain-Free Dentistry Focus</span>
                         </li>
                     </ul>
-                    <div class="p-6 border-l-4 border-orange-600 bg-stone-50 italic text-slate-700">
-                        "Our goal was simple: provide the people of Bhilai with momos that taste like home but feel like a gourmet experience."
+                    <div class="pt-4">
+                        <a href="#contact" class="inline-flex items-center gap-2 text-blue-600 font-bold hover:gap-4 transition-all">
+                            Learn more about our practice <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section id="menu" class="py-24 bg-stone-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Our Specialties</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto italic">Warning: Highly Addictive. Try them all!</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Item 1 -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-stone-100 group">
-                    <div class="relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1534422298391-e4f8c170db06?w=600&h=400&fit=crop" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" alt="Steamed Momos">
-                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase">Bestseller</span>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-slate-900">Classic Steamed Momos</h3>
-                            <span class="text-orange-600 font-bold">₹80</span>
-                        </div>
-                        <p class="text-slate-600 text-sm mb-6">Authentic Himalayan thin-crust dumplings served with spicy garlic chutney.</p>
-                        <button class="w-full py-3 bg-stone-900 text-white rounded-xl font-bold hover:bg-orange-600 transition">Add to Order</button>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-stone-100 group">
-                    <div class="relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1626074353765-517a681e40be?w=600&h=400&fit=crop" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" alt="Fried Momos">
-                        <span class="absolute top-4 left-4 bg-orange-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Hot</span>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-slate-900">Kurkure Momos</h3>
-                            <span class="text-orange-600 font-bold">₹120</span>
-                        </div>
-                        <p class="text-slate-600 text-sm mb-6">Extra crunchy exterior with a juicy heart. Double fried for that perfect snap.</p>
-                        <button class="w-full py-3 bg-stone-900 text-white rounded-xl font-bold hover:bg-orange-600 transition">Add to Order</button>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-stone-100 group">
-                    <div class="relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ef4a4f8?w=600&h=400&fit=crop" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" alt="Gravy Momos">
-                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase">Chef's Choice</span>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-slate-900">Afghani Gravy Momos</h3>
-                            <span class="text-orange-600 font-bold">₹150</span>
-                        </div>
-                        <p class="text-slate-600 text-sm mb-6">Dipped in a rich, creamy, and smoky white gravy with charcoal infusion.</p>
-                        <button class="w-full py-3 bg-stone-900 text-white rounded-xl font-bold hover:bg-orange-600 transition">Add to Order</button>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-12 text-center">
-                <p class="text-slate-500">View Full Menu at our Bhilai outlet</p>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section id="testimonials" class="py-24 bg-slate-900 text-white overflow-hidden">
+    <section class="py-24 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16">
-                <h2 class="text-4xl font-extrabold mb-4 text-center">What Bhilai Says</h2>
-            </div>
+            <h2 class="text-center text-3xl lg:text-4xl font-bold text-slate-900 mb-16">What Our Patients Say</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <div class="flex text-orange-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                <div class="p-8 rounded-2xl bg-blue-50 relative">
+                    <div class="text-blue-200 absolute top-4 right-8"><i data-lucide="quote" class="w-12 h-12"></i></div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                     </div>
-                    <p class="italic mb-6 text-slate-300">"The Kurkure momos are a game changer. Hands down the best I've had in Bhilai. Clean, tasty, and affordable."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center font-bold">A</div>
-                        <span class="font-bold">Animesh Verma</span>
-                    </div>
+                    <p class="text-slate-700 italic mb-6 leading-relaxed">"Best experience I've ever had at a dentist. The staff is incredible, and the office is beautiful. Dr. Mitchell really took the time to explain everything."</p>
+                    <p class="font-bold text-slate-900">Michael R. <span class="block text-sm font-normal text-slate-500">Dallas, TX</span></p>
                 </div>
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <div class="flex text-orange-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 relative">
+                    <div class="text-slate-200 absolute top-4 right-8"><i data-lucide="quote" class="w-12 h-12"></i></div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                     </div>
-                    <p class="italic mb-6 text-slate-300">"Finally a place that cares about hygiene as much as the taste. Their red chutney is legendary!"</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold">S</div>
-                        <span class="font-bold">Sneha Singh</span>
-                    </div>
+                    <p class="text-slate-700 italic mb-6 leading-relaxed">"The $99 new patient special was a great deal. Thorough exam and cleaning. No hidden fees. Highly recommend!"</p>
+                    <p class="font-bold text-slate-900">Jennifer S. <span class="block text-sm font-normal text-slate-500">Plano, TX</span></p>
                 </div>
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <div class="flex text-orange-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
-                        <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 relative">
+                    <div class="text-slate-200 absolute top-4 right-8"><i data-lucide="quote" class="w-12 h-12"></i></div>
+                    <div class="flex text-yellow-400 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
                     </div>
-                    <p class="italic mb-6 text-slate-300">"The Afghani Momos are so creamy. The Graduate Momo Wala has definitely raised the bar for street food."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center font-bold">R</div>
-                        <span class="font-bold">Rahul Mishra</span>
-                    </div>
+                    <p class="text-slate-700 italic mb-6 leading-relaxed">"I was nervous about my root canal, but they made me feel completely at ease. Pain-free and professional."</p>
+                    <p class="font-bold text-slate-900">David T. <span class="block text-sm font-normal text-slate-500">Dallas, TX</span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="py-24 bg-white">
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-slate-50">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-extrabold text-slate-900 mb-12 text-center">Frequently Asked Questions</h2>
-            <div class="space-y-6">
-                <div class="p-6 rounded-2xl bg-stone-50">
-                    <h4 class="text-lg font-bold mb-2">Do you provide home delivery in Bhilai?</h4>
-                    <p class="text-slate-600">Yes! We are available on Zomato and Swiggy within a 10km radius of Bhilai.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-stone-50">
-                    <h4 class="text-lg font-bold mb-2">Are your momos vegetarian?</h4>
-                    <p class="text-slate-600">We offer both Veg and Non-Veg options. We ensure separate preparation areas to respect dietary preferences.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-stone-50">
-                    <h4 class="text-lg font-bold mb-2">Do you accept bulk orders for parties?</h4>
-                    <p class="text-slate-600">Absolutely! Please contact us 24 hours in advance for bulk orders at discounted rates.</p>
-                </div>
+            <h2 class="text-3xl font-bold text-center text-slate-900 mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <details class="group bg-white p-6 rounded-xl shadow-sm border border-slate-100" open>
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-slate-800">
+                        Do you accept dental insurance?
+                        <span class="group-open:rotate-180 transition-transform"><i data-lucide="chevron-down"></i></span>
+                    </summary>
+                    <p class="text-slate-600 mt-4 leading-relaxed">Yes, we accept most major dental insurance PPO plans. We also offer internal payment plans and third-party financing through CareCredit.</p>
+                </details>
+                <details class="group bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-slate-800">
+                        What should I expect at my first visit?
+                        <span class="group-open:rotate-180 transition-transform"><i data-lucide="chevron-down"></i></span>
+                    </summary>
+                    <p class="text-slate-600 mt-4 leading-relaxed">Your first visit includes a comprehensive exam, digital x-rays, oral cancer screening, and a consultation with Dr. Mitchell to discuss your goals.</p>
+                </details>
+                <details class="group bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-slate-800">
+                        How often should I have a dental check-up?
+                        <span class="group-open:rotate-180 transition-transform"><i data-lucide="chevron-down"></i></span>
+                    </summary>
+                    <p class="text-slate-600 mt-4 leading-relaxed">We generally recommend a cleaning and exam every six months to prevent plaque buildup and catch issues early.</p>
+                </details>
             </div>
         </div>
     </section>
 
-    <!-- Contact & Map -->
-    <section id="contact" class="py-24 bg-stone-50">
+    <!-- Contact & Map Section -->
+    <section id="contact" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-stone-100">
+            <div class="bg-blue-900 rounded-3xl overflow-hidden shadow-2xl">
                 <div class="grid lg:grid-cols-2">
-                    <div class="p-12 lg:p-16">
-                        <h2 class="text-4xl font-extrabold text-slate-900 mb-8">Visit Our Stall</h2>
-                        <div class="space-y-8">
-                            <div class="flex gap-6">
-                                <div class="bg-orange-100 p-4 rounded-2xl shrink-0"><i data-lucide="map-pin" class="text-orange-600"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-900">Address</p>
-                                    <p class="text-slate-600 leading-relaxed">Near Civic Center, Shop No. 12, Bhilai, Chhattisgarh 490006</p>
-                                </div>
+                    <div class="p-12 lg:p-16 text-white">
+                        <h2 class="text-4xl font-bold mb-8">Get in Touch</h2>
+                        <form class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Full Name" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400">
+                                <input type="email" placeholder="Email Address" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400">
                             </div>
-                            <div class="flex gap-6">
-                                <div class="bg-orange-100 p-4 rounded-2xl shrink-0"><i data-lucide="phone" class="text-orange-600"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-900">Phone</p>
-                                    <p class="text-slate-600">+91 98765 43210</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-6">
-                                <div class="bg-orange-100 p-4 rounded-2xl shrink-0"><i data-lucide="clock" class="text-orange-600"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-900">Hours</p>
-                                    <p class="text-slate-600">Everyday: 4:00 PM – 11:00 PM</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <form class="mt-12 space-y-4">
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <input type="text" placeholder="Your Name" class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-orange-600">
-                                <input type="tel" placeholder="Phone Number" class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-orange-600">
-                            </div>
-                            <textarea placeholder="Tell us about your event or query..." rows="4" class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-orange-600"></textarea>
-                            <button class="w-full py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition shadow-lg shadow-orange-200 uppercase tracking-widest">Send Inquiry</button>
+                            <input type="tel" placeholder="Phone Number" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400">
+                            <select class="w-full bg-blue-800 border-none rounded-lg p-4 text-blue-300 focus:ring-2 focus:ring-blue-400">
+                                <option>Select Service</option>
+                                <option>Routine Cleaning</option>
+                                <option>Cosmetic Consultation</option>
+                                <option>Dental Emergency</option>
+                            </select>
+                            <textarea placeholder="How can we help?" rows="4" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400"></textarea>
+                            <button type="submit" class="w-full bg-white text-blue-900 font-bold py-4 rounded-lg hover:bg-blue-50 transition-colors uppercase tracking-wider">Book My Appointment</button>
                         </form>
                     </div>
-                    <div class="relative bg-stone-200 min-h-[400px]">
-                        <!-- Google Maps Placeholder -->
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 bg-[url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/77.34,21.19,13/800x800?access_token=MAPBOX_TOKEN')] bg-cover">
-                            <div class="bg-white/90 backdrop-blur p-8 rounded-2xl text-center shadow-xl">
-                                <i data-lucide="map" class="w-12 h-12 text-orange-600 mx-auto mb-4"></i>
-                                <p class="font-bold text-slate-900">Interactive Map</p>
-                                <p class="text-sm">Locate us at the heart of Bhilai</p>
-                                <button class="mt-4 text-orange-600 font-bold hover:underline">Open in Maps</button>
+                    <div class="bg-blue-50 h-full min-h-[400px] relative">
+                        <!-- Placeholder for Google Maps -->
+                        <div class="absolute inset-0 bg-slate-200 flex flex-col items-center justify-center p-8 text-center">
+                            <div class="bg-white p-6 rounded-2xl shadow-lg space-y-4 max-w-sm">
+                                <i data-lucide="map-pinned" class="w-12 h-12 text-blue-600 mx-auto"></i>
+                                <p class="font-bold text-slate-800">123 Commerce St, Dallas, TX 75201</p>
+                                <p class="text-sm text-slate-500">Mon - Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 2:00 PM</p>
+                                <a href="tel:2145550123" class="block text-blue-600 font-bold text-lg underline">(214) 555-0123</a>
                             </div>
+                            <div class="mt-8 text-slate-400 text-xs uppercase tracking-widest">Google Maps Integration Placeholder</div>
                         </div>
                     </div>
                 </div>
@@ -310,42 +300,51 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-white py-16">
+    <footer class="bg-slate-900 text-slate-400 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-12 mb-12">
-                <div class="flex items-center gap-2">
-                    <div class="bg-orange-600 p-2 rounded-lg">
-                        <i data-lucide="utensils-crossed" class="text-white w-6 h-6"></i>
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 text-white mb-6">
+                        <i data-lucide="sparkles" class="text-blue-400"></i>
+                        <span class="text-xl font-bold tracking-tight">Bright Smile</span>
                     </div>
-                    <span class="text-2xl font-extrabold tracking-tight">GRADUATE<span class="text-orange-600">MOMO</span></span>
-                </div>
-                <div class="flex gap-8">
-                    <a href="#" class="hover:text-orange-600 transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
-                    <a href="#" class="hover:text-orange-600 transition"><i data-lucide="facebook" class="w-6 h-6"></i></a>
-                    <a href="#" class="hover:text-orange-600 transition"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-4 gap-12 text-slate-400">
-                <div class="col-span-2">
-                    <h5 class="text-white font-bold mb-4">About Graduate Momo Wala</h5>
-                    <p class="max-w-md">The original graduate-run momo stall in Bhilai. We combine traditional recipes with modern hygiene standards to serve the best street food experience.</p>
+                    <p class="text-sm leading-relaxed">Providing world-class dentistry for the Dallas community since 2008. Your comfort is our priority.</p>
                 </div>
                 <div>
-                    <h5 class="text-white font-bold mb-4">Quick Links</h5>
-                    <ul class="space-y-2">
-                        <li><a href="#menu" class="hover:text-white transition">Menu</a></li>
-                        <li><a href="#about" class="hover:text-white transition">Story</a></li>
-                        <li><a href="#contact" class="hover:text-white transition">Location</a></li>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#home" class="hover:text-blue-400 transition-colors">Home</a></li>
+                        <li><a href="#services" class="hover:text-blue-400 transition-colors">Services</a></li>
+                        <li><a href="#about" class="hover:text-blue-400 transition-colors">About</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="text-white font-bold mb-4">Contact</h5>
-                    <p>hello@graduatemomo.com</p>
-                    <p>+91 98765 43210</p>
+                    <h4 class="text-white font-bold mb-6">Services</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li>Cleaning & Exams</li>
+                        <li>Dental Implants</li>
+                        <li>Teeth Whitening</li>
+                        <li>Invisalign</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Stay Connected</h4>
+                    <div class="flex gap-4 mb-6">
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="linkedin"></i></a>
+                    </div>
+                    <p class="text-xs uppercase tracking-widest">Emergency Line:</p>
+                    <p class="text-white font-bold">214-555-0911</p>
                 </div>
             </div>
-            <div class="mt-12 text-center text-sm text-slate-500">
-                &copy; 2023 Graduate Momo Wala. All rights reserved. Made for the foodies of Bhilai.
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:row justify-between items-center text-xs">
+                <p>&copy; 2023 Bright Smile Dental Dallas. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -354,15 +353,21 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Simple sticky nav change
-        window.onscroll = function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-md');
-            } else {
-                nav.classList.remove('shadow-md');
-            }
-        };
+        // Mobile Menu Toggle
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when link is clicked
+        const links = menu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
     </script>
 </body>
 </html>
