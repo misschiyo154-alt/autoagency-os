@@ -1,500 +1,395 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile Dental Care | Premium Dentistry in Dallas, Texas</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide-icons/0.275.0/umd/lucide.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <meta name="description" content="Expert dental care in Dallas. From cosmetic dentistry to routine checkups, Smile Dental Care provides compassionate services for the whole family.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                        secondary: '#0369a1',
+                        accent: '#f0f9ff',
+                        dark: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-light: #dbeafe;
-            --text-main: #334155;
-            --white: #ffffff;
-            --bg-soft: #f8fafc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Navigation */
-        nav {
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            width: 100%;
-            top: 0;
+        .glass-nav {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #e2e8f0;
         }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding-top: 180px;
-            padding-bottom: 100px;
-            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
-            position: relative;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80') center/cover;
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        .hero-content {
-            max-width: 650px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-tag {
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 25px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 35px;
-            color: #64748b;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            background: var(--primary);
-            color: white;
-            padding: 40px 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        .stat-item p {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.7;
-        }
-
-        /* Services */
-        .services {
-            padding: 100px 0;
-            background: var(--white);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            padding: 40px;
-            border: 1px solid #f1f5f9;
-            border-radius: 12px;
-            transition: all 0.3s;
-            background: var(--white);
-        }
-
-        .service-card:hover {
-            border-color: var(--accent-light);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .service-icon {
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        /* Features */
-        .features {
-            padding: 100px 0;
-            background: var(--bg-soft);
-        }
-
-        .feature-row {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-        }
-
-        .feature-image {
-            flex: 1;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-image img {
-            width: 100%;
-            display: block;
-        }
-
-        .feature-text {
-            flex: 1;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin-top: 30px;
-        }
-
-        .feature-list li {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .feature-list i {
-            color: var(--accent);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: white;
-            padding: 80px 0 30px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 60px;
-            margin-bottom: 60px;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .footer h4 {
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .bottom-bar {
-            border-top: 1px solid #334155;
-            padding-top: 30px;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links, .nav-cta { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-            .feature-row { flex-direction: column; }
-            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         }
     </style>
 </head>
-<body>
+<body class="font-sans text-slate-800 antialiased">
 
-    <nav>
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <a href="#" class="logo">
-                <i data-lucide="sparkles"></i> Smile<span>Dental</span>
-            </a>
-            <div class="nav-links">
-                <a href="#services">Services</a>
-                <a href="#about">About</a>
-                <a href="#reviews">Reviews</a>
-                <a href="#contact">Location</a>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <span class="text-primary text-2xl mr-2"><i class="fas fa-tooth"></i></span>
+                    <span class="font-heading font-bold text-2xl tracking-tight text-dark">SMILE<span class="text-primary">DENTAL</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="hover:text-primary transition-colors font-medium">Home</a>
+                    <a href="#about" class="hover:text-primary transition-colors font-medium">About</a>
+                    <a href="#services" class="hover:text-primary transition-colors font-medium">Services</a>
+                    <a href="#faq" class="hover:text-primary transition-colors font-medium">FAQ</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-secondary transition-all shadow-lg shadow-blue-200">Book Appointment</a>
+                </div>
+
+                <!-- Mobile Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-dark focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
             </div>
-            <div class="nav-cta">
-                <a href="#" class="btn btn-primary">Book Online</a>
-            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 py-6 space-y-4">
+            <a href="#home" class="block text-lg font-medium">Home</a>
+            <a href="#about" class="block text-lg font-medium">About</a>
+            <a href="#services" class="block text-lg font-medium">Services</a>
+            <a href="#contact" class="block text-primary font-bold">Book Now</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <span class="hero-tag">Now Accepting New Patients in Dallas</span>
-                <h1>Excellence in Modern Dentistry</h1>
-                <p>Experience a new standard of dental care where premium comfort meets world-class technology. Your perfect smile starts here in the heart of Texas.</p>
-                <div style="display: flex; gap: 15px;">
-                    <a href="#" class="btn btn-primary">Schedule Appointment</a>
-                    <a href="#" class="btn" style="border: 1px solid var(--accent); color: var(--accent);">View Services</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="stats-bar">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>15+</h3>
-                    <p>Years Experience</p>
-                </div>
-                <div class="stat-item">
-                    <h3>10k+</h3>
-                    <p>Happy Patients</p>
-                </div>
-                <div class="stat-item">
-                    <h3>4.9/5</h3>
-                    <p>Google Rating</p>
-                </div>
-                <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p>Emergency Care</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Premium Services</h2>
-                <p>Tailored treatments designed for your health and confidence.</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <i data-lucide="shield-check" class="service-icon"></i>
-                    <h3>General Care</h3>
-                    <p>Comprehensive exams, professional cleanings, and preventative care for the whole family.</p>
-                </div>
-                <div class="service-card">
-                    <i data-lucide="sparkles" class="service-icon"></i>
-                    <h3>Cosmetic Dentistry</h3>
-                    <p>Transform your smile with premium veneers, professional whitening, and bonding.</p>
-                </div>
-                <div class="service-card">
-                    <i data-lucide="smile" class="service-icon"></i>
-                    <h3>Dental Implants</h3>
-                    <p>Permanent solutions for missing teeth using the latest robotic-guided technology.</p>
-                </div>
-                <div class="service-card">
-                    <i data-lucide="align-center" class="service-icon"></i>
-                    <h3>Orthodontics</h3>
-                    <p>Clear aligners and modern braces to achieve perfect alignment discreetly.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="features" id="about">
-        <div class="container">
-            <div class="feature-row">
-                <div class="feature-image">
-                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80" alt="Modern Dental Office">
-                </div>
-                <div class="feature-text">
-                    <span class="hero-tag">Why Choose Us</span>
-                    <h2>A Patient-First Approach to Oral Health</h2>
-                    <p>At Smile Dental Care Dallas, we combine a boutique atmosphere with clinical excellence. We believe every patient deserves a personalized experience in a stress-free environment.</p>
-                    <ul class="feature-list">
-                        <li><i data-lucide="check-circle-2"></i> State-of-the-art 3D Digital Imaging</li>
-                        <li><i data-lucide="check-circle-2"></i> Private Luxury Treatment Suites</li>
-                        <li><i data-lucide="check-circle-2"></i> Sedation Options for Maximum Comfort</li>
-                        <li><i data-lucide="check-circle-2"></i> Most Insurances Accepted & In-House Plans</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="#" class="footer-logo" style="color: white; text-decoration: none;">
-                        Smile<span>Dental</span>
-                    </a>
-                    <p style="color: #94a3b8; margin-bottom: 20px;">Providing premium dental experiences in Dallas for over 15 years. Your comfort is our priority.</p>
-                    <div style="display: flex; gap: 15px;">
-                        <i data-lucide="facebook" style="cursor: pointer;"></i>
-                        <i data-lucide="instagram" style="cursor: pointer;"></i>
-                        <i data-lucide="linkedin" style="cursor: pointer;"></i>
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute top-0 right-0 -z-10 w-1/2 h-full bg-accent rounded-bl-[100px] hidden lg:block"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 space-y-8">
+                    <div class="inline-block px-4 py-1.5 bg-blue-100 text-secondary rounded-full text-sm font-bold tracking-wide uppercase">
+                        ✨ Expert Dental Care in Dallas
+                    </div>
+                    <h1 class="font-heading text-5xl lg:text-7xl font-bold text-dark leading-tight">
+                        Your Best Smile <span class="text-primary">Starts Here.</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 leading-relaxed max-w-xl">
+                        Experience world-class dentistry at Smile Dental Care. We combine cutting-edge technology with a gentle touch to give you the healthy, confident smile you deserve.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contact" class="px-8 py-4 bg-primary text-white rounded-xl font-bold text-center hover:bg-secondary transition-all transform hover:-translate-y-1 shadow-xl">New Patient Special</a>
+                        <a href="#services" class="px-8 py-4 bg-white border-2 border-slate-200 text-dark rounded-xl font-bold text-center hover:border-primary transition-all">Our Services</a>
+                    </div>
+                    <div class="flex items-center gap-6 pt-4 text-sm text-slate-500">
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Most Insurance Accepted</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Emergency Appointments</div>
                     </div>
                 </div>
-                <div>
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Our Services</a></li>
-                        <li><a href="#">New Patients</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Services</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Teeth Whitening</a></li>
-                        <li><a href="#">Invisalign</a></li>
-                        <li><a href="#">Root Canals</a></li>
-                        <li><a href="#">Emergency Care</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Visit Us</h4>
-                    <p style="color: #94a3b8; margin-bottom: 10px;">
-                        1234 Luxury Way, Suite 100<br>
-                        Dallas, Texas 75201
-                    </p>
-                    <p style="color: white; font-weight: 600;">(214) 555-0123</p>
-                    <p style="color: #94a3b8;">hello@smiledentaldallas.com</p>
+                <div class="lg:w-1/2 relative">
+                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Modern Dental Office" class="rounded-3xl shadow-2xl z-10 relative">
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl hidden sm:block z-20">
+                        <div class="flex items-center gap-4">
+                            <div class="flex -space-x-2">
+                                <div class="w-10 h-10 rounded-full bg-blue-400 border-2 border-white"></div>
+                                <div class="w-10 h-10 rounded-full bg-blue-500 border-2 border-white"></div>
+                                <div class="w-10 h-10 rounded-full bg-blue-600 border-2 border-white"></div>
+                            </div>
+                            <div>
+                                <p class="font-bold text-dark">5000+</p>
+                                <p class="text-xs text-slate-500">Happy Patients in Dallas</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="bottom-bar">
-                <p>&copy; 2023 Smile Dental Care Dallas. All rights reserved. | Privacy Policy</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=800" alt="Dentist working" class="rounded-3xl shadow-lg">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-primary/20 rounded-full animate-ping"></div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 space-y-6">
+                    <h2 class="font-heading text-4xl font-bold text-dark italic">Modern Dentistry, Traditional Values.</h2>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        At Smile Dental Care, we believe that dental visits should be something you look forward to. Located in the heart of Dallas, Texas, our practice is dedicated to providing personalized care tailored to your unique needs.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 bg-accent p-2 rounded-lg text-primary"><i class="fas fa-microscope"></i></div>
+                            <div>
+                                <h4 class="font-bold text-dark">Advanced Technology</h4>
+                                <p class="text-slate-600">Using 3D imaging and digital scans for precise results.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 bg-accent p-2 rounded-lg text-primary"><i class="fas fa-heart"></i></div>
+                            <div>
+                                <h4 class="font-bold text-dark">Comfort-First Approach</h4>
+                                <p class="text-slate-600">Sedation options and a spa-like environment to ease anxiety.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
+            <h2 class="font-heading text-4xl font-bold text-dark mb-4">Our Comprehensive Services</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto italic">Everything your family needs for a lifetime of healthy smiles.</p>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Service 1 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">General Dentistry</h3>
+                <p class="text-slate-600 mb-4 text-sm leading-relaxed">Cleanings, fillings, and preventative care to keep your natural teeth healthy.</p>
+                <a href="#" class="text-primary font-bold text-sm hover:underline">Learn More →</a>
+            </div>
+            <!-- Service 2 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Cosmetic Dentistry</h3>
+                <p class="text-slate-600 mb-4 text-sm leading-relaxed">Teeth whitening, veneers, and bonding for a camera-ready smile.</p>
+                <a href="#" class="text-primary font-bold text-sm hover:underline">Learn More →</a>
+            </div>
+            <!-- Service 3 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-teeth-open"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Dental Implants</h3>
+                <p class="text-slate-600 mb-4 text-sm leading-relaxed">Permanent, natural-looking solutions for missing teeth.</p>
+                <a href="#" class="text-primary font-bold text-sm hover:underline">Learn More →</a>
+            </div>
+            <!-- Service 4 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all group">
+                <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Emergency Care</h3>
+                <p class="text-slate-600 mb-4 text-sm leading-relaxed">Same-day appointments for dental emergencies and pain relief.</p>
+                <a href="#" class="text-primary font-bold text-sm hover:underline">Learn More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="font-heading text-4xl font-bold mb-4">Loved by the Dallas Community</h2>
+                    <p class="text-slate-400">Join thousands of happy patients who trust us with their oral health.</p>
+                </div>
+                <div class="flex gap-2">
+                    <div class="flex text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <span class="font-bold">4.9/5 on Google</span>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700">
+                    <p class="italic text-slate-300 mb-6">"I've always been terrified of the dentist, but the team here made me feel so at ease. The facility is beautiful and the treatment was painless!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-slate-600"></div>
+                        <div>
+                            <p class="font-bold">Sarah Jenkins</p>
+                            <p class="text-sm text-slate-500">North Dallas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700">
+                    <p class="italic text-slate-300 mb-6">"Best cosmetic work in Texas. My veneers look incredibly natural. They took the time to explain every step of the process."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-slate-600"></div>
+                        <div>
+                            <p class="font-bold">Michael Ross</p>
+                            <p class="text-sm text-slate-500">Highland Park</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700">
+                    <p class="italic text-slate-300 mb-6">"Convenient hours for working professionals. I can get my cleaning done before heading to the office. Highly recommend Smile Dental Care."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-slate-600"></div>
+                        <div>
+                            <p class="font-bold">David Thompson</p>
+                            <p class="text-sm text-slate-500">Downtown Dallas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-heading text-4xl font-bold text-center text-dark mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <details class="group border border-slate-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between cursor-pointer">
+                        <h4 class="text-lg font-bold text-dark">Do you accept dental insurance?</h4>
+                        <span class="text-primary transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Yes! We accept most major PPO dental insurance plans. Our office will even handle the filing of your claims for you to ensure you maximize your benefits.</p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between cursor-pointer">
+                        <h4 class="text-lg font-bold text-dark">Are you accepting new patients?</h4>
+                        <span class="text-primary transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Absolutely! We are always happy to welcome new members to our dental family. We have a special $99 cleaning and exam offer for new patients.</p>
+                </details>
+
+                <details class="group border border-slate-200 rounded-2xl p-6 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex items-center justify-between cursor-pointer">
+                        <h4 class="text-lg font-bold text-dark">Do you offer emergency dental services?</h4>
+                        <span class="text-primary transition group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Yes, we prioritize dental emergencies. If you are in pain or have a broken tooth, call us immediately and we will do our best to see you today.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+                <div class="lg:w-1/2 p-8 lg:p-16">
+                    <h2 class="font-heading text-3xl font-bold text-dark mb-8">Request Your Visit</h2>
+                    <form class="space-y-6">
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-dark mb-2">Full Name</label>
+                                <input type="text" placeholder="John Doe" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-dark mb-2">Phone Number</label>
+                                <input type="tel" placeholder="(214) 000-0000" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-primary">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-dark mb-2">Email Address</label>
+                            <input type="email" placeholder="john@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-dark mb-2">Requested Service</label>
+                            <select class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-primary">
+                                <option>Routine Cleaning</option>
+                                <option>Cosmetic Consultation</option>
+                                <option>Emergency Visit</option>
+                                <option>Dental Implants</option>
+                            </select>
+                        </div>
+                        <button class="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-secondary transition-all shadow-lg">Submit Request</button>
+                    </form>
+                </div>
+                <div class="lg:w-1/2 bg-dark p-8 lg:p-16 text-white">
+                    <h3 class="font-heading text-2xl font-bold mb-8">Contact Information</h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div class="text-primary text-xl"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <p class="font-bold">Our Location</p>
+                                <p class="text-slate-400">123 Health Plaza Dr, Suite 500<br>Dallas, TX 75201</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-primary text-xl"><i class="fas fa-phone-alt"></i></div>
+                            <div>
+                                <p class="font-bold">Call Us</p>
+                                <p class="text-slate-400">(214) 555-0123</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="text-primary text-xl"><i class="fas fa-calendar-alt"></i></div>
+                            <div>
+                                <p class="font-bold">Business Hours</p>
+                                <p class="text-slate-400">Mon - Thu: 8:00 AM - 5:00 PM<br>Fri: 8:00 AM - 2:00 PM<br>Sat - Sun: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-12 rounded-2xl overflow-hidden h-48 bg-slate-800 grayscale">
+                        <!-- Placeholder for Map -->
+                        <div class="flex items-center justify-center h-full text-slate-500">
+                            [ Interactive Google Map Embed ]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center">
+                    <span class="text-primary text-2xl mr-2"><i class="fas fa-tooth"></i></span>
+                    <span class="font-heading font-bold text-xl tracking-tight text-dark">SMILE<span class="text-primary">DENTAL</span></span>
+                </div>
+                <div class="flex gap-8 text-slate-500 text-sm">
+                    <a href="#" class="hover:text-primary">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary">Terms of Service</a>
+                    <a href="#" class="hover:text-primary">Accessibility</a>
+                </div>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-slate-400 text-xs">
+                &copy; 2023 Smile Dental Care Dallas. All rights reserved. Designed for excellence.
             </div>
         </div>
     </footer>
 
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
     </script>
 </body>
 </html>
