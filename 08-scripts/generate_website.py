@@ -3,16 +3,15 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 
-# Load .env file
+# Load Environment Variables
 load_dotenv()
 
-# Gemini API Key
 api_key = os.getenv("GEMINI_API_KEY")
 
-# Gemini Client
+# Create Gemini Client
 client = genai.Client(api_key=api_key)
 
-# User Input
+# User Inputs
 business_name = input("Business Name: ")
 business_type = input("Business Type: ")
 location = input("Location: ")
@@ -21,7 +20,7 @@ location = input("Location: ")
 with open("03-prompts/website-generator.md", "r", encoding="utf-8") as f:
     prompt_template = f.read()
 
-# Replace Placeholders
+# Replace Variables
 prompt = prompt_template.format(
     business_name=business_name,
     business_type=business_type,
@@ -38,7 +37,6 @@ except Exception as e:
     print("\n❌ Gemini Error:")
     print(e)
     exit()
-
 
 html = response.text
 

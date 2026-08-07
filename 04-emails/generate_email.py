@@ -1,18 +1,32 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 
+# -------------------------
+# Load Environment
+# -------------------------
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
+# -------------------------
+# Business Details
+# -------------------------
 business_name = input("Business Name: ")
 business_type = input("Business Type: ")
 location = input("Location: ")
 demo_url = input("Demo Website URL: ")
 
-with open("04-emails/email-prompt.md", "r", encoding="utf-8") as f:
-    prompt = f.read()
+# -------------------------
+# Load Prompt Template
+# -------------------------
+prompt_path = Path("04-emails/email-prompt.md")
+
+with open(prompt_path, "r", encoding="utf-8") as file:
+    prompt = file.read()
 
 prompt = prompt.format(
     business_name=business_name,
@@ -21,17 +35,39 @@ prompt = prompt.format(
     demo_url=demo_url
 )
 
+# -------------------------
+# Generate Email
+# -------------------------
 response = client.models.generate_content(
     model="gemini-3-flash-preview",
     contents=prompt,
 )
 
-email = response.text
+email = response.text.strip()
 
-os.makedirs("04-emails/generated", exist_ok=True)
+# Remove markdown if AI returns it
+if email.startswith("```"):
+    email = email.replace("```text", "")
+    email = email.replace("```", "")
+    email = email.strip()
 
-with open("04-emails/generated/email.txt", "w", encoding="utf-8") as f:
-    f.write(email)
+# -------------------------
+# Save Email
+# -------------------------
+output_dir = Path("04-emails/generated")
+output_dir.mkdir(parents=True, exist_ok=True)
 
-print("\n✅ Email Generated!")
+output_file = output_dir / "email.txt"
+
+with open(output_file, "w", encoding="utf-8") as file:
+    file.write(email)
+
+# -------------------------
+# Success Message
+# -------------------------
+print("\n===============================")
+print("✅ Email Generated Successfully!")
+print("===============================")
+print(f"Saved to : {output_file}")
+print("\n----------- EMAIL -----------\n")
 print(email)
