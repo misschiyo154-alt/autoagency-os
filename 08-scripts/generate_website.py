@@ -50,10 +50,31 @@ html = response.text
 if html.startswith("```html"):
     html = html.replace("```html", "").replace("```", "").strip()
 
-# Save Website
-output = Path("02-websites/generated/index.html")
-output.parent.mkdir(parents=True, exist_ok=True)
-output.write_text(html, encoding="utf-8")
+# -------------------------
+# Create Folder Name
+# -------------------------
 
+slug = (
+    business_name.lower()
+    .replace("&", "and")
+    .replace(",", "")
+    .replace(".", "")
+    .replace("'", "")
+    .replace(" ", "-")
+)
+# Save Website
+client_folder = Path("02-websites") / slug
+
+client_folder.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+output = client_folder / "index.html"
+
+output.write_text(
+    html,
+    encoding="utf-8"
+)
 print("\n✅ Website Generated Successfully!")
 print(f"📁 Saved to: {output}")

@@ -3,123 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graduate Momo Wala | Authentic Momos in Bhilai</title>
-    <meta name="description" content="Savor the best handcrafted momos in Bhilai. Hygiene, quality, and taste graduated to the next level.">
+    <title>Royal Salon | Luxury Beauty & Styling in London</title>
+    <meta name="description" content="Experience world-class beauty treatments and hair styling at Royal Salon London. Book your royal transformation today.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#E63946',
-                        secondary: '#F1FAEE',
-                        accent: '#A8DADC',
-                        dark: '#1D3557',
+                        gold: {
+                            50: '#fbf8f1',
+                            100: '#f4ecd9',
+                            200: '#ebd9b3',
+                            300: '#dfc086',
+                            400: '#d4a15a',
+                            500: '#c7843d',
+                            600: '#b76e33',
+                            700: '#98562d',
+                            800: '#7b462a',
+                            900: '#643a25',
+                            950: '#361d12',
+                        },
+                        royal: '#1a1a1a',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        .momo-gradient {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+        .glass-nav {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
         }
+        .service-card:hover .service-icon {
+            transform: translateY(-5px);
+            color: #d4a15a;
+        }
     </style>
 </head>
-<body class="bg-white text-dark font-sans leading-relaxed">
+<body class="bg-white text-royal font-sans antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <nav class="fixed w-full z-50 glass-nav text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
+            <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-extrabold text-primary tracking-tighter">GRADUATE <span class="text-dark">MOMO WALA</span></span>
+                    <span class="font-serif text-2xl font-bold tracking-widest text-gold-400">ROYAL SALON</span>
                 </div>
-                <div class="hidden md:flex space-x-8 font-semibold text-sm uppercase tracking-wider">
-                    <a href="#home" class="hover:text-primary transition">Home</a>
-                    <a href="#about" class="hover:text-primary transition">Our Story</a>
-                    <a href="#menu" class="hover:text-primary transition">Menu</a>
-                    <a href="#testimonials" class="hover:text-primary transition">Reviews</a>
-                    <a href="#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-dark transition shadow-lg shadow-primary/20">Order Now</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="hover:text-gold-400 transition">About</a>
+                    <a href="#services" class="hover:text-gold-400 transition">Services</a>
+                    <a href="#testimonials" class="hover:text-gold-400 transition">Reviews</a>
+                    <a href="#faq" class="hover:text-gold-400 transition">FAQ</a>
+                    <a href="#contact" class="bg-gold-500 hover:bg-gold-600 px-6 py-2 rounded-full font-semibold transition">Book Now</a>
                 </div>
                 <div class="md:hidden">
-                    <button class="text-dark focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
+                    <button id="mobile-menu-button" class="text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-royal px-4 pt-2 pb-6 space-y-2">
+            <a href="#about" class="block py-2 hover:text-gold-400">About</a>
+            <a href="#services" class="block py-2 hover:text-gold-400">Services</a>
+            <a href="#testimonials" class="block py-2 hover:text-gold-400">Reviews</a>
+            <a href="#contact" class="block py-2 text-gold-400">Book Now</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="momo-gradient min-h-screen flex items-center pt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center md:text-left">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="text-white space-y-6">
-                    <span class="inline-block px-4 py-1 bg-primary rounded-full text-xs font-bold uppercase tracking-widest">Bhilai's #1 Choice</span>
-                    <h1 class="text-5xl md:text-7xl font-serif leading-tight">Handcrafted <span class="text-accent italic text-4xl md:text-6xl block mt-2">Momos with a Degree in Taste</span></h1>
-                    <p class="text-lg text-gray-200 max-w-xl">Where traditional flavors meet modern hygiene. We don't just make momos; we craft experiences that keep Bhilai coming back for more.</p>
-                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                        <a href="#menu" class="bg-primary hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-center transition-all transform hover:scale-105 shadow-xl">Explore Our Menu</a>
-                        <a href="#contact" class="bg-white hover:bg-gray-100 text-dark px-8 py-4 rounded-xl font-bold text-center transition-all">Find Our Stall</a>
-                    </div>
-                </div>
+    <header class="relative h-screen flex items-center justify-center text-center text-white hero-gradient">
+        <div class="max-w-4xl px-4">
+            <span class="uppercase tracking-[0.3em] text-gold-400 font-semibold mb-4 block">Premium Beauty Experience</span>
+            <h1 class="text-5xl md:text-7xl font-serif mb-6 leading-tight">Elevate Your Natural Elegance</h1>
+            <p class="text-xl md:text-2xl mb-10 font-light text-gray-200">London's premier sanctuary for bespoke hair, skin, and soul rejuvenation.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#services" class="bg-gold-500 hover:bg-gold-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition shadow-xl">View Services</a>
+                <a href="#contact" class="bg-transparent border-2 border-white hover:bg-white hover:text-royal px-10 py-4 rounded-full text-lg font-semibold transition">Book Appointment</a>
             </div>
         </div>
-    </section>
-
-    <!-- Features -->
-    <section class="py-12 bg-secondary">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-                <i class="fas fa-certificate text-primary text-3xl mb-3"></i>
-                <h4 class="font-bold">Hygienic Prep</h4>
-            </div>
-            <div>
-                <i class="fas fa-pepper-hot text-primary text-3xl mb-3"></i>
-                <h4 class="font-bold">Secret Spicy Chutney</h4>
-            </div>
-            <div>
-                <i class="fas fa-leaf text-primary text-3xl mb-3"></i>
-                <h4 class="font-bold">Fresh Ingredients</h4>
-            </div>
-            <div>
-                <i class="fas fa-truck-fast text-primary text-3xl mb-3"></i>
-                <h4 class="font-bold">Quick Delivery</h4>
-            </div>
-        </div>
-    </section>
+    </header>
 
     <!-- About Section -->
-    <section id="about" class="py-24">
+    <section id="about" class="py-24 bg-gold-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1534422298391-e4f8c170db06?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fresh Momos" class="rounded-2xl shadow-2xl relative z-10">
-                    <div class="absolute -bottom-6 -right-6 w-64 h-64 bg-primary rounded-2xl -z-0 opacity-10"></div>
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13df772ad5?auto=format&fit=crop&q=80&w=800" alt="Salon Interior" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-6 -right-6 bg-gold-500 p-8 rounded-2xl hidden lg:block">
+                        <p class="text-white font-serif text-3xl">15+ Years</p>
+                        <p class="text-gold-100">of Excellence</p>
+                    </div>
                 </div>
-                <div class="space-y-6">
-                    <h2 class="text-4xl font-serif font-bold text-dark italic">Why "Graduate" Momo Wala?</h2>
-                    <p class="text-gray-600 leading-relaxed text-lg">Founded by a visionary graduate who believed that street food deserves professional standards. We brought academic precision to the kitchen—measuring every spice and sourcing only the premium flour and freshest vegetables.</p>
-                    <p class="text-gray-600 leading-relaxed text-lg">In the heart of Bhilai, we’ve created a spot where students, office-goers, and families gather for that perfect plate of happiness. Every dumpling is hand-folded with love and served with our signature graduate-level hospitality.</p>
-                    <div class="grid grid-cols-2 gap-4 pt-4">
-                        <div class="p-4 bg-gray-50 rounded-lg">
-                            <span class="block text-3xl font-bold text-primary italic">5000+</span>
-                            <span class="text-sm text-gray-500 font-semibold uppercase">Daily Dumplings</span>
+                <div>
+                    <h2 class="text-4xl font-serif mb-6">Unveiling the Art of Sophistication</h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">Located in the heart of London, Royal Salon is more than just a beauty destination. We are a team of master artisans dedicated to tailoring every detail of your visit to your unique style.</p>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">From precision cutting to revolutionary skin treatments, we blend traditional techniques with modern innovation to ensure you leave feeling empowered and radiant.</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-royal text-xl mb-2">Master Stylists</h4>
+                            <p class="text-gray-500">Expertise in every strand.</p>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-lg">
-                            <span class="block text-3xl font-bold text-primary italic">100%</span>
-                            <span class="text-sm text-gray-500 font-semibold uppercase">Fresh Promise</span>
+                        <div>
+                            <h4 class="font-bold text-royal text-xl mb-2">Organic Products</h4>
+                            <p class="text-gray-500">Only the finest ingredients.</p>
                         </div>
                     </div>
                 </div>
@@ -127,166 +127,210 @@
         </div>
     </section>
 
-    <!-- Menu/Services -->
-    <section id="menu" class="py-24 bg-dark text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-serif font-bold mb-16">The Graduate's Specials</h2>
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-serif mb-4">Our Signature Treatments</h2>
+                <div class="w-24 h-1 bg-gold-500 mx-auto"></div>
+            </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Menu Item 1 -->
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-primary transition group">
-                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition">
-                        <i class="fas fa-cloud text-primary text-3xl group-hover:text-white"></i>
+                <!-- Service 1 -->
+                <div class="service-card p-8 bg-gray-50 rounded-2xl border border-gray-100 transition duration-300">
+                    <div class="service-icon text-gold-500 mb-6 transition duration-300">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Classic Steamed</h3>
-                    <p class="text-gray-400 mb-6">Light, airy, and stuffed with our secret protein-rich filling. Served with fiery red garlic chutney.</p>
-                    <span class="text-primary font-bold text-xl">₹60 / plate</span>
+                    <h3 class="text-2xl font-serif mb-4">Hair Design</h3>
+                    <p class="text-gray-600 mb-6">Bespoke cuts, coloring, and styling sessions tailored to enhance your facial features and lifestyle.</p>
+                    <p class="font-bold text-gold-700">From £65</p>
                 </div>
-                <!-- Menu Item 2 -->
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-primary transition group">
-                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition">
-                        <i class="fas fa-fire-flame-curved text-primary text-3xl group-hover:text-white"></i>
+                <!-- Service 2 -->
+                <div class="service-card p-8 bg-gray-50 rounded-2xl border border-gray-100 transition duration-300">
+                    <div class="service-icon text-gold-500 mb-6 transition duration-300">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Kurkure Momos</h3>
-                    <p class="text-gray-400 mb-6">Double coated with a secret crunchy crust and deep-fried to perfection. Bhilai's favorite snack.</p>
-                    <span class="text-primary font-bold text-xl">₹100 / plate</span>
+                    <h3 class="text-2xl font-serif mb-4">Facial Therapy</h3>
+                    <p class="text-gray-600 mb-6">Advanced dermatological treatments using luxury serums to revitalize and brighten your complexion.</p>
+                    <p class="font-bold text-gold-700">From £85</p>
                 </div>
-                <!-- Menu Item 3 -->
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-primary transition group">
-                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition">
-                        <i class="fas fa-bowl-hot text-primary text-3xl group-hover:text-white"></i>
+                <!-- Service 3 -->
+                <div class="service-card p-8 bg-gray-50 rounded-2xl border border-gray-100 transition duration-300">
+                    <div class="service-icon text-gold-500 mb-6 transition duration-300">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12z"></path></svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Graduate Pan-Fried</h3>
-                    <p class="text-gray-400 mb-6">Sautéed in our special schezwan gravy with capsicum and onions. A complete meal in itself.</p>
-                    <span class="text-primary font-bold text-xl">₹120 / plate</span>
+                    <h3 class="text-2xl font-serif mb-4">Bridal Packages</h3>
+                    <p class="text-gray-600 mb-6">Complete bridal transformation including hair, makeup, and nails for your special day in London.</p>
+                    <p class="font-bold text-gold-700">Custom Pricing</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section id="testimonials" class="py-24 bg-secondary">
+    <section id="testimonials" class="py-24 bg-royal text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-serif font-bold text-center mb-16 text-dark italic">Bhilai Residents Love Us</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="italic text-gray-600 mb-6">"Finally, a momo place in Bhilai that actually cares about hygiene. The Kurkure momos are to die for!"</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-accent rounded-full"></div>
-                        <span class="font-bold">Rahul Sharma, IIT Bhilai</span>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-serif mb-4">What Our Clients Say</h2>
+                <div class="flex justify-center text-gold-400 space-x-1 mb-2">
+                    ★★★★★
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-zinc-900 p-8 rounded-xl border border-zinc-800">
+                    <p class="italic text-gray-300 mb-6">"The only place in London I trust with my hair. The attention to detail and luxury atmosphere is unmatched."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center font-bold">SC</div>
+                        <div class="ml-4">
+                            <p class="font-bold">Sophia Chen</p>
+                            <p class="text-sm text-gray-500">Regular Client</p>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="italic text-gray-600 mb-6">"The chutney is actually spicy! Not just red water like other places. Truly a graduate level kitchen."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-primary rounded-full"></div>
-                        <span class="font-bold">Priya Verma, Civic Centre</span>
+                <div class="bg-zinc-900 p-8 rounded-xl border border-zinc-800">
+                    <p class="italic text-gray-300 mb-6">"Their hydra-facial literally took years off my skin. Highly professional staff and a beautiful environment."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center font-bold">JW</div>
+                        <div class="ml-4">
+                            <p class="font-bold">James Wilson</p>
+                            <p class="text-sm text-gray-500">Creative Director</p>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="italic text-gray-600 mb-6">"I order every weekend for my family. The quality is consistent and the packaging is very clean."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-dark rounded-full"></div>
-                        <span class="font-bold">Amit Deshmukh, Sector 10</span>
+                <div class="bg-zinc-900 p-8 rounded-xl border border-zinc-800 lg:hidden xl:block">
+                    <p class="italic text-gray-300 mb-6">"Everything from the coffee to the head massage was perfection. Truly the royal treatment as the name suggests."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center font-bold">EM</div>
+                        <div class="ml-4">
+                            <p class="font-bold">Emma Miller</p>
+                            <p class="text-sm text-gray-500">Influencer</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="py-24">
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-serif font-bold text-center mb-12">Frequent Inquiries</h2>
-            <div class="space-y-4">
-                <details class="group bg-gray-50 rounded-xl p-6" open>
-                    <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-lg">
-                        Do you offer party catering?
-                        <i class="fas fa-plus group-open:rotate-45 transition text-primary"></i>
+            <h2 class="text-4xl font-serif mb-12 text-center">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <details class="group border-b border-gray-200 pb-4" open>
+                    <summary class="flex justify-between items-center cursor-pointer list-none text-xl font-semibold">
+                        How do I book an appointment?
+                        <span class="transition group-open:rotate-180">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
                     </summary>
-                    <p class="mt-4 text-gray-600">Yes! We cater for birthdays, corporate events, and kitty parties in Bhilai and Durg. Contact us for bulk pricing.</p>
+                    <p class="mt-4 text-gray-600">You can book directly via our website, call us at +44 20 7946 0000, or visit us in person. We recommend booking at least 48 hours in advance.</p>
                 </details>
-                <details class="group bg-gray-50 rounded-xl p-6">
-                    <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-lg">
-                        What are your operating hours?
-                        <i class="fas fa-plus group-open:rotate-45 transition text-primary"></i>
+                <details class="group border-b border-gray-200 pb-4">
+                    <summary class="flex justify-between items-center cursor-pointer list-none text-xl font-semibold">
+                        What is your cancellation policy?
+                        <span class="transition group-open:rotate-180">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
                     </summary>
-                    <p class="mt-4 text-gray-600">We are open every day from 4:00 PM to 11:00 PM to satisfy your late-night cravings.</p>
+                    <p class="mt-4 text-gray-600">We require at least 24 hours notice for cancellations. Late cancellations may incur a 50% service fee.</p>
                 </details>
-                <details class="group bg-gray-50 rounded-xl p-6">
-                    <summary class="list-none flex justify-between items-center cursor-pointer font-bold text-lg">
-                        Are your ingredients fresh?
-                        <i class="fas fa-plus group-open:rotate-45 transition text-primary"></i>
+                <details class="group border-b border-gray-200 pb-4">
+                    <summary class="flex justify-between items-center cursor-pointer list-none text-xl font-semibold">
+                        Do you offer gift vouchers?
+                        <span class="transition group-open:rotate-180">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
                     </summary>
-                    <p class="mt-4 text-gray-600">Absolutely. We source vegetables daily from the local Mandi and use zero frozen items in our fillings.</p>
+                    <p class="mt-4 text-gray-600">Yes, we offer both physical and digital gift cards that can be redeemed for any of our services or products.</p>
                 </details>
             </div>
         </div>
     </section>
 
-    <!-- Contact & Map -->
-    <section id="contact" class="py-24 bg-white">
+    <!-- Contact & Booking Section -->
+    <section id="contact" class="py-24 bg-gold-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
-                <div class="md:w-1/2 p-12 text-white">
-                    <h2 class="text-4xl font-serif font-bold mb-6 italic">Visit Us Today</h2>
-                    <p class="text-gray-400 mb-8">Located at the heart of Bhilai. Come for the food, stay for the vibe.</p>
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-location-dot text-primary text-xl"></i>
-                            <span>Shop No. 12, Chowpati, Sector 6, Bhilai, Chhattisgarh</span>
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
+                <div class="p-12">
+                    <h2 class="text-4xl font-serif mb-6">Book Your Visit</h2>
+                    <p class="text-gray-600 mb-8">Take the first step towards your transformation. Fill out the form below and our concierge will contact you shortly.</p>
+                    <form class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="First Name" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500">
+                            <input type="text" placeholder="Last Name" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500">
                         </div>
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-phone text-primary text-xl"></i>
-                            <span>+91 98765 43210</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <i class="fas fa-envelope text-primary text-xl"></i>
-                            <span>hello@graduatemomowala.com</span>
-                        </div>
-                    </div>
-                    <!-- Form -->
-                    <form class="mt-10 space-y-4">
-                        <input type="text" placeholder="Your Name" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary">
-                        <input type="email" placeholder="Email Address" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary">
-                        <textarea placeholder="Message" rows="4" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary"></textarea>
-                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 rounded-lg transition shadow-lg">Send Message</button>
+                        <input type="email" placeholder="Email Address" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500">
+                        <select class="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500">
+                            <option>Select Service</option>
+                            <option>Hair Styling</option>
+                            <option>Coloring</option>
+                            <option>Facial</option>
+                            <option>Massage</option>
+                        </select>
+                        <textarea placeholder="Special Requests" rows="4" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500"></textarea>
+                        <button class="w-full bg-royal text-white py-4 rounded-lg font-bold text-lg hover:bg-gold-700 transition">Request Appointment</button>
                     </form>
                 </div>
-                <div class="md:w-1/2 h-[400px] md:h-auto relative">
+                <div class="relative min-h-[400px]">
                     <!-- Google Maps Placeholder -->
-                    <div class="absolute inset-0 bg-gray-300 flex items-center justify-center text-gray-500">
-                        <div class="text-center p-8">
-                            <i class="fas fa-map-location-dot text-6xl mb-4"></i>
-                            <p class="font-bold">Interactive Map Loading...</p>
-                            <p class="text-sm">Sector 6 Market, Bhilai, Chhattisgarh 490006</p>
-                        </div>
+                    <div class="absolute inset-0 bg-gray-200 flex flex-col items-center justify-center p-8 text-center">
+                        <svg class="w-16 h-16 text-gold-500 mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                        <h3 class="text-2xl font-serif mb-2">Find Us</h3>
+                        <p class="text-gray-600 mb-4">123 Bond Street, Mayfair<br>London, W1S 1AR</p>
+                        <p class="text-sm text-gray-500">Mon - Sat: 9:00 AM - 8:00 PM<br>Sun: 10:00 AM - 4:00 PM</p>
+                        <div class="mt-8 p-4 bg-white/50 backdrop-blur rounded italic text-sm">Interactive Map Placeholder</div>
                     </div>
-                    <!-- Real iframe would go here -->
-                    <iframe class="absolute inset-0 w-full h-full grayscale" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14878.894273822188!2d81.3323067!3d21.1833075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293ce8347f3f11%3A0x673c683796ec11f7!2sSector%206%2C%20Bhilai%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-secondary py-12">
+    <footer class="bg-royal text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-8 mb-8">
-                <div class="text-2xl font-extrabold text-primary mb-6 md:mb-0">GRADUATE <span class="text-dark">MOMO WALA</span></div>
-                <div class="flex gap-6">
-                    <a href="#" class="text-dark hover:text-primary transition text-2xl"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-dark hover:text-primary transition text-2xl"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-dark hover:text-primary transition text-2xl"><i class="fab fa-whatsapp"></i></a>
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="font-serif text-3xl font-bold tracking-widest text-gold-400 block mb-6">ROYAL SALON</span>
+                    <p class="text-gray-400 max-w-sm">Crafting excellence in beauty for over a decade. Experience the royal standard of London's most exclusive salon treatments.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-gold-400">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-gold-400">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-gold-400">Careers</a></li>
+                        <li><a href="#" class="hover:text-gold-400">Corporate</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6">Social</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-gold-500 transition">IG</a>
+                        <a href="#" class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-gold-500 transition">FB</a>
+                        <a href="#" class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-gold-500 transition">TW</a>
+                    </div>
                 </div>
             </div>
-            <div class="text-center text-gray-500 text-sm">
-                <p>&copy; 2023 Graduate Momo Wala Bhilai. All Rights Reserved. Crafted with <i class="fas fa-heart text-primary"></i> for Bhilaians.</p>
+            <div class="pt-8 border-t border-zinc-800 text-center text-gray-500 text-sm">
+                <p>&copy; 2024 Royal Salon London. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script>
+        // Simple Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
 </body>
 </html>
