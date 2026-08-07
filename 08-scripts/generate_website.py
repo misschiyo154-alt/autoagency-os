@@ -76,5 +76,15 @@ output.write_text(
     html,
     encoding="utf-8"
 )
+# -------------------------
+# Save Latest Generated Website
+# -------------------------
+
+latest_output = Path("02-websites/generated/index.html")
+latest_output.parent.mkdir(parents=True, exist_ok=True)
+latest_output.write_text(html, encoding="utf-8")
+
+print(f"📁 Latest Website Saved : {latest_output}")
+
 print("\n✅ Website Generated Successfully!")
 print(f"📁 Saved to: {output}")
