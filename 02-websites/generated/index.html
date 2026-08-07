@@ -3,295 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bright Smile Dental | Expert Family Dentistry in Dallas, TX</title>
-    <meta name="description" content="Experience world-class dental care at Bright Smile Dental in Dallas. From routine cleanings to cosmetic transformations, our expert team ensures a comfortable visit.">
+    <title>VICKYAI AGENCY | Leading AI Solutions in Bhilai</title>
+    <meta name="description" content="VICKYAI AGENCY provides cutting-edge AI automation, chatbots, and consulting services for businesses in Bhilai and beyond.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
-    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: '#0F172A',
+                        accent: '#38BDF8',
+                        secondary: '#818CF8'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3 { font-family: 'Lexend', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
-        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38BDF8, #818CF8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-pattern {
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-primary text-slate-200 font-sans antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+    <nav class="fixed w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-2">
-                    <div class="bg-blue-600 p-2 rounded-lg text-white">
-                        <i data-lucide="sparkles"></i>
-                    </div>
-                    <span class="text-xl font-bold text-slate-800 tracking-tight">Bright Smile <span class="text-blue-600">Dental</span></span>
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-extrabold tracking-tighter text-white">VICKYAI<span class="text-accent">.</span></span>
                 </div>
-                
-                <div class="hidden md:flex space-x-8 font-medium text-slate-600">
-                    <a href="#home" class="hover:text-blue-600 transition-colors">Home</a>
-                    <a href="#services" class="hover:text-blue-600 transition-colors">Services</a>
-                    <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
-                    <a href="#faq" class="hover:text-blue-600 transition-colors">FAQ</a>
-                </div>
-
                 <div class="hidden md:block">
-                    <a href="#contact" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-                        Book Appointment
-                    </a>
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="#about" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">About</a>
+                        <a href="#services" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">Services</a>
+                        <a href="#faq" class="hover:text-accent px-3 py-2 text-sm font-medium transition-colors">FAQ</a>
+                        <a href="#contact" class="bg-accent text-primary px-6 py-2.5 rounded-full text-sm font-bold hover:bg-white transition-all transform hover:scale-105">Get Started</a>
+                    </div>
                 </div>
-
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="menu-btn" class="text-slate-600 focus:outline-none">
-                        <i data-lucide="menu"></i>
+                    <button id="mobile-menu-button" class="text-slate-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 py-6 space-y-4">
-            <a href="#home" class="block text-slate-600">Home</a>
-            <a href="#services" class="block text-slate-600">Services</a>
-            <a href="#about" class="block text-slate-600">About</a>
-            <a href="#contact" class="block text-blue-600 font-bold">Book Now</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-primary border-b border-slate-800 px-4 py-6 space-y-4">
+            <a href="#home" class="block text-lg font-medium">Home</a>
+            <a href="#about" class="block text-lg font-medium">About</a>
+            <a href="#services" class="block text-lg font-medium">Services</a>
+            <a href="#contact" class="block text-lg font-medium text-accent">Contact Us</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 lg:pt-48 lg:pb-32 gradient-bg overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-8">
-                    <div class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-bold">
-                        <i data-lucide="map-pin" class="w-4 h-4"></i> Dallas's Top-Rated Dental Clinic
-                    </div>
-                    <h1 class="text-5xl lg:text-6xl font-bold leading-tight text-slate-900">
-                        Experience a Brighter, <br><span class="text-blue-600 underline decoration-blue-200">Healthier Smile</span>
-                    </h1>
-                    <p class="text-lg text-slate-600 max-w-lg leading-relaxed">
-                        State-of-the-art dental care designed for your comfort. From routine cleanings to complete smile makeovers, we provide personalized care for the Dallas community.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#contact" class="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-center hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 text-lg">
-                            Schedule Your Visit
-                        </a>
-                        <div class="flex items-center gap-4 bg-white px-6 py-4 rounded-full border border-slate-200">
-                            <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-[10px] font-bold">JD</div>
-                                <div class="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-bold">AS</div>
-                                <div class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white flex items-center justify-center text-[10px] font-bold">MK</div>
-                            </div>
-                            <span class="text-sm font-semibold text-slate-700">500+ Happy Dallas Patients</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative">
-                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1629909608135-ca908ed9d5a0?auto=format&fit=crop&q=80&w=800" alt="Modern Dentist Office" class="w-full h-auto">
-                    </div>
-                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl z-20 hidden sm:block border border-slate-100">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-green-100 p-3 rounded-full text-green-600">
-                                <i data-lucide="check-circle"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-slate-500 font-medium">New Patient Special</p>
-                                <p class="text-xl font-bold text-slate-800">$99 Full Exam</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-pattern">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
+            <div class="absolute top-20 left-1/4 w-72 h-72 bg-accent/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-20 right-1/4 w-72 h-72 bg-secondary/20 rounded-full blur-[120px]"></div>
         </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-blue-600 font-bold tracking-wide uppercase text-sm mb-3">Our Expertise</h2>
-                <p class="text-4xl font-bold text-slate-900 mb-6">Comprehensive Care for Every Patient</p>
-                <p class="text-slate-600 text-lg">We combine advanced technology with a gentle touch to ensure your visit is stress-free and effective.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Service Card 1 -->
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-                        <i data-lucide="stethoscope"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">General Care</h3>
-                    <p class="text-slate-600 leading-relaxed">Routine cleanings, fillings, and digital x-rays to keep your foundation strong.</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <span class="inline-block py-1 px-4 rounded-full border border-slate-700 bg-slate-800/50 text-accent text-xs font-bold uppercase tracking-widest mb-6">Based in Bhilai, Serving the World</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+                    Scale Your Business with <span class="gradient-text">Intelligent AI</span>
+                </h1>
+                <p class="text-xl text-slate-400 mb-10 leading-relaxed">
+                    VICKYAI Agency builds custom AI infrastructure that automates your workflows, captures leads, and boosts revenue while you sleep.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#contact" class="bg-accent text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-white transition-all flex items-center justify-center">
+                        Free AI Audit <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#services" class="border border-slate-700 bg-slate-800/30 hover:bg-slate-800 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center">
+                        Our Solutions
+                    </a>
                 </div>
-                <!-- Service Card 2 -->
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-                        <i data-lucide="smile"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Cosmetic</h3>
-                    <p class="text-slate-600 leading-relaxed">Teeth whitening, veneers, and bonding for the perfect Hollywood smile.</p>
-                </div>
-                <!-- Service Card 3 -->
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-                        <i data-lucide="shield-plus"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Restorative</h3>
-                    <p class="text-xl font-bold mb-3 invisible hidden">Spacer</p>
-                    <p class="text-slate-600 leading-relaxed">Implants, crowns, and bridges that look and feel like your natural teeth.</p>
-                </div>
-                <!-- Service Card 4 -->
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-                        <i data-lucide="alarm-clock"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Emergency</h3>
-                    <p class="text-slate-600 leading-relaxed">Sudden toothache? We offer same-day appointments for urgent dental needs.</p>
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
+                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">24/7</span><span class="text-xs uppercase tracking-tighter">Support</span></div>
+                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">100%</span><span class="text-xs uppercase tracking-tighter">Automated</span></div>
+                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">50+</span><span class="text-xs uppercase tracking-tighter">Tools Integrated</span></div>
+                    <div class="flex flex-col items-center"><span class="text-2xl font-bold">3x</span><span class="text-xs uppercase tracking-tighter">Efficiency Growth</span></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-slate-50">
+    <section id="about" class="py-24 bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1 relative">
-                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=800" alt="Our Dentist" class="rounded-3xl shadow-2xl">
-                    <div class="absolute -top-10 -right-10 bg-white p-8 rounded-2xl shadow-xl hidden lg:block">
-                        <div class="text-center">
-                            <p class="text-4xl font-bold text-blue-600">15+</p>
-                            <p class="text-sm font-semibold text-slate-500">Years in Dallas</p>
-                        </div>
+                <div class="relative">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" alt="AI Technology" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-accent p-8 rounded-2xl hidden md:block">
+                        <p class="text-primary font-black text-4xl">5+</p>
+                        <p class="text-primary/80 text-sm font-bold uppercase tracking-wide">Years of AI Expertise</p>
                     </div>
                 </div>
-                <div class="order-1 lg:order-2 space-y-6">
-                    <h2 class="text-blue-600 font-bold tracking-wide uppercase text-sm">About Bright Smile</h2>
-                    <h3 class="text-4xl font-bold text-slate-900 leading-tight">Patient-First Care You Can Trust.</h3>
-                    <p class="text-lg text-slate-600">Led by Dr. Sarah Mitchell, our team is dedicated to providing high-quality dental care in a welcoming and friendly environment.</p>
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">The Bridge Between <span class="text-accent">Human Vision</span> and AI Performance.</h2>
+                    <p class="text-slate-400 text-lg mb-6">
+                        Located in the heart of Bhilai, VICKYAI AGENCY was founded with a single mission: to democratize artificial intelligence for businesses of all sizes.
+                    </p>
+                    <p class="text-slate-400 text-lg mb-8">
+                        We don't just provide tools; we engineer custom ecosystems that integrate seamlessly with your existing team, turning complex data into actionable growth strategies.
+                    </p>
                     <ul class="space-y-4">
-                        <li class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-1 rounded-full text-blue-600"><i data-lucide="check" class="w-4 h-4"></i></div>
-                            <span class="font-medium text-slate-700">Latest Dental Technology (3D Imaging)</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-1 rounded-full text-blue-600"><i data-lucide="check" class="w-4 h-4"></i></div>
-                            <span class="font-medium text-slate-700">Flexible Financing & Insurance Plans</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="bg-blue-100 p-1 rounded-full text-blue-600"><i data-lucide="check" class="w-4 h-4"></i></div>
-                            <span class="font-medium text-slate-700">Pain-Free Dentistry Focus</span>
-                        </li>
+                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-accent mt-1 mr-3"></i> <span>Customized Roadmaps for Local & Global Scale</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-accent mt-1 mr-3"></i> <span>Dedicated In-house Development in Bhilai</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-accent mt-1 mr-3"></i> <span>ROI-Focused Implementation</span></li>
                     </ul>
-                    <div class="pt-4">
-                        <a href="#contact" class="inline-flex items-center gap-2 text-blue-600 font-bold hover:gap-4 transition-all">
-                            Learn more about our practice <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Our Intelligence Suite</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">High-impact AI solutions tailored to solve your specific bottlenecks.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 rounded-3xl bg-slate-800/30 border border-slate-800 hover:border-accent/50 transition-all group">
+                    <div class="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-primary transition-colors">
+                        <i class="fa-solid fa-robot text-3xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold text-white mb-4">AI Chatbots</h3>
+                    <p class="text-slate-400 mb-6">Intelligent 24/7 customer support and lead qualification agents that sound exactly like your best salesperson.</p>
+                    <a href="#contact" class="text-accent font-bold hover:underline">Learn More →</a>
+                </div>
+                <!-- Card 2 -->
+                <div class="p-8 rounded-3xl bg-slate-800/30 border border-slate-800 hover:border-secondary/50 transition-all group">
+                    <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-secondary group-hover:text-primary transition-colors">
+                        <i class="fa-solid fa-bolt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Workflow Automation</h3>
+                    <p class="text-slate-400 mb-6">Connect your favorite apps and automate repetitive tasks. Save 20+ hours of manual work every week.</p>
+                    <a href="#contact" class="text-secondary font-bold hover:underline">Learn More →</a>
+                </div>
+                <!-- Card 3 -->
+                <div class="p-8 rounded-3xl bg-slate-800/30 border border-slate-800 hover:border-accent/50 transition-all group">
+                    <div class="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-primary transition-colors">
+                        <i class="fa-solid fa-magnifying-glass-chart text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">AI Consulting</h3>
+                    <p class="text-slate-400 mb-6">Bespoke AI strategy development to help you understand where to implement AI for the highest ROI.</p>
+                    <a href="#contact" class="text-accent font-bold hover:underline">Learn More →</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="py-24 bg-white overflow-hidden">
+    <section class="py-24 bg-slate-900/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center text-3xl lg:text-4xl font-bold text-slate-900 mb-16">What Our Patients Say</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 rounded-2xl bg-blue-50 relative">
-                    <div class="text-blue-200 absolute top-4 right-8"><i data-lucide="quote" class="w-12 h-12"></i></div>
-                    <div class="flex text-yellow-400 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <h2 class="text-center text-3xl font-extrabold mb-16">Trusted by Forward-Thinking Brands</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-primary p-8 rounded-2xl border border-slate-800 italic">
+                    <p class="mb-6 text-slate-300">"VICKYAI built an automation system for our real estate business that handles all our initial inquiries. Our conversion rate jumped by 40% in just two months!"</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-700 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold text-white">Rahul Sharma</h4>
+                            <p class="text-xs text-accent">Real Estate Group, Bhilai</p>
+                        </div>
                     </div>
-                    <p class="text-slate-700 italic mb-6 leading-relaxed">"Best experience I've ever had at a dentist. The staff is incredible, and the office is beautiful. Dr. Mitchell really took the time to explain everything."</p>
-                    <p class="font-bold text-slate-900">Michael R. <span class="block text-sm font-normal text-slate-500">Dallas, TX</span></p>
                 </div>
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 relative">
-                    <div class="text-slate-200 absolute top-4 right-8"><i data-lucide="quote" class="w-12 h-12"></i></div>
-                    <div class="flex text-yellow-400 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                <div class="bg-primary p-8 rounded-2xl border border-slate-800 italic">
+                    <p class="mb-6 text-slate-300">"The custom chatbot they developed for our e-commerce site is incredible. It handles complex queries with ease and has significantly reduced our support overhead."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-700 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold text-white">Anita Desai</h4>
+                            <p class="text-xs text-accent">Retail Founder</p>
+                        </div>
                     </div>
-                    <p class="text-slate-700 italic mb-6 leading-relaxed">"The $99 new patient special was a great deal. Thorough exam and cleaning. No hidden fees. Highly recommend!"</p>
-                    <p class="font-bold text-slate-900">Jennifer S. <span class="block text-sm font-normal text-slate-500">Plano, TX</span></p>
                 </div>
-                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 relative">
-                    <div class="text-slate-200 absolute top-4 right-8"><i data-lucide="quote" class="w-12 h-12"></i></div>
-                    <div class="flex text-yellow-400 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                    <p class="text-slate-700 italic mb-6 leading-relaxed">"I was nervous about my root canal, but they made me feel completely at ease. Pain-free and professional."</p>
-                    <p class="font-bold text-slate-900">David T. <span class="block text-sm font-normal text-slate-500">Dallas, TX</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-24 bg-slate-50">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center text-slate-900 mb-12">Frequently Asked Questions</h2>
-            <div class="space-y-4">
-                <details class="group bg-white p-6 rounded-xl shadow-sm border border-slate-100" open>
-                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-slate-800">
-                        Do you accept dental insurance?
-                        <span class="group-open:rotate-180 transition-transform"><i data-lucide="chevron-down"></i></span>
-                    </summary>
-                    <p class="text-slate-600 mt-4 leading-relaxed">Yes, we accept most major dental insurance PPO plans. We also offer internal payment plans and third-party financing through CareCredit.</p>
-                </details>
-                <details class="group bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-slate-800">
-                        What should I expect at my first visit?
-                        <span class="group-open:rotate-180 transition-transform"><i data-lucide="chevron-down"></i></span>
-                    </summary>
-                    <p class="text-slate-600 mt-4 leading-relaxed">Your first visit includes a comprehensive exam, digital x-rays, oral cancer screening, and a consultation with Dr. Mitchell to discuss your goals.</p>
-                </details>
-                <details class="group bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none text-slate-800">
-                        How often should I have a dental check-up?
-                        <span class="group-open:rotate-180 transition-transform"><i data-lucide="chevron-down"></i></span>
-                    </summary>
-                    <p class="text-slate-600 mt-4 leading-relaxed">We generally recommend a cleaning and exam every six months to prevent plaque buildup and catch issues early.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact & Map Section -->
-    <section id="contact" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-blue-900 rounded-3xl overflow-hidden shadow-2xl">
-                <div class="grid lg:grid-cols-2">
-                    <div class="p-12 lg:p-16 text-white">
-                        <h2 class="text-4xl font-bold mb-8">Get in Touch</h2>
-                        <form class="space-y-4">
-                            <div class="grid sm:grid-cols-2 gap-4">
-                                <input type="text" placeholder="Full Name" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400">
-                                <input type="email" placeholder="Email Address" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400">
-                            </div>
-                            <input type="tel" placeholder="Phone Number" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400">
-                            <select class="w-full bg-blue-800 border-none rounded-lg p-4 text-blue-300 focus:ring-2 focus:ring-blue-400">
-                                <option>Select Service</option>
-                                <option>Routine Cleaning</option>
-                                <option>Cosmetic Consultation</option>
-                                <option>Dental Emergency</option>
-                            </select>
-                            <textarea placeholder="How can we help?" rows="4" class="w-full bg-blue-800 border-none rounded-lg p-4 text-white placeholder-blue-300 focus:ring-2 focus:ring-blue-400"></textarea>
-                            <button type="submit" class="w-full bg-white text-blue-900 font-bold py-4 rounded-lg hover:bg-blue-50 transition-colors uppercase tracking-wider">Book My Appointment</button>
-                        </form>
-                    </div>
-                    <div class="bg-blue-50 h-full min-h-[400px] relative">
-                        <!-- Placeholder for Google Maps -->
-                        <div class="absolute inset-0 bg-slate-200 flex flex-col items-center justify-center p-8 text-center">
-                            <div class="bg-white p-6 rounded-2xl shadow-lg space-y-4 max-w-sm">
-                                <i data-lucide="map-pinned" class="w-12 h-12 text-blue-600 mx-auto"></i>
-                                <p class="font-bold text-slate-800">123 Commerce St, Dallas, TX 75201</p>
-                                <p class="text-sm text-slate-500">Mon - Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 2:00 PM</p>
-                                <a href="tel:2145550123" class="block text-blue-600 font-bold text-lg underline">(214) 555-0123</a>
-                            </div>
-                            <div class="mt-8 text-slate-400 text-xs uppercase tracking-widest">Google Maps Integration Placeholder</div>
+                <div class="bg-primary p-8 rounded-2xl border border-slate-800 italic">
+                    <p class="mb-6 text-slate-300">"Best decision we made this year. Their AI consulting opened our eyes to opportunities we didn't even know existed within our data."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-slate-700 mr-4"></div>
+                        <div>
+                            <h4 class="font-bold text-white">James Wilson</h4>
+                            <p class="text-xs text-accent">Tech Startup CEO</p>
                         </div>
                     </div>
                 </div>
@@ -299,49 +217,131 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-2 text-white mb-6">
-                        <i data-lucide="sparkles" class="text-blue-400"></i>
-                        <span class="text-xl font-bold tracking-tight">Bright Smile</span>
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12">Common Questions</h2>
+            <div class="space-y-4">
+                <div class="border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="w-full p-6 text-left font-bold flex justify-between items-center bg-slate-800/20 hover:bg-slate-800/40 transition-all faq-toggle">
+                        <span>Is AI suitable for small businesses?</span>
+                        <i class="fa-solid fa-chevron-down text-accent"></i>
+                    </button>
+                    <div class="p-6 text-slate-400 border-t border-slate-800 hidden">
+                        Absolutely. In fact, AI provides the biggest advantage to small businesses by allowing them to operate with the efficiency of much larger teams without the massive headcount.
                     </div>
-                    <p class="text-sm leading-relaxed">Providing world-class dentistry for the Dallas community since 2008. Your comfort is our priority.</p>
                 </div>
-                <div>
-                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
-                    <ul class="space-y-4 text-sm font-medium">
-                        <li><a href="#home" class="hover:text-blue-400 transition-colors">Home</a></li>
-                        <li><a href="#services" class="hover:text-blue-400 transition-colors">Services</a></li>
-                        <li><a href="#about" class="hover:text-blue-400 transition-colors">About</a></li>
-                        <li><a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-6">Services</h4>
-                    <ul class="space-y-4 text-sm font-medium">
-                        <li>Cleaning & Exams</li>
-                        <li>Dental Implants</li>
-                        <li>Teeth Whitening</li>
-                        <li>Invisalign</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-6">Stay Connected</h4>
-                    <div class="flex gap-4 mb-6">
-                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook"></i></a>
-                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram"></i></a>
-                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="linkedin"></i></a>
+                <div class="border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="w-full p-6 text-left font-bold flex justify-between items-center bg-slate-800/20 hover:bg-slate-800/40 transition-all faq-toggle">
+                        <span>How long does it take to implement?</span>
+                        <i class="fa-solid fa-chevron-down text-accent"></i>
+                    </button>
+                    <div class="p-6 text-slate-400 border-t border-slate-800 hidden">
+                        Simple automations and chatbots can be deployed in as little as 7-14 days. More complex, custom-trained enterprise models typically take 4-8 weeks.
                     </div>
-                    <p class="text-xs uppercase tracking-widest">Emergency Line:</p>
-                    <p class="text-white font-bold">214-555-0911</p>
+                </div>
+                <div class="border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="w-full p-6 text-left font-bold flex justify-between items-center bg-slate-800/20 hover:bg-slate-800/40 transition-all faq-toggle">
+                        <span>Do you provide local support in Bhilai?</span>
+                        <i class="fa-solid fa-chevron-down text-accent"></i>
+                    </button>
+                    <div class="p-6 text-slate-400 border-t border-slate-800 hidden">
+                        Yes! We are proud to be based in Bhilai. We offer both remote global support and on-site consultations for local businesses in the Chhattisgarh region.
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:row justify-between items-center text-xs">
-                <p>&copy; 2023 Bright Smile Dental Dallas. All rights reserved.</p>
-                <div class="flex gap-6 mt-4 md:mt-0">
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-extrabold text-white mb-6">Let's Build the <span class="text-accent">Future</span> Together.</h2>
+                    <p class="text-slate-400 text-lg mb-8">Ready to automate your growth? Reach out for a free consultation and let's explore how AI can revolutionize your operations.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 text-accent">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Location</h4>
+                                <p class="text-slate-400">Civic Center, Bhilai, Chhattisgarh, India</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 text-accent">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Email</h4>
+                                <p class="text-slate-400">hello@vickyai.agency</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Placeholder -->
+                    <div class="mt-12 rounded-2xl overflow-hidden h-64 border border-slate-800 bg-slate-800/50 flex items-center justify-center text-slate-500 relative">
+                        <iframe class="absolute inset-0 w-full h-full grayscale opacity-50" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14876.626887554907!2d81.3361405!3d21.18596645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293cc9671f6521%3A0x6a05e26715f530d!2sCivic%20Center%2C%20Bhilai%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" 
+                                style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <span class="relative z-10 font-bold bg-primary/80 px-4 py-2 rounded">VICKYAI BHILAI HQ</span>
+                    </div>
+                </div>
+
+                <div class="bg-primary p-8 rounded-3xl border border-slate-800 shadow-xl">
+                    <form action="#" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Full Name</label>
+                                <input type="text" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Business Email</label>
+                                <input type="email" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="john@company.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Service Interested In</label>
+                            <select class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent transition-all">
+                                <option>AI Chatbot Development</option>
+                                <option>Workflow Automation</option>
+                                <option>AI Strategy Consulting</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Message</label>
+                            <textarea class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 h-32 focus:outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="How can we help you scale?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-accent text-primary font-bold py-4 rounded-xl hover:bg-white transition-all transform hover:translate-y-[-2px]">
+                            Send Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <span class="text-2xl font-extrabold text-white">VICKYAI<span class="text-accent">.</span></span>
+                    <p class="text-slate-500 mt-2 text-sm">Empowering Bhilai's businesses with Intelligence.</p>
+                </div>
+                <div class="flex space-x-6 text-2xl">
+                    <a href="#" class="text-slate-500 hover:text-accent transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-accent transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-accent transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between text-slate-500 text-xs">
+                <p>&copy; 2023 VICKYAI AGENCY. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
                     <a href="#" class="hover:text-white">Privacy Policy</a>
                     <a href="#" class="hover:text-white">Terms of Service</a>
                 </div>
@@ -350,22 +350,35 @@
     </footer>
 
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
         // Mobile Menu Toggle
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
 
-        // Close menu when link is clicked
-        const links = menu.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
+        // FAQ Accordion
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Smooth Scroll handling for mobile menu closing
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                mobileMenu.classList.add('hidden');
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
