@@ -1,15 +1,15 @@
-Subject: A new digital look for Graduate Momo Wala
+Subject: Website concept for Graduate Momo Wala
 
-Hi [Name],
+Hi,
 
-I’ve been following Graduate Momo Wala’s growth in Bhilai and love the brand you’ve built. 
+I recently created a homepage redesign for Graduate Momo Wala to showcase how a modern digital presence could look for your restaurant in Bhilai.
 
-To help your online presence match the quality of your food, I took the liberty of redesigning your homepage. I wanted to create a modern layout that makes it even easier for your customers to explore your menu.
+You can view the live demo here: https://autoagency-os.pages.dev
 
-You can see the live demo here: https://autoagency-os.pages.dev
+I wanted to provide a visual example of how a professional website can help attract more local customers and streamline your brand. 
 
-I’d love to hear your thoughts on the new look. If you’re interested in upgrading your site or hearing more about the design, feel free to hit reply!
+Would you be open to a brief chat about this?
 
-Best,
-
-[Your Name]
+Best regards,
+Vicky
+Vicky Web Agency

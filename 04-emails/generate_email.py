@@ -37,17 +37,12 @@ else:
 # Choose Email Template
 # ==========================
 
-print("\nChoose Email Template:")
-print("1. Original")
-print("2. Short & Friendly")
-
-template_choice = input("Enter 1 or 2: ").strip()
+template_choice = "2"
 
 if template_choice == "2":
     prompt_path = Path("04-emails/templates/cold_2.md")
 else:
     prompt_path = Path("04-emails/email-prompt.md")
-
 
 # ==========================
 # Load Prompt Template
