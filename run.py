@@ -18,10 +18,7 @@ def create_slug(business_name):
 
     slug = business_name.lower()
 
-    slug = slug.replace(
-        "&",
-        "and"
-    )
+    slug = slug.replace("&", "and")
 
     slug = re.sub(
         r"[^a-z0-9]+",
@@ -29,47 +26,27 @@ def create_slug(business_name):
         slug
     )
 
-    slug = slug.strip("-")
-
-    return slug
+    return slug.strip("-")
 
 
 # ==========================
 # UPDATE CLOUDFLARE ROUTES
 # ==========================
 
-def update_redirects(slug):
+def update_redirects(slugs):
 
     redirects_file = "_redirects"
 
-    route = (
-        f"/{slug}/ "
-        f"/{slug}/index.html 200"
-    )
+    routes = []
 
-    existing_routes = []
+    for slug in slugs:
 
-    try:
+        route = (
+            f"/{slug}/ "
+            f"/{slug}/index.html 200"
+        )
 
-        with open(
-            redirects_file,
-            "r",
-            encoding="utf-8"
-        ) as file:
-
-            existing_routes = [
-                line.strip()
-                for line in file
-                if line.strip()
-            ]
-
-    except FileNotFoundError:
-
-        pass
-
-    if route not in existing_routes:
-
-        existing_routes.append(route)
+        routes.append(route)
 
     with open(
         redirects_file,
@@ -77,11 +54,13 @@ def update_redirects(slug):
         encoding="utf-8"
     ) as file:
 
-        file.write(
-            "\n".join(existing_routes)
-        )
+        for route in routes:
+            file.write(route + "\n")
 
-        file.write("\n")
+    print("\n✅ Cloudflare Routes Updated")
+
+    for route in routes:
+        print(route)
 
 
 # ==========================
@@ -96,138 +75,175 @@ with open(
 
     reader = csv.DictReader(file)
 
-    for lead in reader:
+    leads = list(reader)
 
-        business_name = lead["Business Name"]
-        business_type = lead["Business Type"]
-        location = lead["Location"]
 
-        slug = create_slug(
-            business_name
-        )
+# ==========================
+# PROCESS LEADS
+# ==========================
 
-        demo_url = (
-            f"{DEMO_URL.rstrip('/')}/"
-            f"{slug}/"
-        )
+slugs = []
 
-        print(
-            "\n===================================="
-        )
+successful_leads = []
 
-        print(
-            f"Business : {business_name}"
-        )
+for index, lead in enumerate(
+    leads,
+    start=1
+):
 
-        print(
-            f"Type     : {business_type}"
-        )
+    business_name = lead["Business Name"]
+    business_type = lead["Business Type"]
+    location = lead["Location"]
 
-        print(
-            f"Location : {location}"
-        )
+    slug = create_slug(
+        business_name
+    )
 
-        print(
-            f"Demo URL : {demo_url}"
-        )
+    demo_url = (
+        f"{DEMO_URL.rstrip('/')}/"
+        f"{slug}/"
+    )
 
-        print(
-            "====================================\n"
-        )
 
-        # ==========================
-        # Website
-        # ==========================
+    print(
+        "\n===================================="
+    )
 
-        result = subprocess.run([
-            python,
-            "08-scripts/generate_website.py",
-            business_name,
-            business_type,
-            location
-        ])
+    print(
+        f"[{index}/{len(leads)}]"
+    )
 
-        if result.returncode != 0:
+    print(
+        f"Business : {business_name}"
+    )
 
-            print("❌ Website Failed")
+    print(
+        f"Type     : {business_type}"
+    )
 
-            continue
+    print(
+        f"Location : {location}"
+    )
 
-        print("✅ Website Generated")
+    print(
+        f"Demo URL : {demo_url}"
+    )
 
-        # ==========================
-        # Add Cloudflare Route
-        # ==========================
+    print(
+        "====================================\n"
+    )
 
-        update_redirects(
-            slug
-        )
 
-        print(
-            "✅ Demo Route Added"
-        )
+    # ==========================
+    # WEBSITE
+    # ==========================
 
-        # ==========================
-        # Email
-        # ==========================
+    result = subprocess.run([
+        python,
+        "08-scripts/generate_website.py",
+        business_name,
+        business_type,
+        location
+    ])
 
-        result = subprocess.run([
-            python,
-            "04-emails/generate_email.py",
+    if result.returncode != 0:
+
+        print("❌ Website Failed")
+
+        continue
+
+    print("✅ Website Generated")
+    slugs.append(slug)
+
+    # ==========================
+    # EMAIL
+    # ==========================
+
+    result = subprocess.run([
+        python,
+        "04-emails/generate_email.py",
+        business_name,
+        business_type,
+        location,
+        demo_url
+    ])
+
+    if result.returncode != 0:
+
+        print("❌ Email Failed")
+
+        continue
+
+    print("✅ Email Generated")
+
+
+    # ==========================
+    # HISTORY
+    # ==========================
+
+    with open(
+        "09-history/history.csv",
+        "a",
+        newline="",
+        encoding="utf-8"
+    ) as history:
+
+        writer = csv.writer(history)
+
+        writer.writerow([
+            datetime.now().strftime(
+                "%Y-%m-%d %H:%M"
+            ),
             business_name,
             business_type,
             location,
-            demo_url
+            "SUCCESS"
         ])
 
-        if result.returncode != 0:
 
-            print("❌ Email Failed")
+    successful_leads.append(
+        business_name
+    )
 
-            continue
 
-        print("✅ Email Generated")
+# ==========================
+# UPDATE REDIRECTS
+# ==========================
 
-        # ==========================
-        # Git Push
-        # ==========================
+update_redirects(
+    slugs
+)
 
-        result = subprocess.run([
-            python,
-            "08-scripts/git_push.py"
-        ])
 
-        if result.returncode != 0:
+# ==========================
+# ONE GIT PUSH
+# ==========================
 
-            print("❌ Git Push Failed")
+print(
+    "\n🚀 Updating GitHub..."
+)
 
-            continue
+result = subprocess.run([
+    python,
+    "08-scripts/git_push.py"
+])
 
-        print("✅ GitHub Updated")
+if result.returncode != 0:
 
-        # ==========================
-        # History
-        # ==========================
+    print(
+        "\n❌ Git Push Failed"
+    )
 
-        with open(
-            "09-history/history.csv",
-            "a",
-            newline="",
-            encoding="utf-8"
-        ) as history:
+else:
 
-            writer = csv.writer(history)
+    print(
+        "\n✅ GitHub Updated Successfully"
+    )
 
-            writer.writerow([
-                datetime.now().strftime(
-                    "%Y-%m-%d %H:%M"
-                ),
-                business_name,
-                business_type,
-                location,
-                "SUCCESS"
-            ])
 
+# ==========================
+# FINAL
+# ==========================
 
 print(
     "\n===================================="
@@ -235,6 +251,14 @@ print(
 
 print(
     "🎉 ALL LEADS COMPLETED"
+)
+
+print(
+    f"Successful : {len(successful_leads)}"
+)
+
+print(
+    f"Total      : {len(leads)}"
 )
 
 print(

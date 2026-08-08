@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grand Dhillon | Premier Fine Dining & Banquets in Bhilai</title>
-    <meta name="description" content="Experience the finest culinary journey at Grand Dhillon, Bhilai. Authentic flavors, luxury ambiance, and world-class hospitality.">
+    <title>Grand Dhillon | Premier Dining & Banquets in Bhilai</title>
+    <meta name="description" content="Experience the finest multi-cuisine dining, luxury banquets, and authentic flavors at Grand Dhillon, Bhilai's landmark restaurant.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#C5A059',
-                        secondary: '#1A1A1A',
-                        accent: '#8B0000',
+                        primary: '#8B1D1D', // Deep Royal Red
+                        gold: '#C5A059',
+                        dark: '#1A1A1A'
                     },
                     fontFamily: {
                         serif: ['Playfair Display', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -37,70 +35,74 @@
             background-size: cover;
             background-position: center;
         }
-        .card-hover:hover {
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
     </style>
 </head>
-<body class="bg-[#FDFCF8] text-secondary font-sans leading-relaxed">
+<body class="font-sans bg-white text-dark overflow-x-hidden">
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-nav border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <span class="font-serif text-2xl font-bold text-primary tracking-tighter uppercase">Grand Dhillon</span>
+                    <span class="font-serif text-2xl font-bold text-gold tracking-wider">GRAND DHILLON</span>
                 </div>
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#home" class="text-white hover:text-primary transition">Home</a>
-                    <a href="#about" class="text-white hover:text-primary transition">Our Story</a>
-                    <a href="#services" class="text-white hover:text-primary transition">Services</a>
-                    <a href="#testimonials" class="text-white hover:text-primary transition">Reviews</a>
-                    <a href="#contact" class="px-6 py-2 bg-primary text-white font-semibold rounded-full hover:bg-opacity-90 transition">Book a Table</a>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-white hover:text-gold transition-colors px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#about" class="text-white hover:text-gold transition-colors px-3 py-2 text-sm font-medium">Our Story</a>
+                        <a href="#services" class="text-white hover:text-gold transition-colors px-3 py-2 text-sm font-medium">Services</a>
+                        <a href="#testimonials" class="text-white hover:text-gold transition-colors px-3 py-2 text-sm font-medium">Reviews</a>
+                        <a href="#contact" class="bg-gold text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg">Reserve a Table</a>
+                    </div>
                 </div>
                 <div class="md:hidden">
-                    <button class="text-white text-2xl"><i class="fas fa-bars"></i></button>
+                    <button type="button" class="text-white p-2" id="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-gradient h-screen flex items-center justify-center text-center text-white px-4">
-        <div class="max-w-4xl" data-aos="fade-up">
-            <h4 class="text-primary font-semibold tracking-[0.3em] uppercase mb-4">A Taste of Royal Heritage</h4>
-            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">Exquisite Dining in the Heart of Bhilai</h1>
-            <p class="text-lg md:text-xl mb-10 text-gray-200 max-w-2xl mx-auto">Experience culinary mastery where tradition meets luxury. Every dish is a story of flavor, every moment a memory of excellence.</p>
+    <section id="home" class="hero-gradient h-screen flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl">
+            <h4 class="text-gold font-serif italic text-xl mb-4 tracking-widest uppercase">The Essence of Fine Dining</h4>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-white mb-6">A Legacy of Taste in the Heart of Bhilai</h1>
+            <p class="text-gray-200 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                Indulge in an exquisite culinary journey where traditional recipes meet modern elegance. Experience the finest North Indian, Chinese, and Continental delicacies.
+            </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contact" class="px-10 py-4 bg-primary text-white font-bold rounded-full hover:bg-white hover:text-secondary transition-all duration-300">Reserve Now</a>
-                <a href="#services" class="px-10 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-secondary transition-all duration-300">Explore Menu</a>
+                <a href="#menu" class="bg-gold text-white px-8 py-4 rounded-md font-bold text-lg hover:scale-105 transition-transform">Explore Menu</a>
+                <a href="#contact" class="border-2 border-white text-white px-8 py-4 rounded-md font-bold text-lg hover:bg-white hover:text-dark transition-all">Book Your Visit</a>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior" class="rounded-2xl shadow-2xl relative z-10">
-                    <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-primary rounded-2xl -z-0 opacity-20"></div>
-                </div>
-                <div>
-                    <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-2">Our Story</h2>
-                    <h3 class="text-4xl font-serif font-bold mb-6 leading-tight">Elevating Bhilai's Culinary Landscape Since 2010</h3>
-                    <p class="text-gray-600 mb-6 text-lg">Grand Dhillon isn't just a restaurant; it's a sanctuary for food connoisseurs. We pride ourselves on sourcing the freshest local ingredients to create authentic North Indian, Continental, and Oriental masterpieces.</p>
-                    <p class="text-gray-600 mb-8">Our chefs blend traditional techniques with modern presentation, ensuring every bite is a celebration of Bhilai's rich culture and hospitality.</p>
-                    <div class="grid grid-cols-2 gap-8 py-6 border-y border-gray-100">
-                        <div>
-                            <span class="block text-3xl font-serif font-bold text-primary">15+</span>
-                            <span class="text-sm uppercase tracking-wide text-gray-500">Years Excellence</span>
-                        </div>
-                        <div>
-                            <span class="block text-3xl font-serif font-bold text-primary">50+</span>
-                            <span class="text-sm uppercase tracking-wide text-gray-500">Master Chefs</span>
-                        </div>
+    <section id="about" class="py-24 px-4 bg-gray-50">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1550966842-2830058b19ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Plating Food" class="rounded-lg shadow-2xl relative z-10">
+                <div class="absolute -bottom-6 -right-6 w-64 h-64 bg-gold/10 -z-0 rounded-lg"></div>
+            </div>
+            <div>
+                <h2 class="text-gold font-serif text-lg font-semibold mb-2">Our Story</h2>
+                <h3 class="text-4xl font-serif font-bold text-dark mb-6 leading-tight">Serving Happiness Since 1998</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Grand Dhillon has been Bhilai's landmark for gourmet food and exceptional hospitality for over two decades. What started as a passion for authentic flavors has evolved into the city's most beloved multi-cuisine destination.
+                </p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Our master chefs curate each dish using farm-fresh ingredients and secret spice blends passed down through generations, ensuring every bite is a celebration.
+                </p>
+                <div class="grid grid-cols-2 gap-8 border-t border-gray-200 pt-8">
+                    <div>
+                        <h4 class="text-3xl font-bold text-primary">25+</h4>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider">Years of Excellence</p>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold text-primary">100+</h4>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider">Signature Dishes</p>
                     </div>
                 </div>
             </div>
@@ -108,236 +110,216 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-24 bg-[#F8F5F0]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-2">What We Offer</h2>
-                <h3 class="text-4xl font-serif font-bold">Unmatched Hospitality Services</h3>
+    <section id="services" class="py-24 px-4 bg-white">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <h2 class="text-gold font-serif text-lg font-semibold mb-2">What We Offer</h2>
+            <h3 class="text-4xl font-serif font-bold text-dark">Services Beyond Dining</h3>
+        </div>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+            <!-- Service 1 -->
+            <div class="group p-10 border border-gray-100 hover:border-gold transition-all duration-300 bg-gray-50 rounded-xl hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                    <i class="fas fa-utensils text-primary text-2xl group-hover:text-white"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-4">Fine Dining</h4>
+                <p class="text-gray-600 leading-relaxed">An upscale atmosphere perfect for family dinners, romantic dates, or corporate lunches.</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="bg-white p-10 rounded-2xl shadow-sm card-hover border border-gray-100">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-utensils text-2xl text-primary"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Fine Dining</h4>
-                    <p class="text-gray-600">Immerse yourself in a luxurious atmosphere with a menu crafted for the sophisticated palate.</p>
+            <!-- Service 2 -->
+            <div class="group p-10 border border-gray-100 hover:border-gold transition-all duration-300 bg-gray-50 rounded-xl hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                    <i class="fas fa-glass-cheers text-primary text-2xl group-hover:text-white"></i>
                 </div>
-                <!-- Service 2 -->
-                <div class="bg-white p-10 rounded-2xl shadow-sm card-hover border border-gray-100">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-glass-cheers text-2xl text-primary"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Banquet Halls</h4>
-                    <p class="text-gray-600">The perfect venue for weddings, corporate events, and celebrations in our spacious, grand halls.</p>
+                <h4 class="text-xl font-bold mb-4">Luxury Banquets</h4>
+                <p class="text-gray-600 leading-relaxed">Spacious halls equipped with modern amenities for weddings, birthdays, and conferences.</p>
+            </div>
+            <!-- Service 3 -->
+            <div class="group p-10 border border-gray-100 hover:border-gold transition-all duration-300 bg-gray-50 rounded-xl hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                    <i class="fas fa-truck text-primary text-2xl group-hover:text-white"></i>
                 </div>
-                <!-- Service 3 -->
-                <div class="bg-white p-10 rounded-2xl shadow-sm card-hover border border-gray-100">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-truck text-2xl text-primary"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-4">Doorstep Delivery</h4>
-                    <p class="text-gray-600">Bring the taste of Grand Dhillon to your home with our lightning-fast, premium delivery service.</p>
-                </div>
+                <h4 class="text-xl font-bold mb-4">Express Delivery</h4>
+                <p class="text-gray-600 leading-relaxed">Get the Grand Dhillon taste delivered straight to your doorstep across Bhilai.</p>
             </div>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section id="testimonials" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-2">Reviews</h2>
-                <h3 class="text-4xl font-serif font-bold">What Our Guests Say</h3>
+    <section id="testimonials" class="py-24 px-4 bg-dark text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto relative">
+            <i class="fas fa-quote-left absolute -top-10 -left-10 text-9xl text-white/5"></i>
+            <div class="text-center mb-16 relative z-10">
+                <h2 class="text-gold font-serif text-lg font-semibold mb-2">Guest Feedback</h2>
+                <h3 class="text-4xl font-serif font-bold">Why Our Guests Love Us</h3>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 bg-[#FDFCF8] rounded-2xl italic relative border border-gray-100">
-                    <i class="fas fa-quote-left text-4xl text-primary/20 absolute top-4 left-4"></i>
-                    <p class="mb-6 relative z-10 text-gray-700">"The best butter chicken in all of Bhilai! The service was impeccable and the ambiance was just breathtaking."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gray-200 rounded-full"></div>
-                        <div>
-                            <p class="font-bold">Rahul Sharma</p>
-                            <p class="text-sm text-primary italic">Food Critic</p>
-                        </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white/5 p-8 rounded-lg border border-white/10 italic">
+                    <div class="flex text-gold mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
+                    <p class="text-gray-300 mb-6">"The Butter Chicken here is legendary! The staff makes you feel like royalty. Highly recommended for family dinners."</p>
+                    <p class="font-bold text-gold">— Rajesh Sharma</p>
                 </div>
-                <div class="p-8 bg-[#FDFCF8] rounded-2xl italic relative border border-gray-100">
-                    <i class="fas fa-quote-left text-4xl text-primary/20 absolute top-4 left-4"></i>
-                    <p class="mb-6 relative z-10 text-gray-700">"Hosted my sister's wedding here. The banquet team is professional and the decoration exceeded our expectations."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gray-200 rounded-full"></div>
-                        <div>
-                            <p class="font-bold">Priya Verma</p>
-                            <p class="text-sm text-primary italic">Local Resident</p>
-                        </div>
+                <div class="bg-white/5 p-8 rounded-lg border border-white/10 italic">
+                    <div class="flex text-gold mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
+                    <p class="text-gray-300 mb-6">"Hosted my daughter's wedding here. The banquet service was flawless and the food variety was spectacular."</p>
+                    <p class="font-bold text-gold">— Anjali Verma</p>
                 </div>
-                <div class="p-8 bg-[#FDFCF8] rounded-2xl italic relative border border-gray-100">
-                    <i class="fas fa-quote-left text-4xl text-primary/20 absolute top-4 left-4"></i>
-                    <p class="mb-6 relative z-10 text-gray-700">"A must-visit for anyone in Chhattisgarh. Their fusion dishes are innovative yet deeply rooted in tradition."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-gray-200 rounded-full"></div>
-                        <div>
-                            <p class="font-bold">Animesh Das</p>
-                            <p class="text-sm text-primary italic">Business Traveler</p>
-                        </div>
+                <div class="bg-white/5 p-8 rounded-lg border border-white/10 italic">
+                    <div class="flex text-gold mb-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
+                    <p class="text-gray-300 mb-6">"Best Chinese food in Bhilai! The ambiance is perfect for a quiet dinner. Will visit again soon."</p>
+                    <p class="font-bold text-gold">— Vikram Singh</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="py-24 bg-[#F8F5F0]">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 class="text-3xl font-serif font-bold text-center mb-12">Frequently Asked Questions</h3>
+    <!-- FAQ -->
+    <section class="py-24 px-4 bg-gray-50">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-serif font-bold text-center mb-12">Frequently Asked Questions</h2>
             <div class="space-y-4">
-                <details class="bg-white rounded-xl shadow-sm group">
-                    <summary class="p-6 cursor-pointer font-semibold list-none flex justify-between items-center">
-                        Do you take advance reservations?
-                        <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+                <details class="bg-white p-6 rounded-lg shadow-sm group">
+                    <summary class="font-bold cursor-pointer flex justify-between items-center list-none">
+                        What are your operating hours?
+                        <span class="text-gold transition-transform group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-600">Yes, we recommend booking at least 24 hours in advance, especially during weekends and holidays.</div>
+                    <p class="mt-4 text-gray-600">We are open 7 days a week from 11:00 AM to 11:00 PM for dining and delivery.</p>
                 </details>
-                <details class="bg-white rounded-xl shadow-sm group">
-                    <summary class="p-6 cursor-pointer font-semibold list-none flex justify-between items-center">
-                        Is there dedicated parking available?
-                        <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+                <details class="bg-white p-6 rounded-lg shadow-sm group">
+                    <summary class="font-bold cursor-pointer flex justify-between items-center list-none">
+                        Do you offer valet parking?
+                        <span class="text-gold transition-transform group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-600">Yes, we offer valet parking and have a large dedicated parking area for guests and event attendees.</div>
+                    <p class="mt-4 text-gray-600">Yes, we provide complimentary valet parking services for all our guests.</p>
                 </details>
-                <details class="bg-white rounded-xl shadow-sm group">
-                    <summary class="p-6 cursor-pointer font-semibold list-none flex justify-between items-center">
-                        Do you offer outdoor catering?
-                        <i class="fas fa-chevron-down group-open:rotate-180 transition"></i>
+                <details class="bg-white p-6 rounded-lg shadow-sm group">
+                    <summary class="font-bold cursor-pointer flex justify-between items-center list-none">
+                        Do we need to make a reservation?
+                        <span class="text-gold transition-transform group-open:rotate-180"><i class="fas fa-chevron-down"></i></span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-600">Absolutely. We provide premium outdoor catering services for weddings, corporate events, and private parties across Bhilai and Durg.</div>
+                    <p class="mt-4 text-gray-600">While walk-ins are welcome, we recommend making a reservation for weekends or large groups to ensure seating.</p>
                 </details>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16">
-                <div>
-                    <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-2">Get In Touch</h2>
-                    <h3 class="text-4xl font-serif font-bold mb-8">Visit Us at Bhilai</h3>
-                    <div class="space-y-6 mb-10">
-                        <div class="flex items-start gap-4">
-                            <div class="text-primary text-xl"><i class="fas fa-map-marker-alt"></i></div>
-                            <div>
-                                <p class="font-bold">Location</p>
-                                <p class="text-gray-600">Grand Dhillon Complex, Nehru Nagar, Bhilai, Chhattisgarh 490020</p>
-                            </div>
+    <section id="contact" class="py-24 px-4 bg-white">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+            <div>
+                <h2 class="text-4xl font-serif font-bold mb-8">Visit Us</h2>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-gold"></i>
                         </div>
-                        <div class="flex items-start gap-4">
-                            <div class="text-primary text-xl"><i class="fas fa-phone-alt"></i></div>
-                            <div>
-                                <p class="font-bold">Phone</p>
-                                <p class="text-gray-600">+91 788 400 0000</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="text-primary text-xl"><i class="fas fa-clock"></i></div>
-                            <div>
-                                <p class="font-bold">Opening Hours</p>
-                                <p class="text-gray-600">Mon - Sun: 11:00 AM - 11:00 PM</p>
-                            </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Location</h4>
+                            <p class="text-gray-600">GE Road, Supela, Bhilai, Chhattisgarh 490023</p>
                         </div>
                     </div>
-                    <!-- Google Maps Placeholder -->
-                    <div class="h-64 bg-gray-100 rounded-2xl overflow-hidden shadow-inner">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59503.22013898166!2d81.3090606!3d21.2139604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a293cc071e62a1b%3A0xf6398b584988770c!2sBhilai%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone-alt text-gold"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Reservations</h4>
+                            <p class="text-gray-600">+91 788 400 0000</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-gold"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Email</h4>
+                            <p class="text-gray-600">info@granddhillon.com</p>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-[#F8F5F0] p-10 rounded-3xl shadow-xl">
-                    <form class="space-y-6">
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Full Name</label>
-                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="John Doe">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Phone Number</label>
-                                <input type="tel" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="+91 00000 00000">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Email Address</label>
-                            <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="john@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Reservation Type</label>
-                            <select class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">
-                                <option>Fine Dining</option>
-                                <option>Banquet Inquiry</option>
-                                <option>Corporate Meeting</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Special Requests</label>
-                            <textarea class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50" rows="4" placeholder="Any dietary requirements or special occasions?"></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-4 bg-primary text-white font-bold rounded-lg hover:bg-secondary transition-all">Submit Inquiry</button>
-                    </form>
+                <!-- Google Maps Placeholder -->
+                <div class="mt-8 bg-gray-200 h-64 rounded-lg overflow-hidden flex items-center justify-center border-2 border-gray-100">
+                    <div class="text-center p-4">
+                        <i class="fas fa-map-marked-alt text-4xl text-gray-400 mb-2"></i>
+                        <p class="text-gray-500 italic">Interactive Map Placeholder<br>(Bhilai GE Road Location)</p>
+                    </div>
                 </div>
+            </div>
+
+            <div class="bg-gray-50 p-10 rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-serif font-bold mb-6 text-primary">Reserve a Table</h3>
+                <form class="space-y-4">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gold outline-none">
+                        <input type="tel" placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gold outline-none">
+                    </div>
+                    <input type="email" placeholder="Email Address" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gold outline-none">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <input type="date" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gold outline-none">
+                        <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gold outline-none text-gray-500">
+                            <option>Number of Guests</option>
+                            <option>1-2 Person</option>
+                            <option>3-5 Persons</option>
+                            <option>6+ Persons</option>
+                        </select>
+                    </div>
+                    <textarea rows="4" placeholder="Special Requests" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gold outline-none"></textarea>
+                    <button class="w-full bg-primary text-white py-4 rounded-md font-bold uppercase tracking-widest hover:bg-opacity-90 transition-all">Confirm Booking</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-12 border-b border-white/10 pb-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <span class="font-serif text-2xl font-bold text-primary tracking-tighter uppercase">Grand Dhillon</span>
-                    <p class="mt-6 text-gray-400">Setting the standard for luxury dining and memorable events in Bhilai.</p>
-                </div>
-                <div>
-                    <h5 class="text-lg font-bold mb-6">Quick Links</h5>
-                    <ul class="space-y-4 text-gray-400">
-                        <li><a href="#home" class="hover:text-primary">Home</a></li>
-                        <li><a href="#about" class="hover:text-primary">About Us</a></li>
-                        <li><a href="#services" class="hover:text-primary">Menu</a></li>
-                        <li><a href="#contact" class="hover:text-primary">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-lg font-bold mb-6">Connect</h5>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary transition"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary transition"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary hover:border-primary transition"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <h5 class="text-lg font-bold mb-6">Newsletter</h5>
-                    <p class="text-sm text-gray-400 mb-4">Subscribe for special offers.</p>
-                    <div class="flex">
-                        <input type="email" placeholder="Email" class="bg-white/10 px-4 py-2 rounded-l-lg w-full focus:outline-none border border-white/10">
-                        <button class="bg-primary px-4 py-2 rounded-r-lg hover:bg-white hover:text-secondary transition"><i class="fas fa-paper-plane"></i></button>
-                    </div>
+    <footer class="bg-dark text-white pt-16 pb-8 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-12">
+            <div class="col-span-1 md:col-span-2">
+                <span class="font-serif text-3xl font-bold text-gold tracking-wider block mb-6">GRAND DHILLON</span>
+                <p class="text-gray-400 max-w-sm mb-6 leading-relaxed">
+                    Celebrating two decades of culinary excellence in Bhilai. We bring you the finest tastes, crafted with passion and served with love.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-gold transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-gold transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center hover:bg-gold transition-colors"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
-            <div class="text-center text-gray-500 text-sm">
-                <p>&copy; 2023 Grand Dhillon Restaurant. All Rights Reserved. Crafted for Taste.</p>
+            <div>
+                <h4 class="text-xl font-bold mb-6">Quick Links</h4>
+                <ul class="space-y-4 text-gray-400">
+                    <li><a href="#home" class="hover:text-gold transition-colors">Home</a></li>
+                    <li><a href="#about" class="hover:text-gold transition-colors">About Us</a></li>
+                    <li><a href="#" class="hover:text-gold transition-colors">View Menu</a></li>
+                    <li><a href="#contact" class="hover:text-gold transition-colors">Book Banquet</a></li>
+                </ul>
             </div>
+            <div>
+                <h4 class="text-xl font-bold mb-6">Newsletter</h4>
+                <p class="text-gray-400 mb-4 text-sm">Subscribe to get offers & updates.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Email" class="bg-white/10 border border-white/20 p-2 rounded-l-md outline-none w-full">
+                    <button class="bg-gold px-4 py-2 rounded-r-md hover:bg-opacity-90"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2023 Grand Dhillon Bhilai. All Rights Reserved. Crafted with <i class="fas fa-heart text-primary"></i> for Great Taste.</p>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling logic
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+        // Mobile Menu Logic
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.querySelector('.md\\:block');
+        
+        // Simplified mobile toggle
+        btn.addEventListener('click', () => {
+            const nav = document.querySelector('.ml-10');
+            nav.classList.toggle('hidden');
         });
     </script>
 </body>
