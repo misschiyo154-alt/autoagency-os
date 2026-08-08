@@ -15,3 +15,4 @@ venv/
 # OS Files
 .DS_Store
 Thumbs.db
+05-leads/leads_backup.csv
