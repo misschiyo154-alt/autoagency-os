@@ -3,9 +3,12 @@ import csv
 import subprocess
 import sys
 import re
+import time
 from datetime import datetime
 
 python = sys.executable
+
+LEADS_FILE = "05-leads/leads.csv"
 
 print("🚀 Starting AI Agency...\n")
 
@@ -30,6 +33,37 @@ def create_slug(business_name):
 
 
 # ==========================
+# SAVE LEADS
+# ==========================
+
+def save_leads(leads):
+
+    fieldnames = [
+        "Business Name",
+        "Business Type",
+        "Location",
+        "Email",
+        "Website",
+        "Status"
+    ]
+
+    with open(
+        LEADS_FILE,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as file:
+
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
+
+        writer.writeheader()
+        writer.writerows(leads)
+
+
+# ==========================
 # UPDATE CLOUDFLARE ROUTES
 # ==========================
 
@@ -39,7 +73,7 @@ def update_redirects(slugs):
 
     routes = []
 
-    for slug in slugs:
+    for slug in sorted(set(slugs)):
 
         route = (
             f"/{slug}/ "
@@ -64,11 +98,47 @@ def update_redirects(slugs):
 
 
 # ==========================
+# RETRY SUBPROCESS
+# ==========================
+
+def run_with_retry(command, label, retries=3):
+
+    for attempt in range(1, retries + 1):
+
+        print(
+            f"  🔄 {label} "
+            f"(attempt {attempt}/{retries})"
+        )
+
+        result = subprocess.run(command)
+
+        if result.returncode == 0:
+
+            return True
+
+        if attempt < retries:
+
+            wait_time = 15 * attempt
+
+            print(
+                f"  ⚠️ {label} failed."
+            )
+
+            print(
+                f"  ⏳ Waiting {wait_time}s before retry..."
+            )
+
+            time.sleep(wait_time)
+
+    return False
+
+
+# ==========================
 # LOAD LEADS
 # ==========================
 
 with open(
-    "05-leads/leads.csv",
+    LEADS_FILE,
     newline="",
     encoding="utf-8"
 ) as file:
@@ -79,10 +149,29 @@ with open(
 
 
 # ==========================
-# PROCESS LEADS
+# EXISTING SLUGS
 # ==========================
 
 slugs = []
+
+for lead in leads:
+
+    status = (
+        lead.get("Status") or ""
+    ).strip().upper()
+
+    if status == "SUCCESS":
+
+        slug = create_slug(
+            lead["Business Name"]
+        )
+
+        slugs.append(slug)
+
+
+# ==========================
+# PROCESS LEADS
+# ==========================
 
 successful_leads = []
 
@@ -94,6 +183,30 @@ for index, lead in enumerate(
     business_name = lead["Business Name"]
     business_type = lead["Business Type"]
     location = lead["Location"]
+
+    status = (
+        lead.get("Status") or ""
+    ).strip().upper()
+
+
+    # ==========================
+    # SKIP COMPLETED
+    # ==========================
+
+    if status == "SUCCESS":
+
+        print(
+            f"\n[{index}/{len(leads)}] "
+            f"⏭️ Already completed: "
+            f"{business_name}"
+        )
+
+        successful_leads.append(
+            business_name
+        )
+
+        continue
+
 
     slug = create_slug(
         business_name
@@ -138,43 +251,77 @@ for index, lead in enumerate(
     # WEBSITE
     # ==========================
 
-    result = subprocess.run([
-        python,
-        "08-scripts/generate_website.py",
-        business_name,
-        business_type,
-        location
-    ])
+    website_success = run_with_retry(
+        [
+            python,
+            "08-scripts/generate_website.py",
+            business_name,
+            business_type,
+            location
+        ],
+        "Website Generation"
+    )
 
-    if result.returncode != 0:
+    if not website_success:
 
-        print("❌ Website Failed")
+        print(
+            "❌ Website Failed"
+        )
+
+        lead["Status"] = "WEBSITE_FAILED"
+
+        save_leads(leads)
 
         continue
 
-    print("✅ Website Generated")
+
+    print(
+        "✅ Website Generated"
+    )
+
+    lead["Status"] = "WEBSITE_DONE"
+
+    save_leads(leads)
+
     slugs.append(slug)
+
 
     # ==========================
     # EMAIL
     # ==========================
 
-    result = subprocess.run([
-        python,
-        "04-emails/generate_email.py",
-        business_name,
-        business_type,
-        location,
-        demo_url
-    ])
+    email_success = run_with_retry(
+        [
+            python,
+            "04-emails/generate_email.py",
+            business_name,
+            business_type,
+            location,
+            demo_url
+        ],
+        "Email Generation"
+    )
 
-    if result.returncode != 0:
+    if not email_success:
 
-        print("❌ Email Failed")
+        print(
+            "❌ Email Failed"
+        )
+
+        lead["Status"] = "EMAIL_FAILED"
+
+        save_leads(leads)
 
         continue
 
-    print("✅ Email Generated")
+
+    print(
+        "✅ Email Generated"
+    )
+
+    lead["Status"] = "EMAIL_READY"
+
+    save_leads(leads)
 
 
     # ==========================
@@ -188,7 +335,9 @@ for index, lead in enumerate(
         encoding="utf-8"
     ) as history:
 
-        writer = csv.writer(history)
+        writer = csv.writer(
+            history
+        )
 
         writer.writerow([
             datetime.now().strftime(
@@ -201,9 +350,30 @@ for index, lead in enumerate(
         ])
 
 
+    # ==========================
+    # FINAL SUCCESS
+    # ==========================
+
+    lead["Status"] = "SUCCESS"
+
+    save_leads(leads)
+
     successful_leads.append(
         business_name
     )
+
+    print(
+        "✅ Lead Completed Successfully"
+    )
+
+
+    # Small delay between leads
+
+    print(
+        "⏳ Waiting 5 seconds before next lead..."
+    )
+
+    time.sleep(5)
 
 
 # ==========================
@@ -227,6 +397,7 @@ result = subprocess.run([
     python,
     "08-scripts/git_push.py"
 ])
+
 
 if result.returncode != 0:
 
@@ -254,11 +425,13 @@ print(
 )
 
 print(
-    f"Successful : {len(successful_leads)}"
+    f"Successful : "
+    f"{len(successful_leads)}"
 )
 
 print(
-    f"Total      : {len(leads)}"
+    f"Total      : "
+    f"{len(leads)}"
 )
 
 print(
