@@ -11,6 +11,17 @@ python = sys.executable
 
 LEADS_FILE = "05-leads/leads.csv"
 REDIRECTS_FILE = "_redirects"
+HISTORY_FILE = "09-history/history.csv"
+
+FIELDNAMES = [
+    "Business Name",
+    "Business Type",
+    "Location",
+    "Email",
+    "Website",
+    "Demo URL",
+    "Status"
+]
 
 print("🚀 Starting AI Agency...\n")
 
@@ -23,7 +34,10 @@ def create_slug(business_name):
 
     slug = business_name.lower()
 
-    slug = slug.replace("&", "and")
+    slug = slug.replace(
+        "&",
+        "and"
+    )
 
     slug = re.sub(
         r"[^a-z0-9]+",
@@ -40,21 +54,18 @@ def create_slug(business_name):
 
 def save_leads(leads):
 
-    fieldnames = [
-        "Business Name",
-        "Business Type",
-        "Location",
-        "Email",
-        "Website",
-        "Demo URL",
-        "Status"
-    ]
-
     if not leads:
-        print("⚠️ No leads to save. CSV was NOT changed.")
+
+        print(
+            "⚠️ No leads to save. "
+            "CSV was NOT changed."
+        )
+
         return False
 
-    temp_file = LEADS_FILE + ".tmp"
+    temp_file = (
+        LEADS_FILE + ".tmp"
+    )
 
     try:
 
@@ -67,12 +78,15 @@ def save_leads(leads):
 
             writer = csv.DictWriter(
                 file,
-                fieldnames=fieldnames,
+                fieldnames=FIELDNAMES,
                 extrasaction="ignore"
             )
 
             writer.writeheader()
-            writer.writerows(leads)
+
+            writer.writerows(
+                leads
+            )
 
         os.replace(
             temp_file,
@@ -87,9 +101,13 @@ def save_leads(leads):
             f"❌ Failed to save leads: {e}"
         )
 
-        if os.path.exists(temp_file):
+        if os.path.exists(
+            temp_file
+        ):
 
-            os.remove(temp_file)
+            os.remove(
+                temp_file
+            )
 
         return False
 
@@ -102,7 +120,9 @@ def update_redirects(slugs):
 
     existing_routes = []
 
-    if os.path.exists(REDIRECTS_FILE):
+    if os.path.exists(
+        REDIRECTS_FILE
+    ):
 
         with open(
             REDIRECTS_FILE,
@@ -125,9 +145,11 @@ def update_redirects(slugs):
 
         if len(parts) >= 3:
 
-            route_map[parts[0]] = route
+            route_map[
+                parts[0]
+            ] = route
 
-    # Add/update current routes
+    # Add current routes
     for slug in slugs:
 
         route = (
@@ -194,14 +216,17 @@ def run_with_retry(
 
         if attempt < retries:
 
-            wait_time = 15 * attempt
+            wait_time = (
+                15 * attempt
+            )
 
             print(
                 f"  ⚠️ {label} failed."
             )
 
             print(
-                f"  ⏳ Waiting {wait_time}s "
+                f"  ⏳ Waiting "
+                f"{wait_time}s "
                 f"before retry..."
             )
 
@@ -239,11 +264,24 @@ if not leads:
         "❌ leads.csv contains no leads."
     )
 
-    print(
-        "❌ Nothing was processed."
-    )
-
     sys.exit(1)
+
+
+# ==========================
+# NORMALIZE LEADS
+# ==========================
+
+for lead in leads:
+
+    for field in FIELDNAMES:
+
+        if field not in lead:
+
+            lead[field] = ""
+
+        elif lead[field] is None:
+
+            lead[field] = ""
 
 
 # ==========================
@@ -254,30 +292,54 @@ slugs = []
 
 for lead in leads:
 
+    business_name = (
+        lead.get("Business Name") or ""
+    ).strip()
+
+    if not business_name:
+
+        continue
+
     status = (
         lead.get("Status") or ""
     ).strip().upper()
 
-    if status == "SUCCESS":
+    demo_url = (
+        lead.get("Demo URL") or ""
+    ).strip()
 
-        business_name = (
-            lead.get("Business Name") or ""
-        ).strip()
+    slug = create_slug(
+        business_name
+    )
 
-        if business_name:
+    # Existing completed/generated
+    if status in [
+        "SUCCESS",
+        "SENT",
+        "EMAIL_READY",
+        "EMAIL_FAILED",
+        "WEBSITE_DONE",
+        "WEBSITE_FAILED"
+    ]:
 
-            slug = create_slug(
-                business_name
-            )
+        slugs.append(
+            slug
+        )
 
-            slugs.append(slug)
+    # If Demo URL already exists,
+    # preserve route too.
+    if demo_url:
+
+        slugs.append(
+            slug
+        )
 
 
 # ==========================
 # PROCESS LEADS
 # ==========================
 
-successful_leads = []
+completed_count = 0
 
 for index, lead in enumerate(
     leads,
@@ -302,33 +364,14 @@ for index, lead in enumerate(
 
 
     # ==========================
-    # VALIDATE LEAD
+    # VALIDATE
     # ==========================
 
     if not business_name:
 
         print(
             f"\n[{index}/{len(leads)}] "
-            f"⚠️ Invalid lead - missing Business Name"
-        )
-
-        continue
-
-
-    # ==========================
-    # SKIP COMPLETED
-    # ==========================
-
-    if status == "SUCCESS":
-
-        print(
-            f"\n[{index}/{len(leads)}] "
-            f"⏭️ Already completed: "
-            f"{business_name}"
-        )
-
-        successful_leads.append(
-            business_name
+            "⚠️ Missing Business Name"
         )
 
         continue
@@ -345,6 +388,10 @@ for index, lead in enumerate(
 
     lead["Demo URL"] = demo_url
 
+    slugs.append(
+        slug
+    )
+
 
     print(
         "\n===================================="
@@ -359,11 +406,7 @@ for index, lead in enumerate(
     )
 
     print(
-        f"Type     : {business_type}"
-    )
-
-    print(
-        f"Location : {location}"
+        f"Status   : {status or 'NEW'}"
     )
 
     print(
@@ -371,63 +414,118 @@ for index, lead in enumerate(
     )
 
     print(
-        "====================================\n"
+        "===================================="
     )
 
 
-    # ==========================
-    # WEBSITE
-    # ==========================
+    # ==================================================
+    # 1. FULLY COMPLETED
+    # ==================================================
 
-    website_success = run_with_retry(
-        [
-            python,
-            "08-scripts/generate_website.py",
-            business_name,
-            business_type,
-            location
-        ],
-        "Website Generation"
-    )
-
-
-    if not website_success:
+    if status in [
+        "SUCCESS",
+        "SENT"
+    ]:
 
         print(
-            "❌ Website Failed"
+            "⏭️ Already completed."
+        )
+
+        completed_count += 1
+
+        continue
+
+
+    # ==================================================
+    # 2. WEBSITE ALREADY DONE
+    # ==================================================
+    #
+    # IMPORTANT:
+    # WEBSITE_DONE
+    # EMAIL_FAILED
+    # EMAIL_READY
+    #
+    # will NEVER regenerate website.
+    # ==================================================
+
+    if status in [
+        "WEBSITE_DONE",
+        "EMAIL_FAILED",
+        "EMAIL_READY"
+    ]:
+
+        print(
+            "⏭️ Website already exists."
+        )
+
+    else:
+
+        # ==========================
+        # WEBSITE GENERATION
+        # ==========================
+
+        website_success = run_with_retry(
+            [
+                python,
+                "08-scripts/generate_website.py",
+                business_name,
+                business_type,
+                location
+            ],
+            "Website Generation"
+        )
+
+        if not website_success:
+
+            print(
+                "❌ Website Failed"
+            )
+
+            lead["Status"] = (
+                "WEBSITE_FAILED"
+            )
+
+            save_leads(
+                leads
+            )
+
+            continue
+
+
+        print(
+            "✅ Website Generated"
         )
 
         lead["Status"] = (
-            "WEBSITE_FAILED"
+            "WEBSITE_DONE"
         )
 
         save_leads(
             leads
         )
 
+
+    # ==================================================
+    # 3. EMAIL ALREADY READY
+    # ==================================================
+
+    current_status = (
+        lead.get("Status") or ""
+    ).strip().upper()
+
+
+    if current_status == "EMAIL_READY":
+
+        print(
+            "⏭️ Email already generated."
+        )
+
         continue
 
 
-    print(
-        "✅ Website Generated"
-    )
-
-    lead["Status"] = (
-        "WEBSITE_DONE"
-    )
-
-    save_leads(
-        leads
-    )
-
-    slugs.append(
-        slug
-    )
-
-
-    # ==========================
-    # EMAIL
-    # ==========================
+    # ==================================================
+    # 4. EMAIL GENERATION
+    # ==================================================
 
     email_success = run_with_retry(
         [
@@ -445,7 +543,7 @@ for index, lead in enumerate(
     if not email_success:
 
         print(
-            "❌ Email Failed"
+            "❌ Email Generation Failed"
         )
 
         lead["Status"] = (
@@ -472,61 +570,14 @@ for index, lead in enumerate(
     )
 
 
-    # ==========================
-    # HISTORY
-    # ==========================
-
-    with open(
-        "09-history/history.csv",
-        "a",
-        newline="",
-        encoding="utf-8"
-    ) as history:
-
-        writer = csv.writer(
-            history
-        )
-
-        writer.writerow([
-            datetime.now().strftime(
-                "%Y-%m-%d %H:%M"
-            ),
-            business_name,
-            business_type,
-            location,
-            "SUCCESS"
-        ])
-
-
-    # ==========================
-    # FINAL SUCCESS
-    # ==========================
-
-    lead["Status"] = "SUCCESS"
-
-    save_leads(
-        leads
-    )
-
-    successful_leads.append(
-        business_name
+    print(
+        "📌 Lead is now EMAIL_READY."
     )
 
     print(
-        "✅ Lead Completed Successfully"
+        "📧 Use retry_emails.py "
+        "to send it."
     )
-
-
-    # ==========================
-    # DELAY
-    # ==========================
-
-    print(
-        "⏳ Waiting 5 seconds "
-        "before next lead..."
-    )
-
-    time.sleep(5)
 
 
 # ==========================
@@ -535,6 +586,15 @@ for index, lead in enumerate(
 
 update_redirects(
     slugs
+)
+
+
+# ==========================
+# SAVE FINAL CSV
+# ==========================
+
+save_leads(
+    leads
 )
 
 
@@ -574,16 +634,16 @@ print(
 )
 
 print(
-    "🎉 ALL LEADS COMPLETED"
+    "🎉 PIPELINE COMPLETED"
 )
 
 print(
-    f"Successful : "
-    f"{len(successful_leads)}"
+    f"Completed/Existing : "
+    f"{completed_count}"
 )
 
 print(
-    f"Total      : "
+    f"Total Leads        : "
     f"{len(leads)}"
 )
 
