@@ -4,11 +4,13 @@ import subprocess
 import sys
 import re
 import time
+import os
 from datetime import datetime
 
 python = sys.executable
 
 LEADS_FILE = "05-leads/leads.csv"
+REDIRECTS_FILE = "_redirects"
 
 print("🚀 Starting AI Agency...\n")
 
@@ -33,7 +35,7 @@ def create_slug(business_name):
 
 
 # ==========================
-# SAVE LEADS
+# SAVE LEADS SAFELY
 # ==========================
 
 def save_leads(leads):
@@ -48,21 +50,49 @@ def save_leads(leads):
         "Status"
     ]
 
-    with open(
-        LEADS_FILE,
-        "w",
-        newline="",
-        encoding="utf-8"
-    ) as file:
+    if not leads:
+        print("⚠️ No leads to save. CSV was NOT changed.")
+        return False
 
-        writer = csv.DictWriter(
-            file,
-            fieldnames=fieldnames,
-            extrasaction="ignore"
+    temp_file = LEADS_FILE + ".tmp"
+
+    try:
+
+        with open(
+            temp_file,
+            "w",
+            newline="",
+            encoding="utf-8"
+        ) as file:
+
+            writer = csv.DictWriter(
+                file,
+                fieldnames=fieldnames,
+                extrasaction="ignore"
+            )
+
+            writer.writeheader()
+            writer.writerows(leads)
+
+        os.replace(
+            temp_file,
+            LEADS_FILE
         )
 
-        writer.writeheader()
-        writer.writerows(leads)
+        return True
+
+    except Exception as e:
+
+        print(
+            f"❌ Failed to save leads: {e}"
+        )
+
+        if os.path.exists(temp_file):
+
+            os.remove(temp_file)
+
+        return False
+
 
 # ==========================
 # UPDATE CLOUDFLARE ROUTES
@@ -70,31 +100,67 @@ def save_leads(leads):
 
 def update_redirects(slugs):
 
-    redirects_file = "_redirects"
+    existing_routes = []
 
-    routes = []
+    if os.path.exists(REDIRECTS_FILE):
 
-    for slug in sorted(set(slugs)):
+        with open(
+            REDIRECTS_FILE,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            existing_routes = [
+                line.strip()
+                for line in file
+                if line.strip()
+            ]
+
+    route_map = {}
+
+    # Preserve existing routes
+    for route in existing_routes:
+
+        parts = route.split()
+
+        if len(parts) >= 3:
+
+            route_map[parts[0]] = route
+
+    # Add/update current routes
+    for slug in slugs:
 
         route = (
             f"/{slug}/ "
             f"/{slug}/index.html 200"
         )
 
-        routes.append(route)
+        route_map[
+            f"/{slug}/"
+        ] = route
+
+    routes = sorted(
+        route_map.values()
+    )
 
     with open(
-        redirects_file,
+        REDIRECTS_FILE,
         "w",
         encoding="utf-8"
     ) as file:
 
         for route in routes:
-            file.write(route + "\n")
 
-    print("\n✅ Cloudflare Routes Updated")
+            file.write(
+                route + "\n"
+            )
+
+    print(
+        "\n✅ Cloudflare Routes Updated"
+    )
 
     for route in routes:
+
         print(route)
 
 
@@ -102,16 +168,25 @@ def update_redirects(slugs):
 # RETRY SUBPROCESS
 # ==========================
 
-def run_with_retry(command, label, retries=3):
+def run_with_retry(
+    command,
+    label,
+    retries=3
+):
 
-    for attempt in range(1, retries + 1):
+    for attempt in range(
+        1,
+        retries + 1
+    ):
 
         print(
             f"  🔄 {label} "
             f"(attempt {attempt}/{retries})"
         )
 
-        result = subprocess.run(command)
+        result = subprocess.run(
+            command
+        )
 
         if result.returncode == 0:
 
@@ -126,10 +201,13 @@ def run_with_retry(command, label, retries=3):
             )
 
             print(
-                f"  ⏳ Waiting {wait_time}s before retry..."
+                f"  ⏳ Waiting {wait_time}s "
+                f"before retry..."
             )
 
-            time.sleep(wait_time)
+            time.sleep(
+                wait_time
+            )
 
     return False
 
@@ -144,9 +222,28 @@ with open(
     encoding="utf-8"
 ) as file:
 
-    reader = csv.DictReader(file)
+    reader = csv.DictReader(
+        file
+    )
 
     leads = list(reader)
+
+
+# ==========================
+# SAFETY CHECK
+# ==========================
+
+if not leads:
+
+    print(
+        "❌ leads.csv contains no leads."
+    )
+
+    print(
+        "❌ Nothing was processed."
+    )
+
+    sys.exit(1)
 
 
 # ==========================
@@ -163,11 +260,17 @@ for lead in leads:
 
     if status == "SUCCESS":
 
-        slug = create_slug(
-            lead["Business Name"]
-        )
+        business_name = (
+            lead.get("Business Name") or ""
+        ).strip()
 
-        slugs.append(slug)
+        if business_name:
+
+            slug = create_slug(
+                business_name
+            )
+
+            slugs.append(slug)
 
 
 # ==========================
@@ -181,13 +284,35 @@ for index, lead in enumerate(
     start=1
 ):
 
-    business_name = lead["Business Name"]
-    business_type = lead["Business Type"]
-    location = lead["Location"]
+    business_name = (
+        lead.get("Business Name") or ""
+    ).strip()
+
+    business_type = (
+        lead.get("Business Type") or ""
+    ).strip()
+
+    location = (
+        lead.get("Location") or ""
+    ).strip()
 
     status = (
         lead.get("Status") or ""
     ).strip().upper()
+
+
+    # ==========================
+    # VALIDATE LEAD
+    # ==========================
+
+    if not business_name:
+
+        print(
+            f"\n[{index}/{len(leads)}] "
+            f"⚠️ Invalid lead - missing Business Name"
+        )
+
+        continue
 
 
     # ==========================
@@ -217,6 +342,8 @@ for index, lead in enumerate(
         f"{DEMO_URL.rstrip('/')}/"
         f"{slug}/"
     )
+
+    lead["Demo URL"] = demo_url
 
 
     print(
@@ -263,15 +390,20 @@ for index, lead in enumerate(
         "Website Generation"
     )
 
+
     if not website_success:
 
         print(
             "❌ Website Failed"
         )
 
-        lead["Status"] = "WEBSITE_FAILED"
+        lead["Status"] = (
+            "WEBSITE_FAILED"
+        )
 
-        save_leads(leads)
+        save_leads(
+            leads
+        )
 
         continue
 
@@ -280,11 +412,17 @@ for index, lead in enumerate(
         "✅ Website Generated"
     )
 
-    lead["Status"] = "WEBSITE_DONE"
+    lead["Status"] = (
+        "WEBSITE_DONE"
+    )
 
-    save_leads(leads)
+    save_leads(
+        leads
+    )
 
-    slugs.append(slug)
+    slugs.append(
+        slug
+    )
 
 
     # ==========================
@@ -303,15 +441,20 @@ for index, lead in enumerate(
         "Email Generation"
     )
 
+
     if not email_success:
 
         print(
             "❌ Email Failed"
         )
 
-        lead["Status"] = "EMAIL_FAILED"
+        lead["Status"] = (
+            "EMAIL_FAILED"
+        )
 
-        save_leads(leads)
+        save_leads(
+            leads
+        )
 
         continue
 
@@ -320,9 +463,13 @@ for index, lead in enumerate(
         "✅ Email Generated"
     )
 
-    lead["Status"] = "EMAIL_READY"
+    lead["Status"] = (
+        "EMAIL_READY"
+    )
 
-    save_leads(leads)
+    save_leads(
+        leads
+    )
 
 
     # ==========================
@@ -357,7 +504,9 @@ for index, lead in enumerate(
 
     lead["Status"] = "SUCCESS"
 
-    save_leads(leads)
+    save_leads(
+        leads
+    )
 
     successful_leads.append(
         business_name
@@ -368,10 +517,13 @@ for index, lead in enumerate(
     )
 
 
-    # Small delay between leads
+    # ==========================
+    # DELAY
+    # ==========================
 
     print(
-        "⏳ Waiting 5 seconds before next lead..."
+        "⏳ Waiting 5 seconds "
+        "before next lead..."
     )
 
     time.sleep(5)

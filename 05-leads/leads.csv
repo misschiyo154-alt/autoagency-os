@@ -1,1 +1,10 @@
-Business Name,Business Type,Location,Email,Website,Status
+Business Name,Business Type,Location,Email,Website,Demo URL,Status
+Grand Dhillon,restaurant,bhilai,rdm@grandhillonhotel.com,https://grandhillonhotel.com/,https://autoagency-os.pages.dev/grand-dhillon/,SUCCESS
+Dashmesh Dhaba,restaurant,bhilai,,https://www.latlong.net/poi/dashmesh-dhaba-440592,https://autoagency-os.pages.dev/dashmesh-dhaba/,SUCCESS
+Bhadohi Chat Corner,restaurant,bhilai,,https://restaurant-guru.in/Bhadohi-Chat-Corner-Bhilai,https://autoagency-os.pages.dev/bhadohi-chat-corner/,SUCCESS
+Juice factory,restaurant,bhilai,,https://bhilai.idbf.in/4593887/juice-factory,https://autoagency-os.pages.dev/juice-factory/,SUCCESS
+new nanhe cafe,restaurant,bhilai,,https://restaurant-guru.in/Nanhe-Cafe-Bhilai,https://autoagency-os.pages.dev/new-nanhe-cafe/,SUCCESS
+chaika adda,restaurant,bhilai,chaikaaddaind@gmail.com,https://www.chaikaaddaind.com/,https://autoagency-os.pages.dev/chaika-adda/,EMAIL_FAILED
+Real Momos,restaurant,bhilai,,https://restaurant-guru.in/Real-Momo-Bhilai,https://autoagency-os.pages.dev/real-momos/,EMAIL_FAILED
+Apicure Restaurant,restaurant,bhilai,,https://restaurant-guru.in/Apicure-Bhilai-3,https://autoagency-os.pages.dev/apicure-restaurant/,EMAIL_FAILED
+The Marks,restaurant,bhilai,,https://www.oyorooms.com/176480/,https://autoagency-os.pages.dev/the-marks/,EMAIL_FAILED
