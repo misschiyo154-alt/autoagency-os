@@ -44,6 +44,7 @@ def save_leads(leads):
         "Location",
         "Email",
         "Website",
+        "Demo URL",
         "Status"
     ]
 
@@ -56,12 +57,12 @@ def save_leads(leads):
 
         writer = csv.DictWriter(
             file,
-            fieldnames=fieldnames
+            fieldnames=fieldnames,
+            extrasaction="ignore"
         )
 
         writer.writeheader()
         writer.writerows(leads)
-
 
 # ==========================
 # UPDATE CLOUDFLARE ROUTES
