@@ -3,10 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vicky Web Agency</title>
+
+    <meta
+        name="description"
+        content="Vicky Web Agency creates modern websites and digital experiences for local businesses."
+    >
+
+    <title>Vicky Web Agency | Websites for Local Businesses</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <h1>Vicky Web Agency</h1>
-    <p>Website demos.</p>
+
+<body class="bg-slate-950 text-white antialiased">
+
+    <!-- NAVBAR -->
+    <header class="border-b border-white/10 bg-slate-950/90 backdrop-blur">
+        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+
+            <a href="/" class="text-xl font-bold tracking-tight">
+                Vicky<span class="text-cyan-400">Web</span>
+            </a>
+
+            <nav class="hidden gap-8 text-sm text-slate-300 md:flex">
+                <a href="#services" class="transition hover:text-white">Services</a>
+                <a href="#demos" class="transition hover:text-white">Demos</a>
+                <a href="#process" class="transition hover:text-white">Process</a>
+                <a href="#contact" class="transition hover:text-white">Contact</a>
+            </nav>
+
+            <a
+                href="#contact"
+                class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            >
+                Get Started
+            </a>
+        </div>
+    </header>
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(34,211,238,0.15),_transparent_35%)]"></div>
+
+            <div class="relative mx-auto grid max-w-6xl gap-14 px-6 py-24 md:grid-cols-2 md:items-center md:py-32">
+
+                <div>
+
+                    <div class="mb-6 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300">
+                        Websites for local businesses
+                    </div>
+
+                    <h1 class="max-w-3xl text-5xl font-black leading-tight tracking-tight md:text-7xl">
+                        Your business deserves
+                        <span class="text-cyan-400"> a better website.</span>
+                    </h1>
+
+                    <p class="mt-7 max-w-xl text-lg leading-8 text-slate-300">
+                        Vicky Web Agency creates modern, fast and professional
+                        websites designed to help local businesses look better
+                        online and turn visitors into customers.
+                    </p>
+
+                    <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+
+                        <a
+                            href="#demos"
+                            class="rounded-xl bg-cyan-400 px-7 py-4 text-center font-bold text-slate-950 transition hover:bg-cyan-300"
+                        >
+                            View Website Demos
+                        </a>
+
+                        <a
+                            href="#contact"
+                            class="rounded-xl border border-white/15 px-7 py-4 text-center font-semibold text-white transition hover:bg-white/5"
+                        >
+                            Start a Project
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HERO CARD -->
+                <div class="relative">
+
+                    <div class="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-2xl shadow-cyan-950/30">
+
+                        <div class="rounded-2xl bg-slate-900 p-6">
+
+                            <div class="mb-6 flex items-center gap-2">
+                                <div class="h-3 w-3 rounded-full bg-red-400"></div>
+                                <div class="h-3 w-3 rounded-full bg-yellow-400"></div>
+                                <div class="h-3 w-3 rounded-full bg-green-400"></div>
+                            </div>
+
+                            <div class="rounded-2xl bg-gradient-to-br from-cyan-400/20 to-blue-500/10 p-8">
+
+                                <p class="text-sm font-semibold text-cyan-300">
+                                    LOCAL BUSINESS WEBSITE
+                                </p>
+
+                                <h2 class="mt-4 text-3xl font-bold">
+                                    Look professional online.
+                                </h2>
+
+                                <p class="mt-4 text-slate-400">
+                                    Clean design. Mobile friendly. Fast loading.
+                                </p>
+
+                                <div class="mt-8 h-2 rounded-full bg-white/10">
+                                    <div class="h-2 w-3/4 rounded-full bg-cyan-400"></div>
+                                </div>
+
+                                <div class="mt-4 grid grid-cols-3 gap-3">
+                                    <div class="h-20 rounded-xl bg-white/5"></div>
+                                    <div class="h-20 rounded-xl bg-white/5"></div>
+                                    <div class="h-20 rounded-xl bg-white/5"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- SERVICES -->
+        <section id="services" class="border-t border-white/10 bg-slate-900/50">
+
+            <div class="mx-auto max-w-6xl px-6 py-24">
+
+                <div class="max-w-2xl">
+                    <p class="text-sm font-bold uppercase tracking-widest text-cyan-400">
+                        What we do
+                    </p>
+
+                    <h2 class="mt-3 text-4xl font-bold tracking-tight">
+                        Everything you need to look professional online.
+                    </h2>
+
+                    <p class="mt-5 text-slate-400">
+                        Simple, focused websites built around your business
+                        instead of generic templates.
+                    </p>
+                </div>
+
+
+                <div class="mt-14 grid gap-6 md:grid-cols-3">
+
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-7">
+                        <div class="text-3xl">🌐</div>
+
+                        <h3 class="mt-5 text-xl font-bold">
+                            Business Websites
+                        </h3>
+
+                        <p class="mt-3 leading-7 text-slate-400">
+                            Modern landing pages and business websites that
+                            work across phones, tablets and desktops.
+                        </p>
+                    </div>
+
+
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-7">
+                        <div class="text-3xl">🎨</div>
+
+                        <h3 class="mt-5 text-xl font-bold">
+                            Website Redesign
+                        </h3>
+
+                        <p class="mt-3 leading-7 text-slate-400">
+                            Turn an outdated online presence into a cleaner,
+                            more professional digital experience.
+                        </p>
+                    </div>
+
+
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-7">
+                        <div class="text-3xl">⚡</div>
+
+                        <h3 class="mt-5 text-xl font-bold">
+                            Fast Deployment
+                        </h3>
+
+                        <p class="mt-3 leading-7 text-slate-400">
+                            Lightweight websites designed for quick loading
+                            and straightforward deployment.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DEMOS -->
+        <section id="demos">
+
+            <div class="mx-auto max-w-6xl px-6 py-24">
+
+                <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-widest text-cyan-400">
+                            Live demos
+                        </p>
+
+                        <h2 class="mt-3 text-4xl font-bold tracking-tight">
+                            Recent website concepts
+                        </h2>
+
+                        <p class="mt-5 max-w-2xl text-slate-400">
+                            A few examples of websites created for local
+                            business concepts.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+
+                    <!-- CHAIKA ADDA -->
+                    <a
+                        href="/chaika-adda/"
+                        class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-cyan-400/40"
+                    >
+
+                        <div class="flex h-44 items-center justify-center bg-gradient-to-br from-amber-500/20 to-orange-500/5">
+
+                            <span class="text-5xl">☕</span>
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <div class="text-sm text-cyan-400">
+                                Cafe / Food Business
+                            </div>
+
+                            <h3 class="mt-2 text-xl font-bold">
+                                Chaika Adda
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                View the live website concept.
+                            </p>
+
+                            <div class="mt-5 font-semibold text-white group-hover:text-cyan-300">
+                                View Demo →
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- REAL MOMOS -->
+                    <a
+                        href="/real-momos/"
+                        class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-cyan-400/40"
+                    >
+
+                        <div class="flex h-44 items-center justify-center bg-gradient-to-br from-red-500/20 to-orange-500/5">
+
+                            <span class="text-5xl">🥟</span>
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <div class="text-sm text-cyan-400">
+                                Restaurant
+                            </div>
+
+                            <h3 class="mt-2 text-xl font-bold">
+                                Real Momos
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                View the live website concept.
+                            </p>
+
+                            <div class="mt-5 font-semibold text-white group-hover:text-cyan-300">
+                                View Demo →
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- GRAND DHILLON -->
+                    <a
+                        href="/grand-dhillon/"
+                        class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-cyan-400/40"
+                    >
+
+                        <div class="flex h-44 items-center justify-center bg-gradient-to-br from-blue-500/20 to-indigo-500/5">
+
+                            <span class="text-5xl">🏢</span>
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <div class="text-sm text-cyan-400">
+                                Business
+                            </div>
+
+                            <h3 class="mt-2 text-xl font-bold">
+                                Grand Dhillon
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                View the live website concept.
+                            </p>
+
+                            <div class="mt-5 font-semibold text-white group-hover:text-cyan-300">
+                                View Demo →
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- DASHMESH -->
+                    <a
+                        href="/dashmesh-dhaba/"
+                        class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-cyan-400/40"
+                    >
+
+                        <div class="flex h-44 items-center justify-center bg-gradient-to-br from-yellow-500/20 to-red-500/5">
+
+                            <span class="text-5xl">🍽️</span>
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <div class="text-sm text-cyan-400">
+                                Food Business
+                            </div>
+
+                            <h3 class="mt-2 text-xl font-bold">
+                                Dashmesh Dhaba
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                View the live website concept.
+                            </p>
+
+                            <div class="mt-5 font-semibold text-white group-hover:text-cyan-300">
+                                View Demo →
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- BHADOHI -->
+                    <a
+                        href="/bhadohi-chat-corner/"
+                        class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-cyan-400/40"
+                    >
+
+                        <div class="flex h-44 items-center justify-center bg-gradient-to-br from-pink-500/20 to-orange-500/5">
+
+                            <span class="text-5xl">🌮</span>
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <div class="text-sm text-cyan-400">
+                                Food Business
+                            </div>
+
+                            <h3 class="mt-2 text-xl font-bold">
+                                Bhadohi Chat Corner
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                View the live website concept.
+                            </p>
+
+                            <div class="mt-5 font-semibold text-white group-hover:text-cyan-300">
+                                View Demo →
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- JUICE FACTORY -->
+                    <a
+                        href="/juice-factory/"
+                        class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-cyan-400/40"
+                    >
+
+                        <div class="flex h-44 items-center justify-center bg-gradient-to-br from-green-500/20 to-lime-500/5">
+
+                            <span class="text-5xl">🥤</span>
+
+                        </div>
+
+                        <div class="p-6">
+
+                            <div class="text-sm text-cyan-400">
+                                Food & Beverage
+                            </div>
+
+                            <h3 class="mt-2 text-xl font-bold">
+                                Juice Factory
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                View the live website concept.
+                            </p>
+
+                            <div class="mt-5 font-semibold text-white group-hover:text-cyan-300">
+                                View Demo →
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROCESS -->
+        <section id="process" class="border-y border-white/10 bg-slate-900/50">
+
+            <div class="mx-auto max-w-6xl px-6 py-24">
+
+                <div class="max-w-2xl">
+
+                    <p class="text-sm font-bold uppercase tracking-widest text-cyan-400">
+                        Simple process
+                    </p>
+
+                    <h2 class="mt-3 text-4xl font-bold">
+                        From idea to live website.
+                    </h2>
+
+                </div>
+
+
+                <div class="mt-14 grid gap-8 md:grid-cols-3">
+
+                    <div>
+                        <div class="text-5xl font-black text-cyan-400">
+                            01
+                        </div>
+
+                        <h3 class="mt-5 text-xl font-bold">
+                            Tell us about your business
+                        </h3>
+
+                        <p class="mt-3 leading-7 text-slate-400">
+                            We understand what your business needs online.
+                        </p>
+                    </div>
+
+
+                    <div>
+                        <div class="text-5xl font-black text-cyan-400">
+                            02
+                        </div>
+
+                        <h3 class="mt-5 text-xl font-bold">
+                            We build the website
+                        </h3>
+
+                        <p class="mt-3 leading-7 text-slate-400">
+                            A modern website concept is designed around your
+                            business.
+                        </p>
+                    </div>
+
+
+                    <div>
+                        <div class="text-5xl font-black text-cyan-400">
+                            03
+                        </div>
+
+                        <h3 class="mt-5 text-xl font-bold">
+                            Review and launch
+                        </h3>
+
+                        <p class="mt-3 leading-7 text-slate-400">
+                            You review the result and decide the next step.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+        <section id="contact">
+
+            <div class="mx-auto max-w-4xl px-6 py-24 text-center">
+
+                <div class="rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/10 to-blue-500/5 p-10 md:p-16">
+
+                    <p class="text-sm font-bold uppercase tracking-widest text-cyan-400">
+                        Ready when you are
+                    </p>
+
+                    <h2 class="mt-4 text-4xl font-black md:text-5xl">
+                        Let's build something better.
+                    </h2>
+
+                    <p class="mx-auto mt-5 max-w-2xl text-slate-300">
+                        Have a local business that needs a better online
+                        presence? Get in touch and let's discuss the project.
+                    </p>
+
+                    <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+
+                        <a
+                            href="mailto:vickywebagency@gmail.com"
+                            class="rounded-xl bg-cyan-400 px-7 py-4 font-bold text-slate-950 transition hover:bg-cyan-300"
+                        >
+                            Email Vicky Web Agency
+                        </a>
+
+                        <a
+                            href="#demos"
+                            class="rounded-xl border border-white/15 px-7 py-4 font-semibold transition hover:bg-white/5"
+                        >
+                            See Our Demos
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10">
+
+        <div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
+
+            <div>
+                © 2026 Vicky Web Agency
+            </div>
+
+            <div>
+                Websites for local businesses.
+            </div>
+
+        </div>
+
+    </footer>
+
 </body>
 </html>
