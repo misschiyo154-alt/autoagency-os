@@ -2,28 +2,36 @@ import os
 import sys
 import re
 from pathlib import Path
+
 from dotenv import load_dotenv
 from google import genai
 
-# ==========================
-# Load Environment Variables
-# ==========================
+
+# ============================================================
+# LOAD ENVIRONMENT VARIABLES
+# ============================================================
 
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
 
-# ==========================
-# Create Gemini Client
-# ==========================
+if not api_key:
+    print("\n❌ GEMINI_API_KEY missing in .env")
+    sys.exit(1)
+
+
+# ============================================================
+# CREATE GEMINI CLIENT
+# ============================================================
 
 client = genai.Client(
     api_key=api_key
 )
 
-# ==========================
-# User Inputs
-# ==========================
+
+# ============================================================
+# USER INPUTS
+# ============================================================
 
 if len(sys.argv) == 4:
 
@@ -37,21 +45,37 @@ else:
     business_type = input("Business Type: ")
     location = input("Location: ")
 
-# ==========================
-# Read Prompt File
-# ==========================
 
-with open(
-    "03-prompts/website-generator.md",
-    "r",
-    encoding="utf-8"
-) as f:
+# ============================================================
+# READ PROMPT
+# ============================================================
 
-    prompt_template = f.read()
+prompt_path = Path(
+    "03-prompts/website-generator.md"
+)
 
-# ==========================
-# Replace Variables
-# ==========================
+try:
+
+    with open(
+        prompt_path,
+        "r",
+        encoding="utf-8"
+    ) as file:
+
+        prompt_template = file.read()
+
+except FileNotFoundError:
+
+    print(
+        f"\n❌ Prompt file not found: {prompt_path}"
+    )
+
+    sys.exit(1)
+
+
+# ============================================================
+# REPLACE VARIABLES
+# ============================================================
 
 prompt = prompt_template.format(
     business_name=business_name,
@@ -59,9 +83,14 @@ prompt = prompt_template.format(
     location=location
 )
 
-# ==========================
-# Generate Website
-# ==========================
+
+# ============================================================
+# GENERATE WEBSITE
+# ============================================================
+
+print(
+    "\n🤖 Generating website with Gemini..."
+)
 
 try:
 
@@ -74,26 +103,54 @@ except Exception as e:
 
     print("\n❌ Gemini Error:")
     print(e)
-    exit()
 
-html = response.text
+    sys.exit(1)
 
-# ==========================
-# Remove Markdown
-# ==========================
 
-if html.startswith("```html"):
+# ============================================================
+# GET HTML
+# ============================================================
 
-    html = (
-        html
-        .replace("```html", "")
-        .replace("```", "")
-        .strip()
+html = (
+    response.text or ""
+).strip()
+
+if not html:
+
+    print(
+        "\n❌ Gemini returned empty website."
     )
 
-# ==========================
-# Create Safe Folder Name
-# ==========================
+    sys.exit(1)
+
+
+# ============================================================
+# REMOVE MARKDOWN CODE FENCES
+# ============================================================
+
+html = re.sub(
+    r"^```html\s*",
+    "",
+    html,
+    flags=re.IGNORECASE
+)
+
+html = re.sub(
+    r"^```\s*",
+    "",
+    html
+)
+
+html = re.sub(
+    r"\s*```$",
+    "",
+    html
+).strip()
+
+
+# ============================================================
+# CREATE SAFE SLUG
+# ============================================================
 
 slug = business_name.lower()
 
@@ -110,9 +167,19 @@ slug = re.sub(
 
 slug = slug.strip("-")
 
-# ==========================
-# Save Website
-# ==========================
+
+if not slug:
+
+    print(
+        "\n❌ Could not create a valid website slug."
+    )
+
+    sys.exit(1)
+
+
+# ============================================================
+# SAVE CLIENT WEBSITE
+# ============================================================
 
 client_folder = (
     Path("02-websites")
@@ -134,9 +201,10 @@ output.write_text(
     encoding="utf-8"
 )
 
-# ==========================
-# Save Latest Generated Website
-# ==========================
+
+# ============================================================
+# SAVE LATEST GENERATED WEBSITE
+# ============================================================
 
 latest_output = (
     Path("02-websites")
@@ -154,32 +222,29 @@ latest_output.write_text(
     encoding="utf-8"
 )
 
-# ==========================
-# Demo URL
-# ==========================
+
+# ============================================================
+# DEMO URL
+# ============================================================
 
 demo_url = (
     f"https://autoagency-os.pages.dev/"
     f"{slug}/"
 )
 
-# ==========================
-# Result
-# ==========================
+
+# ============================================================
+# RESULT
+# ============================================================
 
 print(
-    f"📁 Latest Website Saved : "
-    f"{latest_output}"
-)
-
-print(
-    "\n✅ Website Generated Successfully!"
-)
-
-print(
-    f"📁 Saved to: {output}"
+    f"\n📁 Website Saved: {output}"
 )
 
 print(
     f"🌐 Demo URL: {demo_url}"
+)
+
+print(
+    "\n✅ Website Generated Successfully!"
 )

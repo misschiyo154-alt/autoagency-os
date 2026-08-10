@@ -14,6 +14,7 @@ WEBSITE_URL = "https://autoagency-os.pages.dev"
 
 WHATSAPP = "+91XXXXXXXXXX"
 
+
 # ==========================
 # GITHUB
 # ==========================
@@ -21,6 +22,7 @@ WHATSAPP = "+91XXXXXXXXXX"
 GITHUB_BRANCH = "main"
 
 COMMIT_MESSAGE = "AI Generated Website"
+
 
 # ==========================
 # PATHS
