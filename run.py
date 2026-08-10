@@ -7,6 +7,8 @@ import time
 import os
 from datetime import datetime
 
+from telegram_notify import send_telegram
+
 python = sys.executable
 
 LEADS_FILE = "05-leads/leads.csv"
@@ -24,6 +26,29 @@ FIELDNAMES = [
 ]
 
 print("🚀 Starting AI Agency...\n")
+
+
+# ==========================
+# TELEGRAM NOTIFICATION
+# ==========================
+
+def notify_telegram(message):
+
+    try:
+
+        send_telegram(message)
+
+        print(
+            "  📲 Telegram notification sent."
+        )
+
+    except Exception as e:
+
+        # Telegram must NEVER break the pipeline.
+
+        print(
+            f"  ⚠️ Telegram notification failed: {e}"
+        )
 
 
 # ==========================
@@ -63,9 +88,7 @@ def save_leads(leads):
 
         return False
 
-    temp_file = (
-        LEADS_FILE + ".tmp"
-    )
+    temp_file = LEADS_FILE + ".tmp"
 
     try:
 
@@ -84,9 +107,7 @@ def save_leads(leads):
 
             writer.writeheader()
 
-            writer.writerows(
-                leads
-            )
+            writer.writerows(leads)
 
         os.replace(
             temp_file,
@@ -101,13 +122,9 @@ def save_leads(leads):
             f"❌ Failed to save leads: {e}"
         )
 
-        if os.path.exists(
-            temp_file
-        ):
+        if os.path.exists(temp_file):
 
-            os.remove(
-                temp_file
-            )
+            os.remove(temp_file)
 
         return False
 
@@ -120,9 +137,7 @@ def update_redirects(slugs):
 
     existing_routes = []
 
-    if os.path.exists(
-        REDIRECTS_FILE
-    ):
+    if os.path.exists(REDIRECTS_FILE):
 
         with open(
             REDIRECTS_FILE,
@@ -138,18 +153,14 @@ def update_redirects(slugs):
 
     route_map = {}
 
-    # Preserve existing routes
     for route in existing_routes:
 
         parts = route.split()
 
         if len(parts) >= 3:
 
-            route_map[
-                parts[0]
-            ] = route
+            route_map[parts[0]] = route
 
-    # Add current routes
     for slug in slugs:
 
         route = (
@@ -157,9 +168,7 @@ def update_redirects(slugs):
             f"/{slug}/index.html 200"
         )
 
-        route_map[
-            f"/{slug}/"
-        ] = route
+        route_map[f"/{slug}/"] = route
 
     routes = sorted(
         route_map.values()
@@ -216,9 +225,7 @@ def run_with_retry(
 
         if attempt < retries:
 
-            wait_time = (
-                15 * attempt
-            )
+            wait_time = 15 * attempt
 
             print(
                 f"  ⚠️ {label} failed."
@@ -247,9 +254,7 @@ with open(
     encoding="utf-8"
 ) as file:
 
-    reader = csv.DictReader(
-        file
-    )
+    reader = csv.DictReader(file)
 
     leads = list(reader)
 
@@ -312,7 +317,6 @@ for lead in leads:
         business_name
     )
 
-    # Existing completed/generated
     if status in [
         "SUCCESS",
         "SENT",
@@ -322,17 +326,11 @@ for lead in leads:
         "WEBSITE_FAILED"
     ]:
 
-        slugs.append(
-            slug
-        )
+        slugs.append(slug)
 
-    # If Demo URL already exists,
-    # preserve route too.
     if demo_url:
 
-        slugs.append(
-            slug
-        )
+        slugs.append(slug)
 
 
 # ==========================
@@ -388,9 +386,7 @@ for index, lead in enumerate(
 
     lead["Demo URL"] = demo_url
 
-    slugs.append(
-        slug
-    )
+    slugs.append(slug)
 
 
     print(
@@ -439,14 +435,6 @@ for index, lead in enumerate(
     # ==================================================
     # 2. WEBSITE ALREADY DONE
     # ==================================================
-    #
-    # IMPORTANT:
-    # WEBSITE_DONE
-    # EMAIL_FAILED
-    # EMAIL_READY
-    #
-    # will NEVER regenerate website.
-    # ==================================================
 
     if status in [
         "WEBSITE_DONE",
@@ -481,12 +469,17 @@ for index, lead in enumerate(
                 "❌ Website Failed"
             )
 
-            lead["Status"] = (
-                "WEBSITE_FAILED"
-            )
+            lead["Status"] = "WEBSITE_FAILED"
 
-            save_leads(
-                leads
+            save_leads(leads)
+
+            notify_telegram(
+                f"❌ AOS Lead Failed\n\n"
+                f"Business: {business_name}\n"
+                f"Type: {business_type}\n"
+                f"Location: {location}\n\n"
+                f"Stage: Website Generation\n"
+                f"Status: WEBSITE_FAILED"
             )
 
             continue
@@ -496,13 +489,9 @@ for index, lead in enumerate(
             "✅ Website Generated"
         )
 
-        lead["Status"] = (
-            "WEBSITE_DONE"
-        )
+        lead["Status"] = "WEBSITE_DONE"
 
-        save_leads(
-            leads
-        )
+        save_leads(leads)
 
 
     # ==================================================
@@ -546,12 +535,17 @@ for index, lead in enumerate(
             "❌ Email Generation Failed"
         )
 
-        lead["Status"] = (
-            "EMAIL_FAILED"
-        )
+        lead["Status"] = "EMAIL_FAILED"
 
-        save_leads(
-            leads
+        save_leads(leads)
+
+        notify_telegram(
+            f"⚠️ AOS Lead Ready — Email Failed\n\n"
+            f"Business: {business_name}\n"
+            f"Type: {business_type}\n"
+            f"Location: {location}\n\n"
+            f"🌐 Demo:\n{demo_url}\n\n"
+            f"Status: EMAIL_FAILED"
         )
 
         continue
@@ -561,13 +555,9 @@ for index, lead in enumerate(
         "✅ Email Generated"
     )
 
-    lead["Status"] = (
-        "EMAIL_READY"
-    )
+    lead["Status"] = "EMAIL_READY"
 
-    save_leads(
-        leads
-    )
+    save_leads(leads)
 
 
     print(
@@ -577,6 +567,21 @@ for index, lead in enumerate(
     print(
         "📧 Use retry_emails.py "
         "to send it."
+    )
+
+
+    # ==========================
+    # TELEGRAM — LEAD READY
+    # ==========================
+
+    notify_telegram(
+        f"🚀 AOS Lead Ready\n\n"
+        f"Business: {business_name}\n"
+        f"Type: {business_type}\n"
+        f"Location: {location}\n\n"
+        f"🌐 Demo:\n{demo_url}\n\n"
+        f"📧 Email: Generated\n"
+        f"📌 Status: EMAIL_READY"
     )
 
 
@@ -623,6 +628,17 @@ else:
     print(
         "\n✅ GitHub Updated Successfully"
     )
+
+
+# ==========================
+# FINAL TELEGRAM SUMMARY
+# ==========================
+
+notify_telegram(
+    f"🏁 AOS Pipeline Completed\n\n"
+    f"Completed/Existing: {completed_count}\n"
+    f"Total Leads: {len(leads)}"
+)
 
 
 # ==========================

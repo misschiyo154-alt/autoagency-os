@@ -1,53 +1,208 @@
 import sys
-from pathlib import Path
-
-sys.path.insert(
-    0,
-    str(Path(__file__).resolve().parents[1])
-)
-from config import *
-import os
-import sys
 import re
 from pathlib import Path
-from dotenv import load_dotenv
-from google import genai
+
+import requests
 
 
-# ==========================
-# LOAD ENVIRONMENT
-# ==========================
-
-load_dotenv()
-
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
-
-
-# ==========================
-# BUSINESS DETAILS
-# ==========================
+# ============================================================
+# ARGUMENTS
+# ============================================================
 
 if len(sys.argv) == 5:
-
     business_name = sys.argv[1]
     business_type = sys.argv[2]
     location = sys.argv[3]
     demo_url = sys.argv[4]
-
 else:
-
     business_name = input("Business Name: ")
     business_type = input("Business Type: ")
     location = input("Location: ")
     demo_url = input("Demo Website URL: ")
 
 
-# ==========================
-# CREATE SLUG
-# ==========================
+# ============================================================
+# LOAD PROMPT
+# ============================================================
 
+prompt_path = Path("04-emails/email-prompt.md")
+
+try:
+    with open(prompt_path, "r", encoding="utf-8") as file:
+        prompt_template = file.read()
+
+except FileNotFoundError:
+    print(f"\n❌ Prompt file not found: {prompt_path}")
+    sys.exit(1)
+
+
+prompt = prompt_template.format(
+    business_name=business_name,
+    business_type=business_type,
+    location=location,
+    demo_url=demo_url
+)
+
+
+# ============================================================
+# OLLAMA CONFIG
+# ============================================================
+
+OLLAMA_URL = "http://localhost:11434/api/generate"
+MODEL = "qwen3:4b"
+
+
+# ============================================================
+# GENERATE EMAIL
+# ============================================================
+
+print("\n🤖 Generating email with local Qwen3...")
+
+try:
+    response = requests.post(
+        OLLAMA_URL,
+        json={
+            "model": MODEL,
+            "prompt": prompt,
+            "stream": False,
+            "think": False,
+            "options": {
+                "temperature": 0.3
+            }
+        },
+        timeout=300
+    )
+
+    response.raise_for_status()
+
+    data = response.json()
+
+    email = data.get("response", "").strip()
+
+except requests.exceptions.ConnectionError:
+    print("\n❌ Ollama is not running.")
+    print("Start Ollama first and try again.")
+    sys.exit(1)
+
+except requests.exceptions.Timeout:
+    print("\n❌ Ollama timed out.")
+    print("The local Qwen3 model took too long.")
+    sys.exit(1)
+
+except requests.exceptions.RequestException as e:
+    print(f"\n❌ Ollama HTTP Error: {e}")
+    sys.exit(1)
+
+except Exception as e:
+    print(f"\n❌ Ollama Error: {e}")
+    sys.exit(1)
+
+
+# ============================================================
+# CLEAN OUTPUT
+# ============================================================
+
+if not email:
+    print("\n❌ Qwen returned empty output.")
+    sys.exit(1)
+
+
+# Remove Qwen thinking blocks if they appear.
+email = re.sub(
+    r"<think>.*?</think>",
+    "",
+    email,
+    flags=re.DOTALL | re.IGNORECASE
+).strip()
+
+
+# Remove markdown code fences.
+email = re.sub(
+    r"```(?:text|txt|markdown)?",
+    "",
+    email,
+    flags=re.IGNORECASE
+)
+
+email = email.replace("```", "").strip()
+
+
+# Remove common AI prefixes.
+email = re.sub(
+    r"^(Here(?:'s| is)(?: the)?(?: email| draft)?:?)\s*",
+    "",
+    email,
+    flags=re.IGNORECASE
+).strip()
+
+
+# If Qwen included reasoning before the actual email,
+# start from the first normal greeting.
+greeting_match = re.search(
+    r"(?im)^(Hi|Hello|Dear)\b.*",
+    email
+)
+
+if greeting_match:
+    email = email[greeting_match.start():].strip()
+
+
+# Remove obvious reasoning lines that sometimes appear
+# after the email.
+email = re.sub(
+    r"\n\s*(?:Note:|Word count:|\(Word count:).*?$",
+    "",
+    email,
+    flags=re.IGNORECASE | re.DOTALL
+).strip()
+
+
+# Remove trailing separators.
+email = re.sub(
+    r"\n\s*-{3,}\s*$",
+    "",
+    email
+).strip()
+
+
+# ============================================================
+# REMOVE DUPLICATE EMAIL
+# ============================================================
+
+lines = email.splitlines()
+
+if len(lines) >= 4:
+    for midpoint in range(1, len(lines) // 2 + 1):
+        first = "\n".join(lines[:midpoint]).strip()
+        second = "\n".join(lines[midpoint:]).strip()
+
+        if first and first == second:
+            email = first
+            break
+
+
+# ============================================================
+# FINAL CHECK
+# ============================================================
+
+if not email:
+    print("\n❌ Cleaned email is empty.")
+    sys.exit(1)
+
+
+# ============================================================
+# SAVE EMAIL
+# ============================================================
+
+output_dir = Path("04-emails/generated")
+
+output_dir.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+
+# Create safe slug.
 slug = business_name.lower()
 
 slug = slug.replace(
@@ -64,90 +219,7 @@ slug = re.sub(
 slug = slug.strip("-")
 
 
-# ==========================
-# LOAD PROMPT TEMPLATE
-# ==========================
-
-prompt_path = Path(
-    "04-emails/email-prompt.md"
-)
-
-with open(
-    prompt_path,
-    "r",
-    encoding="utf-8"
-) as file:
-
-    prompt = file.read()
-
-
-prompt = prompt.format(
-    business_name=business_name,
-    business_type=business_type,
-    location=location,
-    demo_url=demo_url
-)
-
-
-# ==========================
-# GENERATE EMAIL
-# ==========================
-
-try:
-
-    response = client.models.generate_content(
-        model="gemini-3-flash-preview",
-        contents=prompt,
-    )
-
-except Exception as e:
-
-    print("\n❌ Gemini Error:")
-    print(e)
-
-    sys.exit(1)
-
-
-email = response.text.strip()
-
-
-# ==========================
-# REMOVE MARKDOWN
-# ==========================
-
-if email.startswith("```text"):
-
-    email = email.replace(
-        "```text",
-        ""
-    )
-
-email = email.replace(
-    "```",
-    ""
-)
-
-email = email.strip()
-
-
-# ==========================
-# SAVE EMAIL
-# ==========================
-
-output_dir = Path(
-    "04-emails/generated"
-)
-
-output_dir.mkdir(
-    parents=True,
-    exist_ok=True
-)
-
-
-output_file = (
-    output_dir /
-    f"{slug}.txt"
-)
+output_file = output_dir / f"{slug}.txt"
 
 
 with open(
@@ -155,32 +227,25 @@ with open(
     "w",
     encoding="utf-8"
 ) as file:
-
     file.write(email)
 
 
-# ==========================
-# SUCCESS
-# ==========================
+# ============================================================
+# RESULT
+# ============================================================
+
+print("\n✅ Email Generated Successfully")
 
 print(
-    "\n==============================="
+    f"📄 Saved: {output_file}"
 )
 
 print(
-    "✅ Email Generated Successfully!"
-)
-
-print(
-    "==============================="
-)
-
-print(
-    f"Saved to : {output_file}"
-)
-
-print(
-    "\n----------- EMAIL -----------\n"
+    "\n---------------- EMAIL ----------------\n"
 )
 
 print(email)
+
+print(
+    "\n----------------------------------------"
+)
