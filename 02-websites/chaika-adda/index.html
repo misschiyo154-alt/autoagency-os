@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaika Adda | The Best Hangout Spot in Bhilai</title>
+    <meta name="description" content="Discover the finest chai, snacks, and vibes at Chaika Adda, Bhilai's favorite destination for food and friendship.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#D97706',
+                        secondary: '#1E293B',
+                        accent: '#F59E0B',
+                    },
+                    fontFamily: {
+                        serif: ['Bree Serif', 'serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .hero-bg { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1544787210-2213d84ad960?auto=format&fit=crop&q=80&w=1600'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="font-sans text-secondary bg-stone-50 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-3xl font-serif font-bold text-primary">chaika<span class="text-secondary">adda</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-primary transition-colors font-medium">Home</a>
+                        <a href="#about" class="hover:text-primary transition-colors font-medium">About</a>
+                        <a href="#menu" class="hover:text-primary transition-colors font-medium">Menu</a>
+                        <a href="#testimonials" class="hover:text-primary transition-colors font-medium">Reviews</a>
+                        <a href="#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-orange-700 transition-all shadow-lg">Visit Us</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-secondary focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-accent font-semibold tracking-widest uppercase mb-4 block">Welcome to Bhilai's Favorite Corner</span>
+            <h1 class="text-5xl md:text-7xl font-serif text-white mb-6 leading-tight">Where Great Stories<br><span class="text-accent italic">Begin with Chai</span></h1>
+            <p class="text-lg text-gray-200 mb-10 max-w-2xl mx-auto">From aromatic elixirs to mouth-watering snacks, we serve memories in every sip. Experience the perfect blend of tradition and vibe.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#menu" class="bg-primary text-white px-10 py-4 rounded-full text-lg font-bold hover:scale-105 transition-transform shadow-xl">Explore Menu</a>
+                <a href="#contact" class="bg-white text-secondary px-10 py-4 rounded-full text-lg font-bold hover:bg-gray-100 transition-all shadow-xl">Find Location</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1594910411242-a3827ec3182b?auto=format&fit=crop&q=80&w=800" alt="Chai serving" class="rounded-2xl shadow-2xl">
+                    <div class="absolute -bottom-6 -right-6 bg-accent p-8 rounded-2xl hidden lg:block">
+                        <p class="text-white font-bold text-4xl">5k+</p>
+                        <p class="text-white/80">Happy Visitors</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-4xl font-serif mb-6 text-secondary leading-tight">The Spirit of <span class="text-primary underline decoration-accent underline-offset-8">Chaika Adda</span></h2>
+                    <p class="text-gray-600 mb-6 text-lg leading-relaxed">Located in the heart of Bhilai, Chaika Adda isn't just a restaurant; it's a community hub. We started with a simple vision: to create a space where students can study, professionals can brainstorm, and friends can laugh—all over the perfect cup of ginger-infused tea.</p>
+                    <p class="text-gray-600 mb-8 text-lg leading-relaxed">Our ingredients are sourced locally, our recipes are generational secrets, and our vibe is unmatched in the city.</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-orange-100 p-2 rounded-full text-primary">✓</span>
+                            <span class="font-semibold text-secondary">Premium Tea Leaves</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-orange-100 p-2 rounded-full text-primary">✓</span>
+                            <span class="font-semibold text-secondary">Cozy Atmosphere</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-orange-100 p-2 rounded-full text-primary">✓</span>
+                            <span class="font-semibold text-secondary">Hygienic Kitchen</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="bg-orange-100 p-2 rounded-full text-primary">✓</span>
+                            <span class="font-semibold text-secondary">Pocket Friendly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services/Menu Section -->
+    <section id="menu" class="py-24 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-serif text-secondary mb-4">Our Signature Offerings</h2>
+                <div class="w-24 h-1 bg-primary mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-secondary font-serif">Artisanal Chai</h3>
+                    <p class="text-gray-600 mb-6">From classic Masala Chai to exotic Saffron blends, we brew perfection in every kulhad.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li>• Adrak Elaichi Special</li>
+                        <li>• Tandoori Chai</li>
+                        <li>• Kashmiri Kahwa</li>
+                    </ul>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-secondary font-serif">Quick Bites</h3>
+                    <p class="text-gray-600 mb-6">Handcrafted snacks that pair perfectly with your tea. Fresh, crispy, and delicious.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li>• Cheese Loaded Fries</li>
+                        <li>• Paneer Tikka Sandwiches</li>
+                        <li>• Crispy Vada Pav</li>
+                    </ul>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all border border-gray-100 group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                        <svg class="w-8 h-8 text-primary group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-secondary font-serif">Event Space</h3>
+                    <p class="text-gray-600 mb-6">Host your birthdays, kit-parties, or open mics in our dedicated vibrant space.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li>• Free High-speed Wi-Fi</li>
+                        <li>• Sound System Support</li>
+                        <li>• Custom Group Menus</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-serif text-center text-secondary mb-16">What Our Regulars Say</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 bg-stone-50 rounded-2xl border border-gray-100">
+                    <div class="flex text-accent mb-4">★★★★★</div>
+                    <p class="italic text-gray-600 mb-6">"The best tandoori chai in Bhilai! The atmosphere is so chill, perfect for my evening study sessions."</p>
+                    <div class="font-bold text-secondary text-lg">— Rahul S., IIT Bhilai</div>
+                </div>
+                <div class="p-8 bg-stone-50 rounded-2xl border border-gray-100">
+                    <div class="flex text-accent mb-4">★★★★★</div>
+                    <p class="italic text-gray-600 mb-6">"Their Cheese Bun Maska and Ginger tea is a match made in heaven. Affordable prices for students."</p>
+                    <div class="font-bold text-secondary text-lg">— Ananya P., Student</div>
+                </div>
+                <div class="p-8 bg-stone-50 rounded-2xl border border-gray-100">
+                    <div class="flex text-accent mb-4">★★★★★</div>
+                    <p class="italic text-gray-600 mb-6">"The only place in Bhilai that gets the 'vibes' right. Friendly staff and consistently great taste."</p>
+                    <div class="font-bold text-secondary text-lg">— Karan Singh, Local Guide</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-stone-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-serif text-center text-secondary mb-12">Frequently Asked</h2>
+            <div class="space-y-4">
+                <details class="bg-white p-6 rounded-xl shadow-sm cursor-pointer group" open>
+                    <summary class="font-bold text-lg list-none flex justify-between items-center">
+                        What are your operating hours?
+                        <span class="text-primary font-bold text-2xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600">We are open from 10:00 AM to 11:00 PM every day, including weekends!</p>
+                </details>
+                <details class="bg-white p-6 rounded-xl shadow-sm cursor-pointer group">
+                    <summary class="font-bold text-lg list-none flex justify-between items-center">
+                        Do you take group reservations?
+                        <span class="text-primary font-bold text-2xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600">Yes! For groups larger than 10, please call us 2 hours in advance so we can reserve your favorite corner.</p>
+                </details>
+                <details class="bg-white p-6 rounded-xl shadow-sm cursor-pointer group">
+                    <summary class="font-bold text-lg list-none flex justify-between items-center">
+                        Do you offer home delivery?
+                        <span class="text-primary font-bold text-2xl group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <p class="mt-4 text-gray-600">We are currently listed on Zomato and Swiggy for home deliveries within an 8km radius of Bhilai.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Map -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-serif text-secondary mb-6">Visit Our Adda</h2>
+                    <p class="text-gray-600 mb-10">We love hearing from you. Drop by for a cup of tea or send us a message for queries regarding catering and events.</p>
+                    
+                    <form action="#" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="Tell us something..."></textarea>
+                        </div>
+                        <button class="w-full bg-primary text-white py-4 rounded-lg font-bold hover:bg-orange-700 transition-all shadow-lg">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="h-[500px] rounded-3xl overflow-hidden shadow-2xl relative bg-gray-200">
+                    <!-- Google Maps Placeholder -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                        <svg class="w-16 h-16 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                        <h3 class="text-xl font-bold mb-2">Find us in Bhilai</h3>
+                        <p class="text-gray-600 mb-6">Civic Center, Shop No. 42, Bhilai, Chhattisgarh 490006</p>
+                        <div class="w-full h-full bg-slate-300 rounded-2xl flex items-center justify-center border-4 border-white">
+                            <span class="text-slate-500 font-medium">[ Interactive Google Map Integration ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+            <div class="grid md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-3xl font-serif font-bold text-primary mb-6 block">chaika<span class="text-white">adda</span></span>
+                    <p class="text-gray-400 max-w-sm mb-6">Creating a community of chai lovers in Bhilai since 2020. Your go-to spot for relaxation and taste.</p>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-all">FB</a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-all">IG</a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition-all">TW</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#home" class="hover:text-primary">Home</a></li>
+                        <li><a href="#about" class="hover:text-primary">Our Story</a></li>
+                        <li><a href="#menu" class="hover:text-primary">Menu</a></li>
+                        <li><a href="#contact" class="hover:text-primary">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-6">Contact Info</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li>📍 Civic Center, Bhilai</li>
+                        <li>📞 +91 98765 43210</li>
+                        <li>✉️ hello@chaikaadda.com</li>
+                        <li>⏰ 10:00 AM - 11:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-16 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Chaika Adda Bhilai. All rights reserved. Handcrafted with ❤️ for Chai Lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-button');
+        const navItems = document.querySelectorAll('nav a');
+        
+        btn.addEventListener('click', () => {
+            const menu = document.querySelector('.md\\:block');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('absolute');
+            menu.classList.toggle('top-20');
+            menu.classList.toggle('left-0');
+            menu.classList.toggle('w-full');
+            menu.classList.toggle('bg-white');
+            menu.classList.toggle('p-6');
+            menu.classList.toggle('flex-col');
+            menu.classList.toggle('space-y-4');
+            menu.classList.toggle('shadow-2xl');
+        });
+
+        // Close menu when clicking links
+        navItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    const menu = document.querySelector('.md\\:block');
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
