@@ -45,12 +45,6 @@
                 box-shadow 0.3s ease;
         }
 
-        .tilt-card:hover {
-            box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.35),
-                0 0 50px rgba(34, 211, 238, 0.08);
-        }
-
         .float {
             animation: float 5s ease-in-out infinite;
         }
@@ -75,7 +69,7 @@
             }
 
             50% {
-                opacity: 0.65;
+                opacity: 0.7;
             }
         }
 
@@ -104,29 +98,46 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
         }
+
+        .shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine::after {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: -120%;
+            width: 60%;
+            height: 300%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.12),
+                transparent
+            );
+            transform: rotate(20deg);
+            transition: left 0.7s ease;
+        }
+
+        .shine:hover::after {
+            left: 140%;
+        }
     </style>
 </head>
 
-
 <body class="bg-slate-950 text-white antialiased">
-
 
 <!-- ========================================================= -->
 <!-- CONFIG -->
 <!-- ========================================================= -->
 
 <script>
+    const WHATSAPP_NUMBER = "919981176965";
 
-    /*
-        ================================
-        CHANGE ONLY THESE TWO VALUES
-        ================================
-    */
-
-    const WHATSAPP_NUMBER = "91XXXXXXXXXX";
-
-    const INSTAGRAM_URL = "https://instagram.com/yourusername";
-
+    const INSTAGRAM_URL =
+        "https://www.instagram.com/_vickyyy.24/";
 </script>
 
 
@@ -138,10 +149,8 @@
 
     <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
 
-        <a
-            href="/"
-            class="group text-xl font-bold tracking-tight"
-        >
+        <a href="/" class="group text-xl font-bold tracking-tight">
+
             <span class="transition group-hover:text-cyan-300">
                 Vicky
             </span>
@@ -149,8 +158,8 @@
             <span class="text-cyan-400">
                 Web Agency
             </span>
-        </a>
 
+        </a>
 
         <nav class="hidden gap-8 text-sm text-slate-300 md:flex">
 
@@ -172,10 +181,11 @@
 
         </nav>
 
-
         <a
             id="navWhatsApp"
             href="#"
+            target="_blank"
+            rel="noopener noreferrer"
             class="rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:scale-105 hover:bg-cyan-300"
         >
             WhatsApp
@@ -186,26 +196,19 @@
 </header>
 
 
-
 <!-- ========================================================= -->
 <!-- HERO -->
 <!-- ========================================================= -->
 
 <main>
 
-<section
-    class="grid-bg relative min-h-screen overflow-hidden pt-28"
->
-
-    <!-- Background glow -->
+<section class="grid-bg relative min-h-screen overflow-hidden pt-28">
 
     <div class="glow pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl"></div>
 
     <div class="glow pointer-events-none absolute -right-40 top-40 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
 
-
     <div class="relative mx-auto grid max-w-6xl gap-16 px-6 py-24 md:grid-cols-2 md:items-center">
-
 
         <!-- HERO TEXT -->
 
@@ -219,7 +222,6 @@
 
             </div>
 
-
             <h1 class="max-w-3xl text-5xl font-black leading-[1.05] tracking-tight md:text-7xl">
 
                 Your business deserves
@@ -230,7 +232,6 @@
 
             </h1>
 
-
             <p class="mt-7 max-w-xl text-lg leading-8 text-slate-300">
 
                 We create modern, fast and professional websites
@@ -238,43 +239,41 @@
 
             </p>
 
-
             <div class="mt-9 flex flex-col gap-4 sm:flex-row">
 
                 <a
                     href="#demos"
-                    class="group rounded-xl bg-cyan-400 px-7 py-4 text-center font-bold text-slate-950 transition hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-xl hover:shadow-cyan-500/20"
+                    class="group shine rounded-xl bg-cyan-400 px-7 py-4 text-center font-bold text-slate-950 transition hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-xl hover:shadow-cyan-500/20"
                 >
                     View Website Demos
+
                     <span class="ml-1 inline-block transition group-hover:translate-x-1">
                         →
                     </span>
-                </a>
 
+                </a>
 
                 <a
                     id="heroWhatsApp"
                     href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="rounded-xl border border-white/15 bg-white/5 px-7 py-4 text-center font-semibold backdrop-blur transition hover:-translate-y-1 hover:bg-white/10"
                 >
-                    Chat on WhatsApp
+                    💬 Chat on WhatsApp
                 </a>
 
             </div>
 
-
             <div class="mt-8 flex flex-wrap gap-5 text-sm text-slate-400">
 
                 <span>✓ Mobile friendly</span>
-
                 <span>✓ Fast loading</span>
-
                 <span>✓ Modern design</span>
 
             </div>
 
         </div>
-
 
 
         <!-- INTERACTIVE 3D HERO -->
@@ -286,16 +285,9 @@
                 class="tilt-card float relative mx-auto max-w-lg"
             >
 
-                <!-- Glow -->
-
                 <div class="absolute -inset-5 rounded-[2rem] bg-cyan-400/10 blur-3xl"></div>
 
-
-                <!-- Browser -->
-
                 <div class="relative overflow-hidden rounded-3xl border border-white/15 bg-slate-900/90 shadow-2xl">
-
-                    <!-- Browser top -->
 
                     <div class="flex items-center gap-2 border-b border-white/10 px-5 py-4">
 
@@ -309,9 +301,6 @@
 
                     </div>
 
-
-                    <!-- Browser content -->
-
                     <div class="p-6 md:p-8">
 
                         <div class="rounded-2xl bg-gradient-to-br from-cyan-400/20 via-blue-500/10 to-transparent p-7">
@@ -321,16 +310,18 @@
                             </div>
 
                             <h2 class="mt-4 text-3xl font-black">
+
                                 Look better.
+
                                 <span class="text-cyan-400">
                                     Sell better.
                                 </span>
+
                             </h2>
 
                             <p class="mt-4 text-sm leading-6 text-slate-400">
                                 A modern digital presence built around your business.
                             </p>
-
 
                             <div class="mt-7 flex gap-3">
 
@@ -346,19 +337,13 @@
 
                         </div>
 
-
-                        <!-- Fake website blocks -->
-
                         <div class="mt-5 grid grid-cols-3 gap-3">
 
                             <div class="h-20 rounded-xl bg-white/5"></div>
-
                             <div class="h-20 rounded-xl bg-white/5"></div>
-
                             <div class="h-20 rounded-xl bg-white/5"></div>
 
                         </div>
-
 
                         <div class="mt-4 h-3 rounded-full bg-white/5"></div>
 
@@ -367,9 +352,6 @@
                     </div>
 
                 </div>
-
-
-                <!-- Floating badge -->
 
                 <div class="absolute -right-4 -top-5 rounded-2xl border border-cyan-400/20 bg-slate-900/90 px-5 py-4 shadow-xl backdrop-blur-xl">
 
@@ -382,9 +364,6 @@
                     </div>
 
                 </div>
-
-
-                <!-- Floating speed badge -->
 
                 <div class="absolute -bottom-5 -left-4 rounded-2xl border border-white/10 bg-slate-900/90 px-5 py-4 shadow-xl backdrop-blur-xl">
 
@@ -405,7 +384,6 @@
     </div>
 
 </section>
-
 
 
 <!-- ========================================================= -->
@@ -436,11 +414,9 @@
 
         </div>
 
-
         <div class="mt-14 grid gap-6 md:grid-cols-3">
 
-
-            <div class="reveal group rounded-2xl border border-white/10 bg-white/5 p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]">
+            <div class="reveal shine group rounded-2xl border border-white/10 bg-white/5 p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]">
 
                 <div class="text-4xl transition duration-300 group-hover:scale-110">
                     🌐
@@ -456,8 +432,7 @@
 
             </div>
 
-
-            <div class="reveal group rounded-2xl border border-white/10 bg-white/5 p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]">
+            <div class="reveal shine group rounded-2xl border border-white/10 bg-white/5 p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]">
 
                 <div class="text-4xl transition duration-300 group-hover:scale-110">
                     🎨
@@ -473,8 +448,7 @@
 
             </div>
 
-
-            <div class="reveal group rounded-2xl border border-white/10 bg-white/5 p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]">
+            <div class="reveal shine group rounded-2xl border border-white/10 bg-white/5 p-7 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07]">
 
                 <div class="text-4xl transition duration-300 group-hover:scale-110">
                     ⚡
@@ -495,7 +469,6 @@
     </div>
 
 </section>
-
 
 
 <!-- ========================================================= -->
@@ -522,15 +495,11 @@
 
         </div>
 
-
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-
-            <!-- DEMO CARD -->
 
             <a
                 href="/chaika-adda/"
-                class="reveal group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20"
+                class="reveal shine group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20"
             >
 
                 <div class="flex h-44 items-center justify-center bg-gradient-to-br from-amber-500/20 to-orange-500/5">
@@ -562,7 +531,7 @@
 
             <a
                 href="/real-momos/"
-                class="reveal group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
+                class="reveal shine group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
             >
 
                 <div class="flex h-44 items-center justify-center bg-gradient-to-br from-red-500/20 to-orange-500/5">
@@ -594,7 +563,7 @@
 
             <a
                 href="/grand-dhillon/"
-                class="reveal group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
+                class="reveal shine group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
             >
 
                 <div class="flex h-44 items-center justify-center bg-gradient-to-br from-blue-500/20 to-indigo-500/5">
@@ -626,7 +595,7 @@
 
             <a
                 href="/dashmesh-dhaba/"
-                class="reveal group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
+                class="reveal shine group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
             >
 
                 <div class="flex h-44 items-center justify-center bg-gradient-to-br from-yellow-500/20 to-red-500/5">
@@ -658,7 +627,7 @@
 
             <a
                 href="/bhadohi-chat-corner/"
-                class="reveal group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
+                class="reveal shine group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
             >
 
                 <div class="flex h-44 items-center justify-center bg-gradient-to-br from-pink-500/20 to-orange-500/5">
@@ -690,7 +659,7 @@
 
             <a
                 href="/juice-factory/"
-                class="reveal group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
+                class="reveal shine group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/40"
             >
 
                 <div class="flex h-44 items-center justify-center bg-gradient-to-br from-green-500/20 to-lime-500/5">
@@ -726,7 +695,6 @@
 </section>
 
 
-
 <!-- ========================================================= -->
 <!-- PROCESS -->
 <!-- ========================================================= -->
@@ -749,7 +717,6 @@
             </h2>
 
         </div>
-
 
         <div class="mt-14 grid gap-10 md:grid-cols-3">
 
@@ -810,7 +777,6 @@
 </section>
 
 
-
 <!-- ========================================================= -->
 <!-- CONTACT -->
 <!-- ========================================================= -->
@@ -834,17 +800,17 @@
                 Let's talk.
             </p>
 
-
             <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
 
                 <a
                     id="contactWhatsApp"
                     href="#"
-                    class="rounded-xl bg-cyan-400 px-7 py-4 font-bold text-slate-950 transition hover:-translate-y-1 hover:bg-cyan-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-xl bg-green-500 px-7 py-4 font-bold text-white transition hover:-translate-y-1 hover:bg-green-400 hover:shadow-xl hover:shadow-green-950/30"
                 >
                     💬 WhatsApp Us
                 </a>
-
 
                 <a
                     href="mailto:vickywebagency@gmail.com"
@@ -852,7 +818,6 @@
                 >
                     ✉ Email Us
                 </a>
-
 
                 <a
                     id="instagramLink"
@@ -873,7 +838,6 @@
 </section>
 
 </main>
-
 
 
 <!-- ========================================================= -->
@@ -903,6 +867,8 @@
             <a
                 id="footerWhatsApp"
                 href="#"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="transition hover:text-green-300"
             >
                 WhatsApp
@@ -915,7 +881,6 @@
 </footer>
 
 
-
 <!-- ========================================================= -->
 <!-- FLOATING WHATSAPP -->
 <!-- ========================================================= -->
@@ -923,12 +888,23 @@
 <a
     id="floatingWhatsApp"
     href="#"
+    target="_blank"
+    rel="noopener noreferrer"
     aria-label="Chat on WhatsApp"
-    class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-2xl shadow-2xl shadow-green-950/40 transition hover:scale-110 hover:bg-green-400"
+    class="group fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full border border-green-300/30 bg-green-500 text-3xl text-white shadow-2xl shadow-green-950/50 transition-all duration-300 hover:-translate-y-2 hover:scale-110 hover:bg-green-400"
 >
-    💬
-</a>
 
+    <span class="absolute inset-0 rounded-full bg-green-400 opacity-30 blur-xl transition group-hover:opacity-70"></span>
+
+    <span class="relative transition-transform duration-300 group-hover:rotate-12">
+        💬
+    </span>
+
+    <span class="absolute -right-1 -top-1 h-4 w-4 animate-ping rounded-full bg-green-300"></span>
+
+    <span class="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-green-400"></span>
+
+</a>
 
 
 <!-- ========================================================= -->
@@ -937,12 +913,12 @@
 
 <script>
 
-    /*
-        WhatsApp links
-    */
+    /* =========================================
+       WHATSAPP
+       ========================================= */
 
     const whatsappMessage =
-        "Hi Vicky Web Agency, I'm interested in getting a website for my business.";
+        "Hi Vicky Web Agency, mujhe apne business ke liye website banwani hai. Mujhe aapke website services ke baare mein jaanna hai.";
 
     const whatsappURL =
         "https://wa.me/" +
@@ -951,77 +927,109 @@
         encodeURIComponent(whatsappMessage);
 
 
-    document.getElementById("navWhatsApp").href = whatsappURL;
-
-    document.getElementById("heroWhatsApp").href = whatsappURL;
-
-    document.getElementById("contactWhatsApp").href = whatsappURL;
-
-    document.getElementById("footerWhatsApp").href = whatsappURL;
-
-    document.getElementById("floatingWhatsApp").href = whatsappURL;
+    const whatsappButtons = [
+        "navWhatsApp",
+        "heroWhatsApp",
+        "contactWhatsApp",
+        "footerWhatsApp",
+        "floatingWhatsApp"
+    ];
 
 
-    /*
-        Instagram
-    */
+    whatsappButtons.forEach(function(id) {
 
-    document.getElementById("instagramLink").href = INSTAGRAM_URL;
+        const element = document.getElementById(id);
 
-    document.getElementById("footerInstagram").href = INSTAGRAM_URL;
+        if (element) {
+            element.href = whatsappURL;
+        }
+
+    });
 
 
-    /*
-        Interactive hero tilt
-    */
+    /* =========================================
+       INSTAGRAM
+       ========================================= */
+
+    const instagramButtons = [
+        "instagramLink",
+        "footerInstagram"
+    ];
+
+
+    instagramButtons.forEach(function(id) {
+
+        const element = document.getElementById(id);
+
+        if (element) {
+            element.href = INSTAGRAM_URL;
+        }
+
+    });
+
+
+    /* =========================================
+       INTERACTIVE 3D HERO
+       ========================================= */
 
     const heroCard =
         document.getElementById("heroCard");
 
-    if (heroCard && window.matchMedia("(pointer:fine)").matches) {
 
-        heroCard.addEventListener("mousemove", function(event) {
+    if (
+        heroCard &&
+        window.matchMedia("(pointer:fine)").matches
+    ) {
 
-            const rect =
-                heroCard.getBoundingClientRect();
+        heroCard.addEventListener(
+            "mousemove",
+            function(event) {
 
-            const x =
-                event.clientX - rect.left;
+                const rect =
+                    heroCard.getBoundingClientRect();
 
-            const y =
-                event.clientY - rect.top;
+                const x =
+                    event.clientX - rect.left;
 
-            const centerX =
-                rect.width / 2;
+                const y =
+                    event.clientY - rect.top;
 
-            const centerY =
-                rect.height / 2;
+                const centerX =
+                    rect.width / 2;
 
-            const rotateY =
-                ((x - centerX) / centerX) * 7;
+                const centerY =
+                    rect.height / 2;
 
-            const rotateX =
-                ((centerY - y) / centerY) * 7;
+                const rotateY =
+                    ((x - centerX) / centerX) * 7;
 
-            heroCard.style.transform =
-                `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-
-        });
+                const rotateX =
+                    ((centerY - y) / centerY) * 7;
 
 
-        heroCard.addEventListener("mouseleave", function() {
+                heroCard.style.transform =
+                    `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
 
-            heroCard.style.transform =
-                "rotateX(0deg) rotateY(0deg) translateY(0)";
+            }
+        );
 
-        });
+
+        heroCard.addEventListener(
+            "mouseleave",
+            function() {
+
+                heroCard.style.transform =
+                    "rotateX(0deg) rotateY(0deg) translateY(0)";
+
+            }
+        );
 
     }
 
 
-    /*
-        Scroll reveal
-    */
+    /* =========================================
+       SCROLL REVEAL
+       ========================================= */
 
     const revealElements =
         document.querySelectorAll(".reveal");
@@ -1057,7 +1065,6 @@
     });
 
 </script>
-
 
 </body>
 </html>
