@@ -1,0 +1,106 @@
+[
+  {
+    "business_name": "Lenox Health Greenwich Village",
+    "business_type": "hospital",
+    "location": "New York, USA",
+    "slug": "lenox-health-greenwich-village",
+    "url": "/lenox-health-greenwich-village/",
+    "created_at": "2026-08-11T23:38:23"
+  },
+  {
+    "business_name": "Montefiore Medical Center",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "montefiore-medical-center",
+    "url": "/montefiore-medical-center/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Montefiore Medical Center West Campus Moses Division Hospital",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "montefiore-medical-center-west-campus-moses-division-hospital",
+    "url": "/montefiore-medical-center-west-campus-moses-division-hospital/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Devika Nursing Home Sindhi Colony Station Road Durg",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "devika-nursing-home-sindhi-colony-station-road-durg",
+    "url": "/devika-nursing-home-sindhi-colony-station-road-durg/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Bhilai Nursing Home",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "bhilai-nursing-home",
+    "url": "/bhilai-nursing-home/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Test Cafe",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "test-cafe",
+    "url": "/test-cafe/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Chaika Adda",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "chaika-adda",
+    "url": "/chaika-adda/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Juice Factory",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "juice-factory",
+    "url": "/juice-factory/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Bhadohi Chat Corner",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "bhadohi-chat-corner",
+    "url": "/bhadohi-chat-corner/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Dashmesh Dhaba",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "dashmesh-dhaba",
+    "url": "/dashmesh-dhaba/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Grand Dhillon",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "grand-dhillon",
+    "url": "/grand-dhillon/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Graduate Momo Wala",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "graduate-momo-wala",
+    "url": "/graduate-momo-wala/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Vickyai Agency ",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "vickyai-agency-",
+    "url": "/vickyai-agency-/",
+    "created_at": ""
+  }
+]

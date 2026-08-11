@@ -67,7 +67,9 @@ HEADERS = {
     )
 }
 
-REQUEST_TIMEOUT = 45
+REQUEST_TIMEOUT = 18
+NOMINATIM_TIMEOUT = 18
+OVERPASS_QUERY_TIMEOUT = 25
 
 
 # ============================================================
@@ -436,228 +438,119 @@ def geocode_location(location):
 # OSM QUERY BUILDER
 # ============================================================
 
-def build_query(
-    business_type,
-    lat,
-    lon
-):
-
-    # Search radius ~25 km
-    radius = 25000
-
-    # --------------------------------------------------------
-    # Specific business mappings
-    # --------------------------------------------------------
-
-    queries = {
-
-        "restaurant": [
-            '["amenity"="restaurant"]'
-        ],
-
-        "cafe": [
-            '["amenity"="cafe"]'
-        ],
-
-        "hospital": [
-            '["amenity"="hospital"]'
-        ],
-
-        "clinic": [
-            '["amenity"="clinic"]'
-        ],
-
-        "dentist": [
-            '["amenity"="dentist"]'
-        ],
-
-        "pharmacy": [
-            '["amenity"="pharmacy"]'
-        ],
-
-        "school": [
-            '["amenity"="school"]'
-        ],
-
-        "college": [
-            '["amenity"="college"]'
-        ],
-
-        "university": [
-            '["amenity"="university"]'
-        ],
-
-        "hotel": [
-            '["tourism"="hotel"]'
-        ],
-
-        "bakery": [
-            '["shop"="bakery"]'
-        ],
-
-        "salon": [
-            '["shop"="hairdresser"]'
-        ],
-
-        "barber": [
-            '["shop"="barber"]'
-        ],
-
-        "gym": [
-            '["leisure"="fitness_centre"]'
-        ],
-
-        "supermarket": [
-            '["shop"="supermarket"]'
-        ],
-
-        "clothing": [
-            '["shop"="clothes"]'
-        ],
-
-        "jewelry": [
-            '["shop"="jewelry"]'
-        ],
-
-        "furniture": [
-            '["shop"="furniture"]'
-        ],
-
-        "electronics": [
-            '["shop"="electronics"]'
-        ],
-
-        "lawyer": [
-            '["office"="lawyer"]'
-        ],
-
-        "real_estate": [
-            '["office"="estate_agent"]'
-        ],
-
-        "car_dealer": [
-            '["shop"="car"]'
-        ],
-
+def build_query(business_type, lat, lon, radius=8000):
+    mappings = {
+        "restaurant": ['["amenity"="restaurant"]'],
+        "cafe": ['["amenity"="cafe"]'],
+        "hospital": ['["amenity"="hospital"]'],
+        "clinic": ['["amenity"="clinic"]'],
+        "dentist": ['["amenity"="dentist"]'],
+        "doctor": ['["amenity"="doctors"]'],
+        "pharmacy": ['["amenity"="pharmacy"]'],
+        "school": ['["amenity"="school"]'],
+        "college": ['["amenity"="college"]'],
+        "university": ['["amenity"="university"]'],
+        "hotel": ['["tourism"="hotel"]'],
+        "bakery": ['["shop"="bakery"]'],
+        "salon": ['["shop"="hairdresser"]'],
+        "barber": ['["shop"="barber"]'],
+        "gym": ['["leisure"="fitness_centre"]'],
+        "supermarket": ['["shop"="supermarket"]'],
+        "clothing": ['["shop"="clothes"]'],
+        "jewelry": ['["shop"="jewelry"]'],
+        "furniture": ['["shop"="furniture"]'],
+        "electronics": ['["shop"="electronics"]'],
+        "lawyer": ['["office"="lawyer"]'],
+        "real_estate": ['["office"="estate_agent"]'],
+        "car_dealer": ['["shop"="car"]'],
     }
-
-    tags = queries.get(
-        business_type
-    )
-
-    # --------------------------------------------------------
-    # Generic business search
-    # --------------------------------------------------------
-
-    if not tags:
-
-        tags = [
-            '["name"]'
-        ]
-
+    tags = mappings.get(business_type, ['["name"]'])
     parts = []
-
     for tag in tags:
-
         parts.append(
-            f"""
-            node(around:{radius},{lat},{lon}){tag};
-            way(around:{radius},{lat},{lon}){tag};
-            relation(around:{radius},{lat},{lon}){tag};
-            """
+            f'node(around:{radius},{lat},{lon}){tag};'
+            f'way(around:{radius},{lat},{lon}){tag};'
+            f'relation(around:{radius},{lat},{lon}){tag};'
         )
-
-    body = "\n".join(parts)
-
-    query = f"""
-    [out:json][timeout:40];
-
-    (
-        {body}
-    );
-
-    out center tags;
-    """
-
-    return query
+    return '[out:json][timeout:25];\n(\n' + '\n'.join(parts) + '\n);\nout center tags;'
 
 
-# ============================================================
-# OVERPASS SEARCH
-# ============================================================
-
-def search_overpass(
-    business_type,
-    lat,
-    lon,
-    quantity
-):
-
-    query = build_query(
-        business_type,
-        lat,
-        lon
-    )
-
-    for endpoint in OVERPASS_ENDPOINTS:
-
-        log("")
-        log(
-            f"[SEARCH] Using Overpass: "
-            f"{endpoint}"
-        )
-
+def search_nominatim_businesses(business_type, location, quantity):
+    """Fallback search when Overpass is unavailable."""
+    aliases = {
+        "doctors": "doctor", "doctor": "doctor",
+        "dentists": "dentist", "clinics": "clinic",
+        "restaurants": "restaurant", "hotels": "hotel",
+        "gyms": "gym", "salons": "salon",
+    }
+    query_type = aliases.get(business_type, business_type.replace("_", " "))
+    queries = [f"{query_type} in {location}", f"{query_type}, {location}"]
+    for q in queries:
         try:
-
-            response = requests.post(
-                endpoint,
-                data=query,
+            response = requests.get(
+                NOMINATIM_URL,
+                params={"q": q, "format": "json", "limit": min(quantity * 3, 50), "addressdetails": 1},
                 headers=HEADERS,
-                timeout=REQUEST_TIMEOUT
+                timeout=NOMINATIM_TIMEOUT,
             )
-
             if response.status_code != 200:
-
-                log(
-                    f"[WARNING] HTTP "
-                    f"{response.status_code}"
-                )
-
                 continue
-
-            data = response.json()
-
-            elements = data.get(
-                "elements",
-                []
-            )
-
-            log(
-                f"[SEARCH] Raw results: "
-                f"{len(elements)}"
-            )
-
+            results = response.json() or []
+            if not results:
+                continue
+            elements = []
+            for item in results:
+                tags = {
+                    "name": item.get("display_name", "").split(",")[0].strip(),
+                    "website": item.get("extratags", {}).get("website", ""),
+                    "phone": item.get("extratags", {}).get("phone", ""),
+                }
+                elements.append({
+                    "type": "nominatim",
+                    "id": item.get("osm_id", ""),
+                    "lat": float(item.get("lat", 0)),
+                    "lon": float(item.get("lon", 0)),
+                    "tags": tags,
+                })
             if elements:
-
+                log(f"[FALLBACK] Nominatim returned {len(elements)} candidates.")
                 return elements
-
-        except requests.RequestException as e:
-
-            log(
-                f"[WARNING] Endpoint failed: "
-                f"{e}"
-            )
-
-        except Exception as e:
-
-            log(
-                f"[WARNING] Parse failed: "
-                f"{e}"
-            )
-
-        time.sleep(1)
-
+        except requests.RequestException as error:
+            log(f"[FALLBACK] Nominatim unavailable: {error}")
+            break
+        except Exception as error:
+            log(f"[FALLBACK] Nominatim parse error: {error}")
     return []
+
+
+def search_overpass(business_type, lat, lon, quantity, location=""):
+    # Small radius first avoids 504s on large metro areas; expand only if needed.
+    radii = [8000, 15000, 25000]
+    for radius in radii:
+        query = build_query(business_type, lat, lon, radius)
+        for endpoint in OVERPASS_ENDPOINTS:
+            log(f"[SEARCH] Overpass radius {radius/1000:.0f} km: {endpoint}")
+            for method in ("post", "get"):
+                try:
+                    if method == "post":
+                        response = requests.post(endpoint, data={"data": query}, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+                    else:
+                        response = requests.get(endpoint, params={"data": query}, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+                    if response.status_code != 200:
+                        log(f"[WARNING] {method.upper()} HTTP {response.status_code}")
+                        continue
+                    data = response.json()
+                    elements = data.get("elements", [])
+                    log(f"[SEARCH] Raw results: {len(elements)}")
+                    if elements:
+                        return elements
+                except requests.RequestException as error:
+                    log(f"[WARNING] {method.upper()} failed: {error}")
+                except Exception as error:
+                    log(f"[WARNING] Response parse failed: {error}")
+                time.sleep(0.4)
+    log("[FALLBACK] All Overpass endpoints failed. Trying Nominatim business search...")
+    return search_nominatim_businesses(business_type, location, quantity)
 
 
 # ============================================================
@@ -993,7 +886,8 @@ def main():
         business_type,
         geo["lat"],
         geo["lon"],
-        quantity
+        quantity,
+        location
     )
 
     if not elements:

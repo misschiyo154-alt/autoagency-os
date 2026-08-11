@@ -104,6 +104,10 @@ SEND_EMAIL_FILE = (
     / "send_email.py"
 )
 
+APPROVAL_FILE = BASE_DIR / "09-history" / "pending_approval.json"
+AGENCY_URL = "https://vickywebagency.pages.dev/"
+approval_notified_key = None
+
 
 # ============================================================
 # AIRA SETTINGS
@@ -1221,18 +1225,26 @@ def workflow_worker():
 
                 command.extend(
                     [
-                        "--quantity",
-                        str(quantity),
-
-                        "--business-type",
-                        str(
-                            business_type
-                        ),
-
-                        "--location",
-                        str(location),
+                        "--quantity", str(quantity),
+                        "--business-type", str(business_type),
+                        "--location", str(location),
+                        "--generate-website",
+                        "--generate-email",
+                        "--deploy",
+                        "--git-push",
+                        "--approval-required",
                     ]
                 )
+
+            # Every Telegram workflow is the full production pipeline, but it pauses for Boss approval before publishing.
+            if "--generate-website" not in command:
+                command.extend([
+                    "--generate-website",
+                    "--generate-email",
+                    "--deploy",
+                    "--git-push",
+                    "--approval-required",
+                ])
 
             print(
                 "[WORKFLOW COMMAND]",
@@ -1674,11 +1686,27 @@ async def execute_intent(
 
     if action == "approve":
 
-        await update.message.reply_text(
-            "👍 Approval command received Boss.\n"
-            "Pending email system check kar rahi hoon."
-        )
+        if not APPROVAL_FILE.exists():
+            await update.message.reply_text(
+                "Boss, abhi koi website publish approval pending nahi hai."
+            )
+            return
 
+        try:
+            data = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
+            if str(data.get("status", "")).upper() != "WAITING_APPROVAL":
+                await update.message.reply_text("Boss, abhi active approval request nahi hai.")
+                return
+            data["status"] = "APPROVED"
+            data["approved_at"] = datetime.now().isoformat(timespec="seconds")
+            APPROVAL_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
+            await update.message.reply_text(
+                "✅ Approved Boss.\n\n"
+                "Ab GitHub push + Cloudflare deployment continue hoga.\n"
+                f"Permanent URL: {AGENCY_URL}"
+            )
+        except Exception as error:
+            await update.message.reply_text(f"Boss, approval save nahi hua: {error}")
         return
 
     # ========================================================
@@ -1687,11 +1715,23 @@ async def execute_intent(
 
     if action == "reject":
 
-        await update.message.reply_text(
-            "👍 Theek hai Boss.\n"
-            "Reject command receive ho gaya."
-        )
+        if not APPROVAL_FILE.exists():
+            await update.message.reply_text(
+                "Boss, abhi koi pending website approval nahi hai."
+            )
+            return
 
+        try:
+            data = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
+            data["status"] = "REJECTED"
+            data["rejected_at"] = datetime.now().isoformat(timespec="seconds")
+            APPROVAL_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
+            await update.message.reply_text(
+                "❌ Rejected Boss.\n\n"
+                "Is run ka GitHub/Cloudflare publish nahi hoga."
+            )
+        except Exception as error:
+            await update.message.reply_text(f"Boss, reject save nahi hua: {error}")
         return
 
     # ========================================================
@@ -2095,8 +2135,31 @@ async def monitor_job(
     context: ContextTypes.DEFAULT_TYPE
 ):
 
-    if not workflow_running:
+    global approval_notified_key
 
+    # Notify Boss when a generated website is waiting for production approval.
+    if APPROVAL_FILE.exists() and OWNER_CHAT_ID:
+        try:
+            data = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
+            if str(data.get("status", "")).upper() == "WAITING_APPROVAL":
+                key = f"{data.get('created_at')}:{data.get('business_name')}"
+                if key != approval_notified_key:
+                    approval_notified_key = key
+                    await context.bot.send_message(
+                        chat_id=int(OWNER_CHAT_ID),
+                        text=(
+                            "🟡 WEBSITE APPROVAL REQUIRED\n\n"
+                            f"Business: {data.get('business_name', 'Unknown')}\n"
+                            f"Preview: {data.get('demo_url', AGENCY_URL)}\n"
+                            f"Agency: {AGENCY_URL}\n\n"
+                            "Reply /approve to publish\n"
+                            "Reply /reject to cancel"
+                        )
+                    )
+        except Exception as error:
+            print("Approval monitor error:", error)
+
+    if not workflow_running:
         return
 
     stats = lead_stats()
@@ -2252,8 +2315,8 @@ def main():
 
         app.job_queue.run_repeating(
             monitor_job,
-            interval=60,
-            first=20
+            interval=5,
+            first=5
         )
 
     print(

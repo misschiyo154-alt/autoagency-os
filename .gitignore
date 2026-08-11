@@ -2,17 +2,23 @@
 __pycache__/
 *.pyc
 
-# Virtual Environment
+# Virtual environment
 .venv/
 venv/
 
-# Environment Variables
+# Secrets
 .env
 
-# VS Code
+# Editors / OS
 .vscode/
-
-# OS Files
 .DS_Store
 Thumbs.db
+
+# Local backups / debug dumps
 05-leads/leads_backup.csv
+email_debug.txt
+generate_email_full.txt
+output.txt
+
+# Runtime approval state
+09-history/pending_approval.json

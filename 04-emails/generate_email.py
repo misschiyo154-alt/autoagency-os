@@ -7,6 +7,7 @@ import requests
 from dotenv import load_dotenv
 
 
+
 # ============================================================
 # AUTOAGENCYOS EMAIL GENERATOR
 # ============================================================
@@ -19,6 +20,8 @@ from dotenv import load_dotenv
 # parents[1] = AutoAgencyOS
 
 BASE_DIR = Path(__file__).resolve().parents[1]
+
+from config import AGENCY_URL
 
 PROMPT_PATH = BASE_DIR / "04-emails" / "email-prompt.md"
 OUTPUT_DIR = BASE_DIR / "04-emails" / "generated"
