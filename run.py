@@ -1,86 +1,92 @@
-from config import *
-
-import argparse
-import csv
 import os
-import re
-import shutil
-import subprocess
 import sys
-import time
-from datetime import datetime
+import csv
+import re
+import argparse
+import subprocess
 from pathlib import Path
-
-from telegram_notify import send_telegram
 
 
 # ============================================================
-# PATHS
+# AUTOAGENCYOS - FULL PIPELINE RUNNER
+# ============================================================
+
+# ------------------------------------------------------------
+# WINDOWS UTF-8
+# ------------------------------------------------------------
+
+if os.name == "nt":
+    try:
+        sys.stdout.reconfigure(
+            encoding="utf-8",
+            errors="replace"
+        )
+
+        sys.stderr.reconfigure(
+            encoding="utf-8",
+            errors="replace"
+        )
+    except Exception:
+        pass
+
+    os.environ["PYTHONIOENCODING"] = "utf-8"
+    os.environ["PYTHONUTF8"] = "1"
+
+
+# ============================================================
+# PROJECT ROOT
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent
 
-LEADS_FILE = BASE_DIR / "05-leads" / "leads.csv"
-BACKUP_FILE = BASE_DIR / "05-leads" / "leads_backup.csv"
-
-HISTORY_FILE = BASE_DIR / "09-history" / "history.csv"
-
-SCRAPER_FILE = BASE_DIR / "08-scripts" / "scrape_leads.py"
-ENRICH_FILE = BASE_DIR / "08-scripts" / "enrich_leads.py"
-
-WEBSITE_FILE = (
-    BASE_DIR /
-    "08-scripts" /
-    "generate_website.py"
-)
-
-EMAIL_FILE = (
-    BASE_DIR /
-    "04-emails" /
-    "generate_email.py"
-)
-
-GIT_FILE = (
-    BASE_DIR /
-    "08-scripts" /
-    "git_push.py"
-)
-
-REDIRECTS_FILE = BASE_DIR / "_redirects"
-
-
 PYTHON = sys.executable
 
 
-FIELDNAMES = [
-    "Business Name",
-    "Business Type",
-    "Location",
-    "Email",
-    "Website",
-    "Demo URL",
-    "Status",
-]
-
-
 # ============================================================
-# SETTINGS
+# FILE PATHS
 # ============================================================
 
-MAX_RETRIES = 3
-RETRY_DELAY = 15
+LEADS_FILE = (
+    BASE_DIR
+    / "05-leads"
+    / "leads.csv"
+)
 
-DEFAULT_TIMEOUT = 60 * 60
+SCRAPER = (
+    BASE_DIR
+    / "08-scripts"
+    / "scrape_leads.py"
+)
 
+ENRICHER = (
+    BASE_DIR
+    / "08-scripts"
+    / "enrich_leads.py"
+)
 
-# ============================================================
-# START
-# ============================================================
+WEBSITE_GENERATOR = (
+    BASE_DIR
+    / "08-scripts"
+    / "generate_website.py"
+)
 
-print()
-print("=" * 60)
-print("🚀 AutoAgencyOS Pipeline")
-print("=" * 60)
+GIT_PUSHER = (
+    BASE_DIR
+    / "08-scripts"
+    / "git_push.py"
+)
+
+REDIRECT_UPDATER = (
+    BASE_DIR
+    / "08-scripts"
+    / "update_redirects.py"
+)
+
+EMAIL_GENERATOR = (
+    BASE_DIR
+    / "04-emails"
+    / "generate_email.py"
+)
 
 
 # ============================================================
@@ -88,242 +94,468 @@ print("=" * 60)
 # ============================================================
 
 parser = argparse.ArgumentParser(
-    description="AutoAgencyOS Lead Pipeline"
+    description="AutoAgencyOS Full Automation Pipeline"
 )
 
-parser.add_argument(
-    "--type",
-    dest="business_type",
-    required=True,
-    help="Business type, e.g. doctors"
-)
-
-parser.add_argument(
-    "--location",
-    dest="location",
-    required=True,
-    help="Location, e.g. bhilai"
-)
 
 parser.add_argument(
     "--quantity",
-    dest="quantity",
     type=int,
-    required=True,
-    help="Number of leads required"
+    default=5,
+    help="Number of leads to process"
 )
+
+
+parser.add_argument(
+    "--business-type",
+    type=str,
+    default="businesses",
+    help="Business type"
+)
+
+
+parser.add_argument(
+    "--location",
+    type=str,
+    default="",
+    help="Worldwide location"
+)
+
+
+parser.add_argument(
+    "--generate-website",
+    action="store_true",
+    help="Generate website for the lead"
+)
+
+
+parser.add_argument(
+    "--git-push",
+    action="store_true",
+    help="Push generated website to Git"
+)
+
+
+parser.add_argument(
+    "--deploy",
+    action="store_true",
+    help="Update redirects/deployment configuration"
+)
+
+
+parser.add_argument(
+    "--generate-email",
+    action="store_true",
+    help="Generate personalized cold email"
+)
+
 
 args = parser.parse_args()
 
 
-BUSINESS_TYPE = (
+# ============================================================
+# NORMALIZE
+# ============================================================
+
+quantity = max(
+    1,
+    args.quantity
+)
+
+business_type = (
     args.business_type
-    .strip()
-    .lower()
-)
+    or "businesses"
+).strip()
 
-LOCATION = (
+location = (
     args.location
-    .strip()
-    .lower()
+    or ""
+).strip()
+
+
+# ============================================================
+# SAFE LOG
+# ============================================================
+
+def log(message=""):
+
+    try:
+
+        print(
+            str(message),
+            flush=True
+        )
+
+    except Exception:
+
+        try:
+
+            print(
+                str(message)
+                .encode(
+                    "ascii",
+                    errors="replace"
+                )
+                .decode("ascii"),
+                flush=True
+            )
+
+        except Exception:
+            pass
+
+
+# ============================================================
+# HEADER
+# ============================================================
+
+log()
+log("=" * 70)
+log("AUTOAGENCYOS FULL PIPELINE")
+log("=" * 70)
+
+log(
+    f"Quantity      : {quantity}"
 )
 
-QUANTITY = args.quantity
+log(
+    f"Business Type : {business_type}"
+)
+
+log(
+    f"Location      : "
+    f"{location if location else 'default'}"
+)
+
+log(
+    f"Project       : {BASE_DIR}"
+)
+
+log("=" * 70)
 
 
-if QUANTITY <= 0:
+# ============================================================
+# RUN SCRIPT
+# ============================================================
 
-    print(
-        "❌ Quantity must be greater than 0."
+def run_script(
+    script_path,
+    input_text=None,
+    extra_args=None
+):
+
+    script_path = Path(
+        script_path
+    )
+
+    if not script_path.exists():
+
+        log()
+        log(
+            f"[ERROR] Script not found:"
+        )
+
+        log(
+            str(script_path)
+        )
+
+        return False, ""
+
+
+    command = [
+        PYTHON,
+        str(script_path)
+    ]
+
+
+    if extra_args:
+
+        command.extend(
+            [
+                str(x)
+                for x in extra_args
+            ]
+        )
+
+
+    log()
+    log("=" * 70)
+
+    log(
+        f"Running: {script_path.name}"
+    )
+
+    log(
+        "Command: "
+        + " ".join(
+            f'"{x}"'
+            if " " in str(x)
+            else str(x)
+            for x in command
+        )
+    )
+
+    log("=" * 70)
+
+
+    env = os.environ.copy()
+
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
+
+
+    try:
+
+        process = subprocess.run(
+
+            command,
+
+            cwd=str(BASE_DIR),
+
+            input=input_text,
+
+            text=True,
+
+            encoding="utf-8",
+
+            errors="replace",
+
+            stdout=subprocess.PIPE,
+
+            stderr=subprocess.STDOUT,
+
+            env=env
+        )
+
+
+        output = (
+            process.stdout
+            or ""
+        )
+
+
+        if output:
+
+            for line in output.splitlines():
+
+                log(line)
+
+
+        if process.returncode != 0:
+
+            log()
+
+            log(
+                f"[ERROR] "
+                f"{script_path.name} "
+                f"exited with code "
+                f"{process.returncode}"
+            )
+
+            return False, output
+
+
+        log()
+
+        log(
+            f"[OK] "
+            f"{script_path.name} completed."
+        )
+
+        return True, output
+
+
+    except KeyboardInterrupt:
+
+        log()
+        log(
+            "[STOPPED] "
+            "Process cancelled by user."
+        )
+
+        return False, ""
+
+
+    except Exception as error:
+
+        log()
+
+        log(
+            "[ERROR] Could not execute:"
+        )
+
+        log(
+            str(script_path)
+        )
+
+        log(
+            str(error)
+        )
+
+        return False, ""
+
+
+# ============================================================
+# LEAD SCRAPER
+# ============================================================
+
+log()
+log("[1/6] LEAD SEARCH")
+
+
+if not SCRAPER.exists():
+
+    log(
+        "[ERROR] scrape_leads.py not found."
     )
 
     sys.exit(1)
 
 
-print(
-    f"🎯 Requested leads : {QUANTITY}"
-)
-
-print(
-    f"🏢 Business type   : {BUSINESS_TYPE}"
-)
-
-print(
-    f"📍 Location        : {LOCATION}"
+scraper_input = (
+    f"{business_type}\n"
+    f"{location}\n"
 )
 
 
+scrape_ok, scrape_output = run_script(
+    SCRAPER,
+    input_text=scraper_input
+)
+
+
+if not scrape_ok:
+
+    log()
+    log(
+        "Lead search failed."
+    )
+
+    sys.exit(1)
+
+
 # ============================================================
-# TELEGRAM
+# LIMIT CSV
 # ============================================================
 
-def notify_telegram(message):
+log()
+log(
+    "[PIPELINE] Limiting leads "
+    f"to {quantity}."
+)
 
-    try:
 
-        send_telegram(message)
+if not LEADS_FILE.exists():
 
-        print(
-            "  📲 Telegram notification sent."
+    log(
+        "[ERROR] leads.csv was not created."
+    )
+
+    sys.exit(1)
+
+
+try:
+
+    with open(
+        LEADS_FILE,
+        "r",
+        newline="",
+        encoding="utf-8-sig"
+    ) as file:
+
+        reader = csv.DictReader(
+            file
         )
 
-    except Exception as e:
-
-        print(
-            f"  ⚠️ Telegram notification failed: {e}"
+        fieldnames = (
+            reader.fieldnames
         )
+
+        rows = list(reader)
+
+
+    if not fieldnames:
+
+        log(
+            "[ERROR] leads.csv has no headers."
+        )
+
+        sys.exit(1)
+
+
+    rows = rows[:quantity]
+
+
+    with open(
+        LEADS_FILE,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as file:
+
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
+
+        writer.writeheader()
+
+        writer.writerows(rows)
+
+
+    log(
+        f"[OK] {len(rows)} leads "
+        "selected."
+    )
+
+
+except Exception as error:
+
+    log(
+        "[ERROR] Could not process leads.csv:"
+    )
+
+    log(error)
+
+    sys.exit(1)
 
 
 # ============================================================
-# BACKUP
+# ENRICH
 # ============================================================
 
-def create_backup():
+log()
+log("[2/6] LEAD ENRICHMENT")
 
-    if not LEADS_FILE.exists():
 
-        return
+if ENRICHER.exists():
 
-    try:
+    enrich_ok, enrich_output = run_script(
+        ENRICHER
+    )
 
-        shutil.copy2(
-            LEADS_FILE,
-            BACKUP_FILE
+    if not enrich_ok:
+
+        log()
+        log(
+            "[WARNING] Enrichment failed."
         )
 
-        print(
-            "  💾 Leads backup created."
-        )
+else:
 
-    except Exception as e:
-
-        print(
-            f"  ⚠️ Backup failed: {e}"
-        )
-
-
-create_backup()
+    log(
+        "[WARNING] enrich_leads.py not found."
+    )
 
 
 # ============================================================
-# RUN SUBPROCESS
-# ============================================================
-
-def run_with_retry(
-    command,
-    label,
-    input_text=None,
-    retries=MAX_RETRIES,
-    timeout=DEFAULT_TIMEOUT
-):
-
-    # Force UTF-8 for all child Python processes.
-    # This fixes Windows cp1252 UnicodeEncodeError.
-    env = os.environ.copy()
-    env["PYTHONIOENCODING"] = "utf-8"
-    env["PYTHONUTF8"] = "1"
-
-    for attempt in range(
-        1,
-        retries + 1
-    ):
-
-        print()
-        print(
-            f"  🔄 {label} "
-            f"(attempt {attempt}/{retries})"
-        )
-
-        try:
-
-            result = subprocess.run(
-                command,
-                input=input_text,
-                text=True,
-                capture_output=True,
-                cwd=str(BASE_DIR),
-                timeout=timeout,
-                encoding="utf-8",
-                errors="replace",
-                env=env
-            )
-
-            stdout = (
-                result.stdout
-                or ""
-            )
-
-            stderr = (
-                result.stderr
-                or ""
-            )
-
-            output = stdout
-
-            if stderr:
-
-                output += (
-                    "\n"
-                    + stderr
-                )
-
-            if output.strip():
-
-                print(
-                    output.rstrip()
-                )
-
-            if result.returncode == 0:
-
-                print(
-                    f"  ✅ {label} completed."
-                )
-
-                return True
-
-            print(
-                f"  ❌ {label} failed "
-                f"(exit code {result.returncode})."
-            )
-
-        except subprocess.TimeoutExpired:
-
-            print(
-                f"  ❌ {label} timed out."
-            )
-
-        except Exception as e:
-
-            print(
-                f"  ❌ {label} error: {e}"
-            )
-
-        if attempt < retries:
-
-            wait_time = (
-                RETRY_DELAY * attempt
-            )
-
-            print(
-                f"  ⏳ Retrying in "
-                f"{wait_time}s..."
-            )
-
-            time.sleep(
-                wait_time
-            )
-
-    return False
-
-# ============================================================
-# CSV HELPERS
+# READ FIRST LEAD
 # ============================================================
 
 def read_leads():
 
     if not LEADS_FILE.exists():
-
         return []
+
 
     try:
 
@@ -331,7 +563,7 @@ def read_leads():
             LEADS_FILE,
             "r",
             newline="",
-            encoding="utf-8"
+            encoding="utf-8-sig"
         ) as file:
 
             reader = csv.DictReader(
@@ -340,935 +572,458 @@ def read_leads():
 
             return list(reader)
 
-    except Exception as e:
+    except Exception as error:
 
-        print(
-            f"❌ Failed reading leads.csv: {e}"
+        log(
+            "[ERROR] Could not read leads.csv:"
         )
+
+        log(error)
 
         return []
 
 
-def save_leads(leads):
+# ============================================================
+# WEBSITE GENERATION
+# ============================================================
+
+website_output = ""
+
+demo_url = ""
+
+
+if args.generate_website:
+
+    log()
+    log("[3/6] WEBSITE GENERATION")
+
+
+    leads = read_leads()
+
 
     if not leads:
 
-        print(
-            "⚠️ No leads to save."
+        log(
+            "[ERROR] No leads available "
+            "for website generation."
         )
 
-        return False
+        sys.exit(1)
 
-    temp_file = (
-        str(LEADS_FILE)
-        + ".tmp"
-    )
 
-    try:
+    # --------------------------------------------------------
+    # Current pipeline generates the website for the FIRST
+    # selected lead.
+    # --------------------------------------------------------
 
-        LEADS_FILE.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
+    lead = leads[0]
 
-        with open(
-            temp_file,
-            "w",
-            newline="",
-            encoding="utf-8"
-        ) as file:
 
-            writer = csv.DictWriter(
-                file,
-                fieldnames=FIELDNAMES,
-                extrasaction="ignore"
-            )
+    lead_name = (
+        lead.get("Business Name")
+        or lead.get("business_name")
+        or lead.get("Name")
+        or lead.get("name")
+        or ""
+    ).strip()
 
-            writer.writeheader()
-
-            writer.writerows(
-                leads
-            )
-
-        os.replace(
-            temp_file,
-            LEADS_FILE
-        )
-
-        return True
-
-    except Exception as e:
-
-        print(
-            f"❌ Failed saving leads: {e}"
-        )
-
-        if os.path.exists(
-            temp_file
-        ):
-
-            try:
-                os.remove(temp_file)
-            except Exception:
-                pass
-
-        return False
-
-
-# ============================================================
-# CREATE SLUG
-# ============================================================
-
-def create_slug(
-    business_name
-):
-
-    slug = (
-        business_name
-        .lower()
-        .strip()
-    )
-
-    slug = slug.replace(
-        "&",
-        "and"
-    )
-
-    slug = re.sub(
-        r"[^a-z0-9]+",
-        "-",
-        slug
-    )
-
-    return slug.strip("-")
-
-
-# ============================================================
-# REDIRECTS
-# ============================================================
-
-def update_redirects(leads):
-
-    slugs = set()
-
-    for lead in leads:
-
-        business_name = (
-            lead.get(
-                "Business Name"
-            )
-            or ""
-        ).strip()
-
-        if not business_name:
-
-            continue
-
-        slug = create_slug(
-            business_name
-        )
-
-        if slug:
-
-            slugs.add(slug)
-
-    if not slugs:
-
-        return
-
-    existing_routes = []
-
-    if REDIRECTS_FILE.exists():
-
-        try:
-
-            with open(
-                REDIRECTS_FILE,
-                "r",
-                encoding="utf-8"
-            ) as file:
-
-                existing_routes = [
-                    line.strip()
-                    for line in file
-                    if line.strip()
-                ]
-
-        except Exception as e:
-
-            print(
-                f"⚠️ Could not read _redirects: {e}"
-            )
-
-    route_map = {}
-
-    for route in existing_routes:
-
-        parts = route.split()
-
-        if len(parts) >= 3:
-
-            route_map[
-                parts[0]
-            ] = route
-
-    for slug in slugs:
-
-        route = (
-            f"/{slug}/ "
-            f"/{slug}/index.html 200"
-        )
-
-        route_map[
-            f"/{slug}/"
-        ] = route
-
-    routes = sorted(
-        route_map.values()
-    )
-
-    try:
-
-        with open(
-            REDIRECTS_FILE,
-            "w",
-            encoding="utf-8"
-        ) as file:
-
-            for route in routes:
-
-                file.write(
-                    route + "\n"
-                )
-
-        print()
-        print(
-            "✅ Cloudflare Routes Updated"
-        )
-
-        for route in routes:
-
-            print(
-                f"  {route}"
-            )
-
-    except Exception as e:
-
-        print(
-            f"⚠️ Redirect update failed: {e}"
-        )
-
-
-# ============================================================
-# STATUS NORMALIZATION
-# ============================================================
-
-def normalize_lead(
-    lead
-):
-
-    normalized = {}
-
-    for field in FIELDNAMES:
-
-        value = (
-            lead.get(field)
-            or ""
-        )
-
-        normalized[field] = str(
-            value
-        ).strip()
-
-    return normalized
-
-
-# ============================================================
-# STEP 1
-# LEAD DISCOVERY
-# ============================================================
-
-print()
-print("=" * 60)
-print("1️⃣ Lead Discovery")
-print("=" * 60)
-
-
-if not SCRAPER_FILE.exists():
-
-    print(
-        f"❌ Scraper missing:\n"
-        f"{SCRAPER_FILE}"
-    )
-
-    sys.exit(1)
-
-
-# IMPORTANT:
-# scrape_leads.py currently uses:
-#
-# business_type = input("Business Type: ")
-# location = input("Location: ")
-#
-# Therefore run.py MUST feed those values
-# through stdin.
-
-scraper_input = (
-    f"{BUSINESS_TYPE}\n"
-    f"{LOCATION}\n"
-)
-
-
-scraper_success = run_with_retry(
-    [
-        PYTHON,
-        str(SCRAPER_FILE)
-    ],
-    "Lead Scraping",
-    input_text=scraper_input
-)
-
-
-if not scraper_success:
-
-    print(
-        "\n❌ Lead scraping failed."
-    )
-
-    sys.exit(1)
-
-
-# ============================================================
-# STEP 2
-# LEAD ENRICHMENT
-# ============================================================
-
-print()
-print("=" * 60)
-print("2️⃣ Lead Enrichment")
-print("=" * 60)
-
-
-if not ENRICH_FILE.exists():
-
-    print(
-        f"❌ Enrichment script missing:\n"
-        f"{ENRICH_FILE}"
-    )
-
-    sys.exit(1)
-
-
-enrich_success = run_with_retry(
-    [
-        PYTHON,
-        str(ENRICH_FILE)
-    ],
-    "Lead Enrichment"
-)
-
-
-if not enrich_success:
-
-    print(
-        "\n❌ Lead enrichment failed."
-    )
-
-    sys.exit(1)
-
-
-# ============================================================
-# LOAD SCRAPED + ENRICHED LEADS
-# ============================================================
-
-all_leads = read_leads()
-
-
-if not all_leads:
-
-    print()
-    print(
-        "❌ leads.csv is empty."
-    )
-
-    print(
-        "❌ Pipeline stopped safely."
-    )
-
-    notify_telegram(
-        f"❌ AOS Pipeline Failed\n\n"
-        f"Type: {BUSINESS_TYPE}\n"
-        f"Location: {LOCATION}\n"
-        f"Reason: leads.csv is empty."
-    )
-
-    sys.exit(1)
-
-
-# Normalize
-all_leads = [
-    normalize_lead(lead)
-    for lead in all_leads
-]
-
-
-# ============================================================
-# STEP 3
-# SELECT REQUESTED LEADS
-# ============================================================
-
-print()
-print("=" * 60)
-print("3️⃣ Selecting Requested Leads")
-print("=" * 60)
-
-
-# Prefer leads matching requested business type/location.
-matching_leads = []
-
-for lead in all_leads:
 
     lead_type = (
-        lead.get(
-            "Business Type"
-        )
+        lead.get("Business Type")
+        or lead.get("business_type")
+        or business_type
         or ""
-    ).strip().lower()
+    ).strip()
+
 
     lead_location = (
-        lead.get(
-            "Location"
-        )
-        or ""
-    ).strip().lower()
-
-    if (
-        lead_type == BUSINESS_TYPE
-        and lead_location == LOCATION
-    ):
-
-        matching_leads.append(
-            lead
-        )
-
-
-# If scraper didn't preserve Business Type,
-# fall back to location/name data rather than
-# killing the entire pipeline.
-if not matching_leads:
-
-    location_matches = []
-
-    for lead in all_leads:
-
-        lead_location = (
-            lead.get(
-                "Location"
-            )
-            or ""
-        ).strip().lower()
-
-        if lead_location == LOCATION:
-
-            lead[
-                "Business Type"
-            ] = BUSINESS_TYPE
-
-            location_matches.append(
-                lead
-            )
-
-    matching_leads = location_matches
-
-
-if not matching_leads:
-
-    print(
-        f"❌ No leads found for "
-        f"{BUSINESS_TYPE} in {LOCATION}."
-    )
-
-    sys.exit(1)
-
-
-selected_leads = matching_leads[
-    :QUANTITY
-]
-
-
-print(
-    f"Available matching leads : "
-    f"{len(matching_leads)}"
-)
-
-print(
-    f"Requested leads           : "
-    f"{QUANTITY}"
-)
-
-print(
-    f"Selected leads            : "
-    f"{len(selected_leads)}"
-)
-
-
-if not selected_leads:
-
-    print(
-        "❌ Nothing selected."
-    )
-
-    sys.exit(1)
-
-
-for index, lead in enumerate(
-    selected_leads,
-    start=1
-):
-
-    print(
-        f"  {index}. "
-        f"{lead.get('Business Name', 'Unknown')}"
-    )
-
-
-# ============================================================
-# IMPORTANT:
-# Keep ONLY selected leads in the working CSV.
-#
-# This prevents generate_website/email from processing
-# every old lead in the file.
-# ============================================================
-
-save_leads(
-    selected_leads
-)
-
-
-# ============================================================
-# STEP 4
-# WEBSITE + EMAIL
-# ============================================================
-
-print()
-print("=" * 60)
-print("4️⃣ Website + Email Generation")
-print("=" * 60)
-
-
-completed_count = 0
-failed_count = 0
-ready_count = 0
-
-
-for index, lead in enumerate(
-    selected_leads,
-    start=1
-):
-
-    business_name = (
-        lead.get(
-            "Business Name"
-        )
+        lead.get("Location")
+        or lead.get("location")
+        or location
         or ""
     ).strip()
 
-    business_type = (
-        lead.get(
-            "Business Type"
-        )
-        or BUSINESS_TYPE
-    ).strip()
 
-    location = (
-        lead.get(
-            "Location"
-        )
-        or LOCATION
-    ).strip()
+    if not lead_name:
 
-    status = (
-        lead.get(
-            "Status"
-        )
-        or ""
-    ).strip().upper()
-
-
-    if not business_name:
-
-        print(
-            f"\n[{index}/{len(selected_leads)}]"
+        log(
+            "[ERROR] Could not determine "
+            "business name from leads.csv."
         )
 
-        print(
-            "⚠️ Missing Business Name. Skipping."
-        )
-
-        failed_count += 1
-
-        continue
+        sys.exit(1)
 
 
-    slug = create_slug(
-        business_name
+    log()
+    log(
+        f"[WEBSITE] Business : {lead_name}"
+    )
+
+    log(
+        f"[WEBSITE] Type     : {lead_type}"
+    )
+
+    log(
+        f"[WEBSITE] Location : {lead_location}"
     )
 
 
-    # ========================================================
-    # DEMO URL
-    # ========================================================
+    website_ok, website_output = run_script(
 
-    demo_base = (
-        globals().get(
-            "DEMO_URL",
-            ""
-        )
-        or ""
-    ).strip()
+        WEBSITE_GENERATOR,
 
-    if demo_base:
+        extra_args=[
+            lead_name,
+            lead_type,
+            lead_location
+        ]
+    )
 
-        demo_url = (
-            demo_base.rstrip("/")
-            + "/"
-            + slug
-            + "/"
+
+    if not website_ok:
+
+        log()
+        log(
+            "[ERROR] Website generation failed."
         )
 
-    else:
+        sys.exit(1)
 
-        demo_url = (
-            f"/{slug}/"
+
+    # --------------------------------------------------------
+    # Extract Demo URL printed by generator
+    # --------------------------------------------------------
+
+    url_patterns = [
+
+        r"Demo URL\s*:\s*(https?://\S+)",
+
+        r"Demo\s+URL\s*:\s*(https?://\S+)",
+
+        r"(https://autoagency-os\.pages\.dev/\S+)"
+    ]
+
+
+    for pattern in url_patterns:
+
+        match = re.search(
+            pattern,
+            website_output,
+            flags=re.IGNORECASE
         )
 
+        if match:
 
-    lead[
-        "Demo URL"
-    ] = demo_url
-
-
-    print()
-    print("-" * 60)
-
-    print(
-        f"[{index}/{len(selected_leads)}]"
-    )
-
-    print(
-        f"Business : {business_name}"
-    )
-
-    print(
-        f"Type     : {business_type}"
-    )
-
-    print(
-        f"Location : {location}"
-    )
-
-    print(
-        f"Status   : {status or 'NEW'}"
-    )
-
-    print(
-        f"Demo URL : {demo_url}"
-    )
-
-    print(
-        "-" * 60
-    )
-
-
-    # ========================================================
-    # WEBSITE
-    # ========================================================
-
-    if status in [
-        "WEBSITE_DONE",
-        "EMAIL_READY",
-        "EMAIL_FAILED",
-        "SUCCESS",
-        "SENT"
-    ]:
-
-        print(
-            "⏭️ Website already completed."
-        )
-
-    else:
-
-        website_success = run_with_retry(
-            [
-                PYTHON,
-                str(WEBSITE_FILE),
-                business_name,
-                business_type,
-                location
-            ],
-            "Website Generation"
-        )
-
-
-        if not website_success:
-
-            print(
-                "❌ Website Generation Failed."
+            demo_url = (
+                match.group(1)
+                .strip()
+                .rstrip(".,)")
             )
 
-            lead[
-                "Status"
-            ] = "WEBSITE_FAILED"
-
-            save_leads(
-                selected_leads
-            )
-
-            notify_telegram(
-                f"❌ AOS Lead Failed\n\n"
-                f"Business: {business_name}\n"
-                f"Type: {business_type}\n"
-                f"Location: {location}\n\n"
-                f"Stage: Website Generation\n"
-                f"Status: WEBSITE_FAILED"
-            )
-
-            failed_count += 1
-
-            continue
+            break
 
 
-        print(
-            "✅ Website Generated."
+    if demo_url:
+
+        log()
+        log(
+            f"[OK] Demo URL captured:"
         )
 
-        lead[
-            "Status"
-        ] = "WEBSITE_DONE"
-
-        save_leads(
-            selected_leads
-        )
-
-
-    # ========================================================
-    # EMAIL
-    # ========================================================
-
-    current_status = (
-        lead.get(
-            "Status"
-        )
-        or ""
-    ).strip().upper()
-
-
-    if current_status == "EMAIL_READY":
-
-        print(
-            "⏭️ Email already generated."
-        )
-
-        ready_count += 1
-
-        continue
-
-
-    if current_status == "EMAIL_FAILED":
-
-        print(
-            "⏭️ Email previously failed."
-        )
-
-        continue
-
-
-    email_success = run_with_retry(
-        [
-            PYTHON,
-            str(EMAIL_FILE),
-            business_name,
-            business_type,
-            location,
+        log(
             demo_url
-        ],
-        "Email Generation"
-    )
-
-
-    if not email_success:
-
-        print(
-            "❌ Email Generation Failed."
         )
 
-        lead[
-            "Status"
-        ] = "EMAIL_FAILED"
+    else:
 
-        save_leads(
-            selected_leads
+        log()
+        log(
+            "[WARNING] Demo URL could not "
+            "be detected from generator output."
         )
 
-        notify_telegram(
-            f"⚠️ AOS Lead Ready — Email Failed\n\n"
-            f"Business: {business_name}\n"
-            f"Type: {business_type}\n"
-            f"Location: {location}\n\n"
-            f"🌐 Demo:\n"
-            f"{demo_url}\n\n"
-            f"Status: EMAIL_FAILED"
-        )
 
-        failed_count += 1
+else:
 
-        continue
-
-
-    print(
-        "✅ Email Generated."
-    )
-
-    lead[
-        "Status"
-    ] = "EMAIL_READY"
-
-    save_leads(
-        selected_leads
-    )
-
-    ready_count += 1
-
-
-    # ========================================================
-    # TELEGRAM
-    # ========================================================
-
-    notify_telegram(
-        f"🚀 AOS Lead Ready\n\n"
-        f"Business: {business_name}\n"
-        f"Type: {business_type}\n"
-        f"Location: {location}\n\n"
-        f"🌐 Demo:\n"
-        f"{demo_url}\n\n"
-        f"📧 Email: Generated\n"
-        f"📌 Status: EMAIL_READY"
+    log()
+    log(
+        "[3/6] Website generation skipped."
     )
 
 
-    completed_count += 1
-
-
 # ============================================================
-# STEP 5
-# UPDATE REDIRECTS
-# ============================================================
-
-print()
-print("=" * 60)
-print("5️⃣ Updating Cloudflare Routes")
-print("=" * 60)
-
-
-update_redirects(
-    selected_leads
-)
-
-
-# ============================================================
-# FINAL CSV
-# ============================================================
-
-save_leads(
-    selected_leads
-)
-
-
-# ============================================================
-# STEP 6
 # GIT PUSH
 # ============================================================
 
-print()
-print("=" * 60)
-print("6️⃣ GitHub Update")
-print("=" * 60)
+if args.git_push:
+
+    log()
+    log("[4/6] GIT PUSH")
 
 
-if GIT_FILE.exists():
+    if not GIT_PUSHER.exists():
 
-    git_result = subprocess.run(
-        [
-            PYTHON,
-            str(GIT_FILE)
-        ],
-        cwd=str(BASE_DIR)
+        log(
+            "[ERROR] git_push.py not found."
+        )
+
+        sys.exit(1)
+
+
+    git_ok, git_output = run_script(
+        GIT_PUSHER
     )
 
 
-    if git_result.returncode == 0:
+    if not git_ok:
 
-        print(
-            "✅ GitHub Updated Successfully."
+        log()
+        log(
+            "[ERROR] Git push failed."
         )
+
+        sys.exit(1)
+
+
+else:
+
+    log()
+    log(
+        "[4/6] Git push skipped."
+    )
+
+
+# ============================================================
+# DEPLOY / REDIRECTS
+# ============================================================
+
+if args.deploy:
+
+    log()
+    log("[5/6] DEPLOY / REDIRECT UPDATE")
+
+
+    if REDIRECT_UPDATER.exists():
+
+        redirect_ok, redirect_output = run_script(
+            REDIRECT_UPDATER
+        )
+
+
+        if not redirect_ok:
+
+            log()
+            log(
+                "[WARNING] Redirect/deploy "
+                "script failed."
+            )
 
     else:
 
-        print(
-            "❌ Git Push Failed."
+        log(
+            "[WARNING] update_redirects.py "
+            "not found."
         )
 
 else:
 
-    print(
-        "⚠️ git_push.py not found. Skipping."
+    log()
+    log(
+        "[5/6] Deploy step skipped."
     )
 
 
 # ============================================================
-# FINAL SUMMARY
+# EMAIL GENERATION
 # ============================================================
 
-print()
-print("=" * 60)
-print("🎉 PIPELINE COMPLETED")
-print("=" * 60)
+if args.generate_email:
 
-print(
-    f"Requested : {QUANTITY}"
-)
+    log()
+    log("[6/6] EMAIL GENERATION")
 
-print(
-    f"Selected  : {len(selected_leads)}"
-)
 
-print(
-    f"Ready     : {ready_count}"
-)
+    leads = read_leads()
 
-print(
-    f"Failed    : {failed_count}"
-)
 
-print(
-    f"Total CSV : {len(selected_leads)}"
-)
+    if not leads:
 
-print(
-    "=" * 60
-)
+        log(
+            "[ERROR] No leads available "
+            "for email generation."
+        )
+
+        sys.exit(1)
+
+
+    # --------------------------------------------------------
+    # Generate email for first selected lead.
+    # --------------------------------------------------------
+
+    lead = leads[0]
+
+
+    lead_name = (
+        lead.get("Business Name")
+        or lead.get("business_name")
+        or lead.get("Name")
+        or lead.get("name")
+        or ""
+    ).strip()
+
+
+    lead_type = (
+        lead.get("Business Type")
+        or lead.get("business_type")
+        or business_type
+        or ""
+    ).strip()
+
+
+    lead_location = (
+        lead.get("Location")
+        or lead.get("location")
+        or location
+        or ""
+    ).strip()
+
+
+    # --------------------------------------------------------
+    # If website generator didn't return a URL, use the
+    # default demo URL based on the business slug.
+    # --------------------------------------------------------
+
+    if not demo_url and lead_name:
+
+        slug = lead_name.lower()
+
+        slug = slug.replace(
+            "&",
+            "and"
+        )
+
+        slug = re.sub(
+            r"[^a-z0-9]+",
+            "-",
+            slug
+        )
+
+        slug = slug.strip("-")
+
+
+        if slug:
+
+            demo_url = (
+                "https://autoagency-os.pages.dev/"
+                + slug
+                + "/"
+            )
+
+
+    if not demo_url:
+
+        log()
+        log(
+            "[WARNING] No demo URL available."
+        )
+
+        log(
+            "[WARNING] Email will not be generated "
+            "because the prompt requires a real demo URL."
+        )
+
+    else:
+
+        log()
+        log(
+            f"[EMAIL] Demo URL: {demo_url}"
+        )
+
+
+        email_ok, email_output = run_script(
+
+            EMAIL_GENERATOR,
+
+            extra_args=[
+                lead_name,
+                lead_type,
+                lead_location,
+                demo_url
+            ]
+        )
+
+
+        if not email_ok:
+
+            log()
+            log(
+                "[WARNING] Email generation failed."
+            )
+
+else:
+
+    log()
+    log(
+        "[6/6] Email generation skipped."
+    )
 
 
 # ============================================================
-# TELEGRAM SUMMARY
+# FINAL STATUS
 # ============================================================
 
-notify_telegram(
-    f"🏁 AOS Pipeline Completed\n\n"
-    f"🏢 Type: {BUSINESS_TYPE}\n"
-    f"📍 Location: {LOCATION}\n\n"
-    f"🎯 Requested: {QUANTITY}\n"
-    f"📌 Selected: {len(selected_leads)}\n"
-    f"📧 Email Ready: {ready_count}\n"
-    f"❌ Failed: {failed_count}"
+log()
+log("=" * 70)
+log("AUTOAGENCYOS PIPELINE FINISHED")
+log("=" * 70)
+
+
+leads = read_leads()
+
+
+total_leads = len(
+    leads
 )
+
+
+emails_ready = 0
+
+
+for lead in leads:
+
+    email = (
+        lead.get("Email")
+        or lead.get("email")
+        or ""
+    ).strip()
+
+
+    if email:
+
+        emails_ready += 1
+
+
+log(
+    f"Leads available : {total_leads}"
+)
+
+log(
+    f"Emails found    : {emails_ready}"
+)
+
+
+if demo_url:
+
+    log(
+        f"Demo URL        : {demo_url}"
+    )
+
+
+log("=" * 70)
+
+log()
+log(
+    "Pipeline complete."
+)
+
+sys.exit(0)

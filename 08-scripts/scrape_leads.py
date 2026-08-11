@@ -1,148 +1,439 @@
 import csv
-import os
 import sys
+import os
 import time
+import re
+import argparse
+from pathlib import Path
+from urllib.parse import quote
+
 import requests
 
 
 # ============================================================
-# WINDOWS UTF-8 FIX
+# AUTOAGENCYOS - WORLDWIDE LEAD SCRAPER
 # ============================================================
 
-try:
-    sys.stdout.reconfigure(
-        encoding="utf-8",
-        errors="replace"
-    )
-    sys.stderr.reconfigure(
-        encoding="utf-8",
-        errors="replace"
-    )
-except Exception:
-    pass
+if os.name == "nt":
+    try:
+        sys.stdout.reconfigure(
+            encoding="utf-8",
+            errors="replace"
+        )
+        sys.stderr.reconfigure(
+            encoding="utf-8",
+            errors="replace"
+        )
+    except Exception:
+        pass
+
+    os.environ["PYTHONUTF8"] = "1"
+    os.environ["PYTHONIOENCODING"] = "utf-8"
 
 
 # ============================================================
 # PATHS
 # ============================================================
 
-OUTPUT_FILE = os.path.join(
-    "05-leads",
-    "leads.csv"
-)
+BASE_DIR = Path(__file__).resolve().parents[1]
 
-os.makedirs(
-    os.path.dirname(OUTPUT_FILE),
+LEADS_DIR = BASE_DIR / "05-leads"
+OUTPUT_FILE = LEADS_DIR / "leads.csv"
+
+LEADS_DIR.mkdir(
+    parents=True,
     exist_ok=True
 )
+
+
+# ============================================================
+# SETTINGS
+# ============================================================
+
+NOMINATIM_URL = (
+    "https://nominatim.openstreetmap.org/search"
+)
+
+OVERPASS_ENDPOINTS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter"
+]
+
+HEADERS = {
+    "User-Agent": (
+        "AutoAgencyOS/1.0 "
+        "(lead-research-tool)"
+    )
+}
+
+REQUEST_TIMEOUT = 45
+
+
+# ============================================================
+# BUSINESS TYPE NORMALIZATION
+# ============================================================
+
+BUSINESS_ALIASES = {
+
+    "resturant": "restaurant",
+    "restraunt": "restaurant",
+    "restaurent": "restaurant",
+    "restaurants": "restaurant",
+
+    "hotel": "hotel",
+    "hotels": "hotel",
+
+    "hospital": "hospital",
+    "hospitals": "hospital",
+
+    "clinic": "clinic",
+    "clinics": "clinic",
+
+    "doctor": "doctor",
+    "doctors": "doctor",
+
+    "dentist": "dentist",
+    "dentists": "dentist",
+
+    "cafe": "cafe",
+    "cafes": "cafe",
+
+    "coffee shop": "cafe",
+    "coffee shops": "cafe",
+
+    "bakery": "bakery",
+    "bakeries": "bakery",
+
+    "salon": "salon",
+    "salons": "salon",
+
+    "barber": "barber",
+    "barbers": "barber",
+
+    "gym": "gym",
+    "gyms": "gym",
+    "fitness": "gym",
+
+    "school": "school",
+    "schools": "school",
+
+    "college": "college",
+    "colleges": "college",
+
+    "university": "university",
+    "universities": "university",
+
+    "pharmacy": "pharmacy",
+    "pharmacies": "pharmacy",
+
+    "lawyer": "lawyer",
+    "lawyers": "lawyer",
+
+    "real estate": "real_estate",
+    "real estate agency": "real_estate",
+
+    "car dealer": "car_dealer",
+    "car dealers": "car_dealer",
+
+    "auto dealer": "car_dealer",
+
+    "electronics": "electronics",
+
+    "clothing": "clothing",
+
+    "jewelry": "jewelry",
+    "jewellery": "jewelry",
+
+    "furniture": "furniture",
+
+    "supermarket": "supermarket",
+
+    "grocery": "supermarket",
+    "grocery store": "supermarket",
+
+    "bakery shop": "bakery",
+
+    "business": "businesses",
+    "businesses": "businesses",
+
+}
+
+
+def normalize_business_type(value):
+
+    value = (
+        value
+        .strip()
+        .lower()
+    )
+
+    return BUSINESS_ALIASES.get(
+        value,
+        value
+    )
+
+
+# ============================================================
+# SAFE PRINT
+# ============================================================
+
+def log(message=""):
+
+    try:
+        print(
+            message,
+            flush=True
+        )
+
+    except Exception:
+
+        try:
+            print(
+                str(message)
+                .encode(
+                    "ascii",
+                    errors="replace"
+                )
+                .decode("ascii"),
+                flush=True
+            )
+
+        except Exception:
+            pass
 
 
 # ============================================================
 # INPUT
 # ============================================================
 
-if len(sys.argv) >= 3:
+def get_arguments():
 
-    business_type = sys.argv[1].strip().lower()
-    location = sys.argv[2].strip().lower()
-
-else:
-
-    business_type = input(
-        "Business Type: "
-    ).strip().lower()
-
-    location = input(
-        "Location: "
-    ).strip().lower()
-
-
-# ============================================================
-# SPELLING FIXES
-# ============================================================
-
-business_type_aliases = {
-
-    "resturant": "restaurant",
-    "restraunt": "restaurant",
-    "restaurent": "restaurant",
-
-    "doctor": "doctors",
-    "dr": "doctors",
-    "clinic": "doctors",
-    "medical": "doctors",
-
-    "hotel": "hotel",
-    "hotels": "hotel",
-
-    "dentist": "dentist",
-    "dentists": "dentist",
-
-    "gym": "gym",
-    "gyms": "gym",
-
-    "salon": "hairdresser",
-    "salons": "hairdresser",
-    "beauty salon": "beauty",
-
-    "cafe": "cafe",
-    "cafes": "cafe",
-
-    "restaurant": "restaurant",
-    "restaurants": "restaurant",
-}
-
-
-business_type = business_type_aliases.get(
-    business_type,
-    business_type
-)
-
-
-# ============================================================
-# CITY COORDINATES
-# ============================================================
-
-LOCATIONS = {
-
-    "bhilai": {
-        "lat": 21.2095,
-        "lon": 81.4285
-    },
-
-    "durg": {
-        "lat": 21.1904,
-        "lon": 81.2849
-    },
-
-    "raipur": {
-        "lat": 21.2514,
-        "lon": 81.6296
-    },
-
-}
-
-
-if location not in LOCATIONS:
-
-    print(
-        f"ERROR: Location '{location}' is not configured."
+    parser = argparse.ArgumentParser(
+        description=(
+            "AutoAgencyOS Worldwide Lead Scraper"
+        )
     )
 
-    print(
-        "Supported locations: "
-        "Bhilai, Durg, Raipur"
+    parser.add_argument(
+        "--quantity",
+        type=int,
+        default=None
     )
 
-    sys.exit(1)
+    parser.add_argument(
+        "--business-type",
+        type=str,
+        default=None
+    )
 
+    parser.add_argument(
+        "--location",
+        type=str,
+        default=None
+    )
 
-lat = LOCATIONS[location]["lat"]
-lon = LOCATIONS[location]["lon"]
+    return parser.parse_args()
 
 
 # ============================================================
-# BUSINESS QUERIES
+# INTERACTIVE / TELEGRAM COMPATIBILITY
+# ============================================================
+
+def get_input():
+
+    args = get_arguments()
+
+    quantity = args.quantity
+    business_type = args.business_type
+    location = args.location
+
+    # --------------------------------------------------------
+    # If run.py sends stdin:
+    #
+    # business type
+    # location
+    #
+    # read those values automatically.
+    # --------------------------------------------------------
+
+    if (
+        business_type is None
+        or location is None
+    ):
+
+        try:
+
+            if not sys.stdin.isatty():
+
+                lines = []
+
+                for line in sys.stdin:
+                    line = line.strip()
+
+                    if line:
+                        lines.append(line)
+
+                if business_type is None and len(lines) >= 1:
+                    business_type = lines[0]
+
+                if location is None and len(lines) >= 2:
+                    location = lines[1]
+
+        except Exception:
+            pass
+
+    # --------------------------------------------------------
+    # Manual terminal mode
+    # --------------------------------------------------------
+
+    if not business_type:
+
+        business_type = input(
+            "Business Type: "
+        ).strip()
+
+    if not location:
+
+        location = input(
+            "Location: "
+        ).strip()
+
+    # --------------------------------------------------------
+    # Quantity
+    # --------------------------------------------------------
+
+    if quantity is None:
+
+        try:
+
+            quantity_text = input(
+                "Quantity: "
+            ).strip()
+
+            quantity = int(
+                quantity_text
+            )
+
+        except Exception:
+
+            quantity = 5
+
+    quantity = max(
+        1,
+        min(quantity, 500)
+    )
+
+    business_type = normalize_business_type(
+        business_type
+    )
+
+    location = location.strip()
+
+    return (
+        quantity,
+        business_type,
+        location
+    )
+
+
+# ============================================================
+# GEOCODE WORLDWIDE LOCATION
+# ============================================================
+
+def geocode_location(location):
+
+    log("")
+    log(
+        f"[LOCATION] Searching worldwide location: "
+        f"{location}"
+    )
+
+    params = {
+        "q": location,
+        "format": "json",
+        "limit": 1,
+        "addressdetails": 1
+    }
+
+    try:
+
+        response = requests.get(
+            NOMINATIM_URL,
+            params=params,
+            headers=HEADERS,
+            timeout=REQUEST_TIMEOUT
+        )
+
+        if response.status_code != 200:
+
+            log(
+                "[ERROR] Location service "
+                f"returned HTTP {response.status_code}"
+            )
+
+            return None
+
+        data = response.json()
+
+        if not data:
+
+            log(
+                f"[ERROR] Location not found: "
+                f"{location}"
+            )
+
+            return None
+
+        result = data[0]
+
+        lat = float(
+            result["lat"]
+        )
+
+        lon = float(
+            result["lon"]
+        )
+
+        display_name = result.get(
+            "display_name",
+            location
+        )
+
+        log(
+            f"[LOCATION OK] {display_name}"
+        )
+
+        log(
+            f"[COORDINATES] "
+            f"{lat:.6f}, {lon:.6f}"
+        )
+
+        return {
+            "lat": lat,
+            "lon": lon,
+            "display_name": display_name
+        }
+
+    except requests.RequestException as e:
+
+        log(
+            f"[ERROR] Geocoding failed: {e}"
+        )
+
+        return None
+
+    except Exception as e:
+
+        log(
+            f"[ERROR] Geocoding parse failed: {e}"
+        )
+
+        return None
+
+
+# ============================================================
+# OSM QUERY BUILDER
 # ============================================================
 
 def build_query(
@@ -151,425 +442,448 @@ def build_query(
     lon
 ):
 
-    radius = 15000
+    # Search radius ~25 km
+    radius = 25000
 
     # --------------------------------------------------------
-    # DOCTORS
+    # Specific business mappings
     # --------------------------------------------------------
 
-    if business_type == "doctors":
+    queries = {
 
-        return f"""
-[out:json][timeout:60];
+        "restaurant": [
+            '["amenity"="restaurant"]'
+        ],
 
-(
-    nwr["amenity"="clinic"](around:{radius},{lat},{lon});
-    nwr["amenity"="doctors"](around:{radius},{lat},{lon});
-    nwr["healthcare"="doctor"](around:{radius},{lat},{lon});
-    nwr["healthcare"="clinic"](around:{radius},{lat},{lon});
-    nwr["healthcare"="centre"](around:{radius},{lat},{lon});
-    nwr["healthcare"="center"](around:{radius},{lat},{lon});
-);
+        "cafe": [
+            '["amenity"="cafe"]'
+        ],
 
-out center tags;
-"""
+        "hospital": [
+            '["amenity"="hospital"]'
+        ],
 
+        "clinic": [
+            '["amenity"="clinic"]'
+        ],
 
-    # --------------------------------------------------------
-    # DENTISTS
-    # --------------------------------------------------------
+        "dentist": [
+            '["amenity"="dentist"]'
+        ],
 
-    if business_type == "dentist":
+        "pharmacy": [
+            '["amenity"="pharmacy"]'
+        ],
 
-        return f"""
-[out:json][timeout:60];
+        "school": [
+            '["amenity"="school"]'
+        ],
 
-(
-    nwr["amenity"="dentist"](around:{radius},{lat},{lon});
-    nwr["healthcare"="dentist"](around:{radius},{lat},{lon});
-);
+        "college": [
+            '["amenity"="college"]'
+        ],
 
-out center tags;
-"""
+        "university": [
+            '["amenity"="university"]'
+        ],
 
+        "hotel": [
+            '["tourism"="hotel"]'
+        ],
 
-    # --------------------------------------------------------
-    # RESTAURANTS
-    # --------------------------------------------------------
+        "bakery": [
+            '["shop"="bakery"]'
+        ],
 
-    if business_type == "restaurant":
+        "salon": [
+            '["shop"="hairdresser"]'
+        ],
 
-        return f"""
-[out:json][timeout:60];
+        "barber": [
+            '["shop"="barber"]'
+        ],
 
-(
-    nwr["amenity"="restaurant"](around:{radius},{lat},{lon});
-);
+        "gym": [
+            '["leisure"="fitness_centre"]'
+        ],
 
-out center tags;
-"""
+        "supermarket": [
+            '["shop"="supermarket"]'
+        ],
 
+        "clothing": [
+            '["shop"="clothes"]'
+        ],
 
-    # --------------------------------------------------------
-    # CAFE
-    # --------------------------------------------------------
+        "jewelry": [
+            '["shop"="jewelry"]'
+        ],
 
-    if business_type == "cafe":
+        "furniture": [
+            '["shop"="furniture"]'
+        ],
 
-        return f"""
-[out:json][timeout:60];
+        "electronics": [
+            '["shop"="electronics"]'
+        ],
 
-(
-    nwr["amenity"="cafe"](around:{radius},{lat},{lon});
-);
+        "lawyer": [
+            '["office"="lawyer"]'
+        ],
 
-out center tags;
-"""
+        "real_estate": [
+            '["office"="estate_agent"]'
+        ],
 
-
-    # --------------------------------------------------------
-    # HOTEL
-    # --------------------------------------------------------
-
-    if business_type == "hotel":
-
-        return f"""
-[out:json][timeout:60];
-
-(
-    nwr["tourism"="hotel"](around:{radius},{lat},{lon});
-    nwr["tourism"="guest_house"](around:{radius},{lat},{lon});
-);
-
-out center tags;
-"""
-
-
-    # --------------------------------------------------------
-    # GYM
-    # --------------------------------------------------------
-
-    if business_type == "gym":
-
-        return f"""
-[out:json][timeout:60];
-
-(
-    nwr["leisure"="fitness_centre"](around:{radius},{lat},{lon});
-    nwr["sport"="fitness"](around:{radius},{lat},{lon});
-);
-
-out center tags;
-"""
-
-
-    # --------------------------------------------------------
-    # HAIRDRESSER
-    # --------------------------------------------------------
-
-    if business_type == "hairdresser":
-
-        return f"""
-[out:json][timeout:60];
-
-(
-    nwr["shop"="hairdresser"](around:{radius},{lat},{lon});
-);
-
-out center tags;
-"""
-
-
-    # --------------------------------------------------------
-    # BEAUTY
-    # --------------------------------------------------------
-
-    if business_type == "beauty":
-
-        return f"""
-[out:json][timeout:60];
-
-(
-    nwr["shop"="beauty"](around:{radius},{lat},{lon});
-);
-
-out center tags;
-"""
-
-
-    # --------------------------------------------------------
-    # GENERIC FALLBACK
-    # --------------------------------------------------------
-
-    return f"""
-[out:json][timeout:60];
-
-(
-    nwr["amenity"="{business_type}"](around:{radius},{lat},{lon});
-    nwr["shop"="{business_type}"](around:{radius},{lat},{lon});
-    nwr["healthcare"="{business_type}"](around:{radius},{lat},{lon});
-);
-
-out center tags;
-"""
-
-
-# ============================================================
-# OVERPASS SERVERS
-# ============================================================
-
-OVERPASS_SERVERS = [
-
-    "https://overpass-api.de/api/interpreter",
-
-    "https://overpass.kumi.systems/api/interpreter",
-
-    "https://overpass.private.coffee/api/interpreter",
-
-]
-
-
-# ============================================================
-# REQUEST OVERPASS
-# ============================================================
-
-def request_overpass(
-    query
-):
-
-    headers = {
-
-        "User-Agent":
-            "AutoAgencyOS/1.0 "
-            "(lead-discovery-bot)",
-
-        "Accept":
-            "application/json",
+        "car_dealer": [
+            '["shop"="car"]'
+        ],
 
     }
 
+    tags = queries.get(
+        business_type
+    )
 
-    for server_index, url in enumerate(
-        OVERPASS_SERVERS,
-        start=1
-    ):
+    # --------------------------------------------------------
+    # Generic business search
+    # --------------------------------------------------------
 
-        print()
-        print(
-            f"Overpass Server "
-            f"{server_index}/{len(OVERPASS_SERVERS)}"
+    if not tags:
+
+        tags = [
+            '["name"]'
+        ]
+
+    parts = []
+
+    for tag in tags:
+
+        parts.append(
+            f"""
+            node(around:{radius},{lat},{lon}){tag};
+            way(around:{radius},{lat},{lon}){tag};
+            relation(around:{radius},{lat},{lon}){tag};
+            """
         )
 
-        print(
-            url
+    body = "\n".join(parts)
+
+    query = f"""
+    [out:json][timeout:40];
+
+    (
+        {body}
+    );
+
+    out center tags;
+    """
+
+    return query
+
+
+# ============================================================
+# OVERPASS SEARCH
+# ============================================================
+
+def search_overpass(
+    business_type,
+    lat,
+    lon,
+    quantity
+):
+
+    query = build_query(
+        business_type,
+        lat,
+        lon
+    )
+
+    for endpoint in OVERPASS_ENDPOINTS:
+
+        log("")
+        log(
+            f"[SEARCH] Using Overpass: "
+            f"{endpoint}"
         )
 
+        try:
 
-        for attempt in range(
-            1,
-            4
-        ):
+            response = requests.post(
+                endpoint,
+                data=query,
+                headers=HEADERS,
+                timeout=REQUEST_TIMEOUT
+            )
 
-            try:
+            if response.status_code != 200:
 
-                print(
-                    f"Request attempt "
-                    f"{attempt}/3..."
-                )
-
-
-                response = requests.post(
-
-                    url,
-
-                    data=query.encode(
-                        "utf-8"
-                    ),
-
-                    headers=headers,
-
-                    timeout=90
-
-                )
-
-
-                print(
-                    f"Overpass Status: "
+                log(
+                    f"[WARNING] HTTP "
                     f"{response.status_code}"
                 )
 
+                continue
 
-                if response.status_code == 200:
+            data = response.json()
 
-                    try:
+            elements = data.get(
+                "elements",
+                []
+            )
 
-                        return response.json()
+            log(
+                f"[SEARCH] Raw results: "
+                f"{len(elements)}"
+            )
 
-                    except ValueError:
+            if elements:
 
-                        print(
-                            "ERROR: "
-                            "Overpass returned invalid JSON."
-                        )
+                return elements
 
-                        print(
-                            response.text[:1000]
-                        )
+        except requests.RequestException as e:
 
-                        break
+            log(
+                f"[WARNING] Endpoint failed: "
+                f"{e}"
+            )
 
+        except Exception as e:
 
-                if response.status_code in [
-                    429,
-                    502,
-                    503,
-                    504
-                ]:
+            log(
+                f"[WARNING] Parse failed: "
+                f"{e}"
+            )
 
-                    print(
-                        "Overpass temporarily "
-                        "unavailable."
-                    )
+        time.sleep(1)
 
-                else:
-
-                    print(
-                        "Overpass request failed."
-                    )
-
-                    print(
-                        response.text[:1000]
-                    )
-
-                    break
-
-
-            except requests.Timeout:
-
-                print(
-                    "Request timed out."
-                )
-
-
-            except requests.RequestException as error:
-
-                print(
-                    f"Network error: {error}"
-                )
-
-
-            if attempt < 3:
-
-                wait_time = 5 * attempt
-
-                print(
-                    f"Waiting {wait_time}s..."
-                )
-
-                time.sleep(
-                    wait_time
-                )
-
-
-        print(
-            "Trying next Overpass server..."
-        )
-
-
-    return None
+    return []
 
 
 # ============================================================
-# CLEAN VALUE
+# CLEAN TEXT
 # ============================================================
 
-def clean_value(
-    value
-):
+def clean_text(value):
 
-    if value is None:
+    if not value:
         return ""
 
-    return str(value).strip()
+    value = str(value)
+
+    value = re.sub(
+        r"\s+",
+        " ",
+        value
+    )
+
+    return value.strip()
 
 
 # ============================================================
 # EXTRACT WEBSITE
 # ============================================================
 
-def get_website(
-    tags
-):
+def extract_website(tags):
 
-    return clean_value(
-        tags.get("website")
-        or tags.get("contact:website")
-        or tags.get("url")
-        or ""
-    )
+    possible = [
+        "website",
+        "contact:website",
+        "url"
+    ]
 
+    for key in possible:
 
-# ============================================================
-# EXTRACT EMAIL
-# ============================================================
+        value = tags.get(
+            key,
+            ""
+        )
 
-def get_email(
-    tags
-):
+        if value:
 
-    return clean_value(
+            value = value.strip()
 
-        tags.get("email")
-        or tags.get("contact:email")
-        or ""
+            if (
+                value.startswith(
+                    "http://"
+                )
+                or
+                value.startswith(
+                    "https://"
+                )
+            ):
 
-    )
+                return value
+
+            return (
+                "https://"
+                + value
+            )
+
+    return ""
 
 
 # ============================================================
 # EXTRACT PHONE
 # ============================================================
 
-def get_phone(
-    tags
+def extract_phone(tags):
+
+    for key in [
+        "phone",
+        "contact:phone",
+        "mobile",
+        "contact:mobile"
+    ]:
+
+        phone = tags.get(
+            key,
+            ""
+        )
+
+        if phone:
+            return clean_text(phone)
+
+    return ""
+
+
+# ============================================================
+# BUILD LEAD
+# ============================================================
+
+def element_to_lead(
+    element,
+    business_type,
+    location
 ):
 
-    return clean_value(
-
-        tags.get("phone")
-        or tags.get("contact:phone")
-        or tags.get("mobile")
-        or ""
-
+    tags = element.get(
+        "tags",
+        {}
     )
 
+    name = clean_text(
+        tags.get(
+            "name",
+            ""
+        )
+    )
+
+    if not name:
+        return None
+
+    website = extract_website(
+        tags
+    )
+
+    phone = extract_phone(
+        tags
+    )
+
+    # --------------------------------------------------------
+    # Coordinates
+    # --------------------------------------------------------
+
+    lat = element.get(
+        "lat"
+    )
+
+    lon = element.get(
+        "lon"
+    )
+
+    center = element.get(
+        "center"
+    )
+
+    if lat is None and center:
+
+        lat = center.get(
+            "lat"
+        )
+
+        lon = center.get(
+            "lon"
+        )
+
+    # --------------------------------------------------------
+    # OSM ID
+    # --------------------------------------------------------
+
+    osm_type = element.get(
+        "type",
+        ""
+    )
+
+    osm_id = element.get(
+        "id",
+        ""
+    )
+
+    osm_url = ""
+
+    if osm_type and osm_id:
+
+        osm_url = (
+            f"https://www.openstreetmap.org/"
+            f"{osm_type}/{osm_id}"
+        )
+
+    return {
+
+        "Business Name": name,
+
+        "Business Type": business_type,
+
+        "Location": location,
+
+        "Email": "",
+
+        "Website": website,
+
+        "Phone": phone,
+
+        "OSM URL": osm_url,
+
+        "Status": "NEW"
+
+    }
+
 
 # ============================================================
-# EXTRACT ADDRESS
+# REMOVE DUPLICATES
 # ============================================================
 
-def get_address(
-    tags
-):
+def deduplicate(leads):
 
-    parts = [
+    seen = set()
 
-        tags.get("addr:housenumber"),
-        tags.get("addr:street"),
-        tags.get("addr:suburb"),
-        tags.get("addr:city"),
+    unique = []
 
-    ]
+    for lead in leads:
 
-    parts = [
+        key = (
+            lead.get(
+                "Business Name",
+                ""
+            )
+            .lower()
+            .strip()
+        )
 
-        clean_value(x)
-        for x in parts
-        if clean_value(x)
+        if not key:
+            continue
 
-    ]
+        if key in seen:
+            continue
 
-    return ", ".join(parts)
+        seen.add(key)
+
+        unique.append(
+            lead
+        )
+
+    return unique
 
 
 # ============================================================
@@ -583,322 +897,231 @@ def save_leads(
     fieldnames = [
 
         "Business Name",
+
         "Business Type",
+
         "Location",
+
         "Email",
+
         "Website",
+
         "Phone",
-        "Address",
-        "Status",
+
+        "OSM URL",
+
+        "Status"
 
     ]
 
+    with open(
+        OUTPUT_FILE,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as file:
 
-    temp_file = (
-        OUTPUT_FILE
-        + ".tmp"
-    )
-
-
-    try:
-
-        with open(
-            temp_file,
-            "w",
-            newline="",
-            encoding="utf-8-sig"
-        ) as file:
-
-            writer = csv.DictWriter(
-
-                file,
-
-                fieldnames=fieldnames,
-
-                extrasaction="ignore"
-
-            )
-
-            writer.writeheader()
-
-            writer.writerows(
-                leads
-            )
-
-
-        os.replace(
-            temp_file,
-            OUTPUT_FILE
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
         )
 
-        return True
+        writer.writeheader()
 
+        for lead in leads:
 
-    except Exception as error:
-
-        print(
-            f"ERROR: Failed to save CSV: "
-            f"{error}"
-        )
-
-        if os.path.exists(
-            temp_file
-        ):
-
-            try:
-                os.remove(
-                    temp_file
-                )
-            except Exception:
-                pass
-
-        return False
+            writer.writerow(
+                {
+                    field: lead.get(
+                        field,
+                        ""
+                    )
+                    for field in fieldnames
+                }
+            )
 
 
 # ============================================================
 # MAIN
 # ============================================================
 
-print()
-print(
-    "=============================="
-)
+def main():
 
-print(
-    "AutoAgencyOS Lead Scraper"
-)
+    quantity, business_type, location = get_input()
 
-print(
-    "=============================="
-)
+    log("")
+    log("=" * 60)
+    log("AUTOAGENCYOS WORLDWIDE LEAD SEARCH")
+    log("=" * 60)
 
-print(
-    f"Business Type: {business_type}"
-)
-
-print(
-    f"Location     : {location}"
-)
-
-print(
-    f"Coordinates  : {lat}, {lon}"
-)
-
-
-query = build_query(
-    business_type,
-    lat,
-    lon
-)
-
-
-print()
-print(
-    "Searching OpenStreetMap..."
-)
-
-
-data = request_overpass(
-    query
-)
-
-
-if data is None:
-
-    print()
-    print(
-        "ERROR: All Overpass servers failed."
+    log(
+        f"Business type : {business_type}"
     )
 
-    print(
-        "No changes were made to leads.csv."
+    log(
+        f"Location      : {location}"
     )
 
-    sys.exit(1)
-
-
-elements = data.get(
-    "elements",
-    []
-)
-
-
-# ============================================================
-# PARSE RESULTS
-# ============================================================
-
-leads = []
-
-seen = set()
-
-
-for item in elements:
-
-    tags = item.get(
-        "tags",
-        {}
+    log(
+        f"Quantity      : {quantity}"
     )
 
+    log("=" * 60)
 
-    name = clean_value(
-        tags.get("name")
+    # --------------------------------------------------------
+    # GEOCODE
+    # --------------------------------------------------------
+
+    geo = geocode_location(
+        location
     )
 
+    if not geo:
 
-    if not name:
-
-        continue
-
-
-    # Avoid duplicates
-    dedupe_key = (
-        name.lower(),
-        clean_value(
-            tags.get("addr:street")
-        ).lower()
-    )
-
-
-    if dedupe_key in seen:
-
-        continue
-
-
-    seen.add(
-        dedupe_key
-    )
-
-
-    email = get_email(
-        tags
-    )
-
-    website = get_website(
-        tags
-    )
-
-    phone = get_phone(
-        tags
-    )
-
-    address = get_address(
-        tags
-    )
-
-
-    leads.append({
-
-        "Business Name":
-            name,
-
-        "Business Type":
-            business_type,
-
-        "Location":
-            location,
-
-        "Email":
-            email,
-
-        "Website":
-            website,
-
-        "Phone":
-            phone,
-
-        "Address":
-            address,
-
-        "Status":
-            "",
-
-    })
-
-
-# ============================================================
-# SAVE
-# ============================================================
-
-if not save_leads(
-    leads
-):
-
-    sys.exit(1)
-
-
-# ============================================================
-# RESULT
-# ============================================================
-
-print()
-print(
-    "=============================="
-)
-
-print(
-    "LEADS SCRAPED SUCCESSFULLY"
-)
-
-print(
-    "=============================="
-)
-
-print(
-    f"Leads : {len(leads)}"
-)
-
-print(
-    f"Saved : {OUTPUT_FILE}"
-)
-
-
-# ============================================================
-# PREVIEW
-# ============================================================
-
-if leads:
-
-    print()
-    print(
-        "First leads:"
-    )
-
-    for lead in leads[:10]:
-
-        print(
-            f"- {lead['Business Name']}"
+        log("")
+        log(
+            "[FAILED] Could not find location."
         )
 
-        if lead["Phone"]:
+        sys.exit(1)
 
-            print(
-                f"  Phone: "
-                f"{lead['Phone']}"
-            )
+    # --------------------------------------------------------
+    # SEARCH
+    # --------------------------------------------------------
 
-        if lead["Website"]:
-
-            print(
-                f"  Website: "
-                f"{lead['Website']}"
-            )
-
-        if lead["Email"]:
-
-            print(
-                f"  Email: "
-                f"{lead['Email']}"
-            )
-
-else:
-
-    print()
-    print(
-        "WARNING: No named businesses "
-        "were returned by OpenStreetMap."
+    elements = search_overpass(
+        business_type,
+        geo["lat"],
+        geo["lon"],
+        quantity
     )
 
-    print(
-        "The CSV was created but contains "
-        "zero leads."
+    if not elements:
+
+        log("")
+        log(
+            "[FAILED] No businesses found."
+        )
+
+        # Create empty CSV anyway
+        save_leads([])
+
+        sys.exit(0)
+
+    # --------------------------------------------------------
+    # CONVERT
+    # --------------------------------------------------------
+
+    leads = []
+
+    for element in elements:
+
+        lead = element_to_lead(
+            element,
+            business_type,
+            location
+        )
+
+        if lead:
+
+            leads.append(
+                lead
+            )
+
+    # --------------------------------------------------------
+    # DEDUPLICATE
+    # --------------------------------------------------------
+
+    leads = deduplicate(
+        leads
     )
+
+    # --------------------------------------------------------
+    # LIMIT
+    # --------------------------------------------------------
+
+    leads = leads[
+        :quantity
+    ]
+
+    # --------------------------------------------------------
+    # SAVE
+    # --------------------------------------------------------
+
+    save_leads(
+        leads
+    )
+
+    # --------------------------------------------------------
+    # RESULT
+    # --------------------------------------------------------
+
+    log("")
+    log("=" * 60)
+    log("LEAD SEARCH COMPLETED")
+    log("=" * 60)
+
+    log(
+        f"Location : {location}"
+    )
+
+    log(
+        f"Type     : {business_type}"
+    )
+
+    log(
+        f"Requested: {quantity}"
+    )
+
+    log(
+        f"Found    : {len(leads)}"
+    )
+
+    log(
+        f"Saved    : {OUTPUT_FILE}"
+    )
+
+    log("=" * 60)
+
+    if leads:
+
+        log("")
+        log("LEADS:")
+
+        for index, lead in enumerate(
+            leads,
+            start=1
+        ):
+
+            log(
+                f"{index}. "
+                f"{lead['Business Name']}"
+            )
+
+            if lead.get(
+                "Website"
+            ):
+
+                log(
+                    f"   Website: "
+                    f"{lead['Website']}"
+                )
+
+            if lead.get(
+                "Phone"
+            ):
+
+                log(
+                    f"   Phone: "
+                    f"{lead['Phone']}"
+                )
+
+    log("")
+
+
+# ============================================================
+# RUN
+# ============================================================
+
+if __name__ == "__main__":
+    main()
