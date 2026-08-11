@@ -217,6 +217,12 @@ def run_with_retry(
     timeout=DEFAULT_TIMEOUT
 ):
 
+    # Force UTF-8 for all child Python processes.
+    # This fixes Windows cp1252 UnicodeEncodeError.
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
+
     for attempt in range(
         1,
         retries + 1
@@ -238,7 +244,8 @@ def run_with_retry(
                 cwd=str(BASE_DIR),
                 timeout=timeout,
                 encoding="utf-8",
-                errors="replace"
+                errors="replace",
+                env=env
             )
 
             stdout = (
@@ -262,7 +269,9 @@ def run_with_retry(
 
             if output.strip():
 
-                print(output.rstrip())
+                print(
+                    output.rstrip()
+                )
 
             if result.returncode == 0:
 
@@ -305,7 +314,6 @@ def run_with_retry(
             )
 
     return False
-
 
 # ============================================================
 # CSV HELPERS
