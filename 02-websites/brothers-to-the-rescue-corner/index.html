@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brothers to the Rescue Corner | New York</title>
+    <meta name="description" content="A premium local cornerstone in New York, dedicated to excellence and community service.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff9ed',
+                            100: '#ffefd4',
+                            200: '#ffdca9',
+                            300: '#ffc171',
+                            400: '#ff9c37',
+                            500: '#f97816', // Primary Accent (Safety Orange/Amber)
+                            600: '#ea5a0c',
+                            700: '#c2420c',
+                            800: '#9a3612',
+                            900: '#7c2e12',
+                        },
+                        onyx: '#111111',
+                        surface: '#1A1A1A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0c0c0c;
+            color: #e5e5e5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(249, 120, 22, 0.07) 0%, rgba(0, 0, 0, 0) 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-visual-container {
+            perspective: 1000px;
+        }
+
+        .hero-tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0c0c0c; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f97816; }
+
+        @media (hover: none) {
+            .cursor-glow { display: none; }
+            .hero-tilt-card { transform: none !important; }
+        }
+    </style>
+</head>
+<body class="selection:bg-brand-500/30 selection:text-brand-300">
+
+    <div id="cursor-glow" class="cursor-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 transition-all duration-300" id="main-nav">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-brand-500 flex items-center justify-center rounded-sm rotate-45 group-hover:rotate-0 transition-transform duration-500">
+                    <i data-lucide="shield" class="w-4 h-4 text-white -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
+                </div>
+                <span class="text-sm font-semibold tracking-widest uppercase">Brothers to the Rescue Corner</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#services" class="text-xs font-medium uppercase tracking-widest hover:text-brand-400 transition-colors">Services</a>
+                <a href="#about" class="text-xs font-medium uppercase tracking-widest hover:text-brand-400 transition-colors">About</a>
+                <a href="#faq" class="text-xs font-medium uppercase tracking-widest hover:text-brand-400 transition-colors">FAQ</a>
+                <a href="#contact" class="text-xs font-medium uppercase tracking-widest px-5 py-2.5 border border-white/10 hover:border-brand-500/50 hover:bg-brand-500/5 transition-all glass">Contact</a>
+            </div>
+
+            <button class="md:hidden text-white" id="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-onyx translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col p-8">
+        <div class="flex justify-end mb-12">
+            <button id="close-menu-btn"><i data-lucide="x" class="w-8 h-8"></i></button>
+        </div>
+        <div class="flex flex-col gap-8 text-3xl font-serif">
+            <a href="#services" class="mobile-link">Services</a>
+            <a href="#about" class="mobile-link">About</a>
+            <a href="#faq" class="mobile-link">FAQ</a>
+            <a href="#contact" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
+                <div class="z-10">
+                    <div class="reveal inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-500/30 bg-brand-500/5 text-brand-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                        </span>
+                        Based in New York, USA
+                    </div>
+                    <h1 class="reveal stagger-1 text-5xl md:text-7xl font-serif leading-[1.1] mb-8">
+                        The Corner of <span class="text-brand-500 italic">Reliability</span> and Community.
+                    </h1>
+                    <p class="reveal stagger-2 text-lg text-neutral-400 max-w-lg mb-10 leading-relaxed font-light">
+                        Brothers to the Rescue Corner serves as a premier destination for those seeking excellence, support, and dedicated service in the heart of New York.
+                    </p>
+                    <div class="reveal stagger-3 flex flex-wrap gap-4">
+                        <a href="#contact" class="px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-medium transition-all flex items-center gap-2 group">
+                            Inquire Now
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#services" class="px-8 py-4 border border-white/10 hover:border-white/30 transition-all font-medium">
+                            Our Offerings
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual-container reveal hidden lg:block">
+                    <div id="hero-tilt" class="hero-tilt-card relative w-full aspect-[4/5] max-w-md mx-auto">
+                        <!-- Main Card -->
+                        <div class="absolute inset-0 glass border border-white/20 shadow-2xl rounded-sm overflow-hidden p-8 flex flex-col justify-end">
+                            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-brand-900/40 to-transparent"></div>
+                            <div class="relative z-10">
+                                <p class="text-xs uppercase tracking-widest text-brand-300 mb-2 font-semibold">Our Philosophy</p>
+                                <h3 class="text-2xl font-serif">A legacy of service, built on the strength of brotherhood.</h3>
+                            </div>
+                        </div>
+                        <!-- Floating Elements -->
+                        <div class="absolute -top-6 -right-6 w-32 h-32 glass border border-white/10 p-4 flex flex-col justify-between translate-z-10 shadow-xl">
+                            <i data-lucide="award" class="w-6 h-6 text-brand-500"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-tighter">Premium Standards</span>
+                        </div>
+                        <div class="absolute -bottom-8 -left-8 w-40 h-24 glass border border-white/10 p-4 flex flex-col justify-between translate-z-20 shadow-xl">
+                            <span class="text-[10px] font-bold uppercase tracking-tighter text-brand-400">Location</span>
+                            <span class="text-sm">New York, NY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Texture -->
+            <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <defs>
+                        <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100" height="100" fill="url(#grid)" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div class="max-w-2xl">
+                        <span class="text-brand-500 text-xs font-bold uppercase tracking-widest mb-4 block">What We Offer</span>
+                        <h2 class="text-4xl md:text-5xl font-serif">Curated Services Designed for the New York Community.</h2>
+                    </div>
+                    <div class="text-neutral-500 text-sm max-w-xs leading-relaxed italic">
+                        Experience the difference of a business built on attention to detail and local expertise.
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="reveal group">
+                        <div class="p-8 glass h-full border border-white/5 group-hover:border-brand-500/40 transition-all duration-500 flex flex-col">
+                            <i data-lucide="map-pin" class="w-8 h-8 text-brand-500 mb-8 transition-transform group-hover:scale-110"></i>
+                            <h3 class="text-xl font-serif mb-4">Local Logistics</h3>
+                            <p class="text-neutral-400 text-sm leading-relaxed mb-8 font-light">Navigating the unique landscape of New York with precision and local insight you can depend on.</p>
+                            <div class="mt-auto pt-4 border-t border-white/5">
+                                <span class="text-[10px] uppercase tracking-widest text-neutral-500">Service Category 01</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="reveal stagger-1 group">
+                        <div class="p-8 glass h-full border border-white/5 group-hover:border-brand-500/40 transition-all duration-500 flex flex-col">
+                            <i data-lucide="users" class="w-8 h-8 text-brand-500 mb-8 transition-transform group-hover:scale-110"></i>
+                            <h3 class="text-xl font-serif mb-4">Community Liaison</h3>
+                            <p class="text-neutral-400 text-sm leading-relaxed mb-8 font-light">Fostering connections and providing essential support for businesses and residents alike.</p>
+                            <div class="mt-auto pt-4 border-t border-white/5">
+                                <span class="text-[10px] uppercase tracking-widest text-neutral-500">Service Category 02</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="reveal stagger-2 group">
+                        <div class="p-8 glass h-full border border-white/5 group-hover:border-brand-500/40 transition-all duration-500 flex flex-col">
+                            <i data-lucide="zap" class="w-8 h-8 text-brand-500 mb-8 transition-transform group-hover:scale-110"></i>
+                            <h3 class="text-xl font-serif mb-4">Rapid Response</h3>
+                            <p class="text-neutral-400 text-sm leading-relaxed mb-8 font-light">Agile, professional solutions tailored to the fast-paced demands of New York life.</p>
+                            <div class="mt-auto pt-4 border-t border-white/5">
+                                <span class="text-[10px] uppercase tracking-widest text-neutral-500">Service Category 03</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 px-6 bg-surface/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="reveal relative">
+                        <div class="aspect-square glass border border-white/10 rounded-sm overflow-hidden relative">
+                            <!-- Minimalist Graphic -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-64 h-64 border border-brand-500/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                                <div class="absolute w-48 h-48 border border-white/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                                <i data-lucide="anchor" class="w-12 h-12 text-brand-500 opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 glass p-6 border border-brand-500/20 max-w-[240px]">
+                            <p class="text-sm italic font-serif leading-relaxed">"Service isn't just about what we do, but how we support the corner we call home."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="reveal stagger-1">
+                        <span class="text-brand-500 text-xs font-bold uppercase tracking-widest mb-4 block">Rooted in New York</span>
+                        <h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Founded on the Principles of Mutual Support.</h2>
+                        <div class="space-y-6 text-neutral-400 font-light leading-relaxed">
+                            <p>Brothers to the Rescue Corner represents more than just a name; it is a commitment to the neighborhood. Located in the heart of New York, we believe in the power of professional reliability combined with a personal, local touch.</p>
+                            <p>Our presence in the community is defined by a standard of excellence that honors the spirit of those who build, protect, and serve. We invite you to experience the dedicated atmosphere we've cultivated at our corner of the city.</p>
+                        </div>
+                        <div class="mt-12 grid grid-cols-2 gap-8 py-8 border-t border-white/5">
+                            <div>
+                                <h4 class="text-2xl font-serif text-white mb-1">NY, USA</h4>
+                                <p class="text-[10px] uppercase tracking-widest text-neutral-500">Operational Base</p>
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-serif text-white mb-1">08+</h4>
+                                <p class="text-[10px] uppercase tracking-widest text-neutral-500">Core Services</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Experience -->
+        <section class="py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="reveal glass p-12 md:p-20 relative overflow-hidden text-center">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
+                    <span class="text-brand-500 text-xs font-bold uppercase tracking-widest mb-6 block">The Signature Standard</span>
+                    <h2 class="text-4xl md:text-6xl font-serif mb-8 max-w-3xl mx-auto leading-tight">Elevating Every Interaction into an Experience.</h2>
+                    <p class="text-neutral-400 max-w-xl mx-auto mb-12 font-light">Whether you're a long-term partner or visiting for the first time, our commitment to quality remains unwavering.</p>
+                    <div class="flex justify-center">
+                        <div class="flex -space-x-4">
+                            <div class="w-12 h-12 rounded-full border-2 border-onyx bg-neutral-800 flex items-center justify-center"><i data-lucide="check" class="w-4 h-4"></i></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-onyx bg-neutral-700 flex items-center justify-center"><i data-lucide="shield-check" class="w-4 h-4"></i></div>
+                            <div class="w-12 h-12 rounded-full border-2 border-onyx bg-neutral-600 flex items-center justify-center"><i data-lucide="star" class="w-4 h-4"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-24 px-6 bg-onyx">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col items-center text-center mb-16">
+                    <h2 class="text-3xl font-serif mb-4">Client Feedback</h2>
+                    <div class="w-12 h-px bg-brand-500"></div>
+                </div>
+                <div class="flex items-center justify-center py-12 glass border-dashed border-white/10">
+                    <p class="text-neutral-500 font-serif italic">Customer Reviews Coming Soon</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-24 px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-serif mb-4">Common Inquiries</h2>
+                    <p class="text-neutral-500 font-light">Answers to general questions about our operations.</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="reveal glass group">
+                        <button class="w-full p-6 flex items-center justify-between text-left transition-all" onclick="this.nextElementSibling.classList.toggle('hidden');">
+                            <span class="font-medium text-sm tracking-wide">Where are you located exactly?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-brand-500"></i>
+                        </button>
+                        <div class="hidden p-6 pt-0 text-neutral-400 text-sm font-light leading-relaxed border-t border-white/5">
+                            We are located at [Business Address] in New York. Please reach out for specific directions or appointment details.
+                        </div>
+                    </div>
+                    
+                    <div class="reveal stagger-1 glass group">
+                        <button class="w-full p-6 flex items-center justify-between text-left transition-all" onclick="this.nextElementSibling.classList.toggle('hidden');">
+                            <span class="font-medium text-sm tracking-wide">What are your hours of operation?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-brand-500"></i>
+                        </button>
+                        <div class="hidden p-6 pt-0 text-neutral-400 text-sm font-light leading-relaxed border-t border-white/5">
+                            Our standard hours are currently [Business Hours]. We recommend contacting us to confirm availability.
+                        </div>
+                    </div>
+
+                    <div class="reveal stagger-2 glass group">
+                        <button class="w-full p-6 flex items-center justify-between text-left transition-all" onclick="this.nextElementSibling.classList.toggle('hidden');">
+                            <span class="font-medium text-sm tracking-wide">How can I book a service or visit?</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-brand-500"></i>
+                        </button>
+                        <div class="hidden p-6 pt-0 text-neutral-400 text-sm font-light leading-relaxed border-t border-white/5">
+                            You can use our contact form below or reach us directly at [Email Address] to discuss your needs.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 px-6 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Begin the <span class="text-brand-500 italic">Conversation</span>.</h2>
+                    <p class="text-neutral-400 mb-12 font-light leading-relaxed">Reach out to Brothers to the Rescue Corner for inquiries regarding our services, partnerships, or community initiatives.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 glass flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-brand-500"></i></div>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1">Address</p>
+                                <p class="text-sm">[Business Address], New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 glass flex items-center justify-center shrink-0"><i data-lucide="mail" class="w-4 h-4 text-brand-500"></i></div>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1">Email</p>
+                                <p class="text-sm">[Email Address]</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 glass flex items-center justify-center shrink-0"><i data-lucide="phone" class="w-4 h-4 text-brand-500"></i></div>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1">Phone</p>
+                                <p class="text-sm">[Phone Number]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal stagger-1 glass p-8 md:p-12 relative">
+                    <form class="space-y-6" onsubmit="return false;">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-widest font-bold text-neutral-500">Full Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-500 outline-none transition-colors text-sm" placeholder="John Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-widest font-bold text-neutral-500">Email Address</label>
+                                <input type="email" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-500 outline-none transition-colors text-sm" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest font-bold text-neutral-500">Message</label>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-500 outline-none transition-colors text-sm" placeholder="How can we assist you?"></textarea>
+                        </div>
+                        <button class="w-full py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs uppercase tracking-[0.2em] transition-all">
+                            Send Inquiry
+                        </button>
+                        <p class="text-[10px] text-center text-neutral-500 italic uppercase tracking-tighter">This is a demo form. Submission is currently disabled.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 bg-brand-500 flex items-center justify-center rounded-sm">
+                        <i data-lucide="shield" class="w-3 h-3 text-white"></i>
+                    </div>
+                    <span class="text-[10px] font-bold tracking-widest uppercase">Brothers to the Rescue Corner</span>
+                </div>
+                <p class="text-neutral-600 text-[10px] uppercase tracking-[0.2em]">&copy; 2024. All rights reserved.</p>
+            </div>
+
+            <div class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                <a href="#" class="hover:text-brand-400 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-brand-400 transition-colors">Terms of Service</a>
+            </div>
+
+            <div class="flex gap-4">
+                <a href="#" class="w-8 h-8 glass flex items-center justify-center hover:border-brand-500/50 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                <a href="#" class="w-8 h-8 glass flex items-center justify-center hover:border-brand-500/50 transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Cursor Glow Effect
+        const cursorGlow = document.getElementById('cursor-glow');
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateGlow() {
+            // Smooth lerp
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+            cursorGlow.style.left = `${glowX}px`;
+            cursorGlow.style.top = `${glowY}px`;
+            requestAnimationFrame(animateGlow);
+        }
+        animateGlow();
+
+        // 3D Tilt Effect for Hero Visual
+        const heroTilt = document.getElementById('hero-tilt');
+        if (heroTilt && window.innerWidth > 1024) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = heroTilt.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const moveX = (e.clientX - centerX) / 25;
+                const moveY = (e.clientY - centerY) / 25;
+                
+                heroTilt.style.transform = `rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
+            });
+        }
+
+        // Reveal animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Navigation Background Change on Scroll
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('glass', 'py-3');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.remove('glass', 'py-3');
+                nav.classList.add('py-4');
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const links = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu(isOpen) {
+            mobileMenu.style.transform = isOpen ? 'translateX(0)' : 'translateX(100%)';
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
+        openBtn.addEventListener('click', () => toggleMenu(true));
+        closeBtn.addEventListener('click', () => toggleMenu(false));
+        links.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+
+    </script>
+</body>
+</html>

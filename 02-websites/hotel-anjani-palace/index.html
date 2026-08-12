@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Anjani Palace | Bhilai's Premier Stay</title>
+    <meta name="description" content="Experience refined hospitality and modern comfort at Hotel Anjani Palace, Bhilai.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Scripts & Frameworks -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#C5A059', // Sophisticated Gold
+                        stone: {
+                            950: '#141210',
+                            900: '#1C1917',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'reveal': 'reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        reveal: {
+                            '0%': { transform: 'scaleX(0)', transformOrigin: 'left' },
+                            '100%': { transform: 'scaleX(1)', transformOrigin: 'left' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #141210;
+            color: #E7E5E4;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(197, 160, 89, 0.08) 0%, transparent 70%);
+        }
+
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(90deg, rgba(197, 160, 89, 0) 0%, rgba(197, 160, 89, 0.4) 50%, rgba(197, 160, 89, 0) 100%);
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+        }
+
+        .tilt-container {
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        ::-webkit-scrollbar { display: none; }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        html { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary/30 selection:text-white">
+
+    <div id="cursor-glow" class="cursor-glow hidden lg:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 transition-all duration-500" id="main-nav">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-panel px-6 py-3 rounded-full">
+            <div class="flex items-center gap-2">
+                <span class="font-serif text-2xl tracking-tight text-white">Hotel <span class="text-primary italic">Anjani</span> Palace</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-xs font-medium tracking-[0.2em] uppercase">
+                <a href="#about" class="hover:text-primary transition-colors">Experience</a>
+                <a href="#services" class="hover:text-primary transition-colors">Services</a>
+                <a href="#faq" class="hover:text-primary transition-colors">Concierge</a>
+                <a href="#contact" class="hover:text-primary transition-colors">Location</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden sm:block px-6 py-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold tracking-widest uppercase rounded-full hover:bg-primary hover:text-stone-950 transition-all duration-300">
+                    Book Stay
+                </a>
+                <button class="md:hidden text-white" id="menu-toggle">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-stone-950 translate-x-full transition-transform duration-500 flex flex-col justify-center items-center gap-8">
+        <button id="menu-close" class="absolute top-8 right-8 text-white">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <a href="#about" class="text-3xl font-serif text-white hover:text-primary transition-colors">Experience</a>
+        <a href="#services" class="text-3xl font-serif text-white hover:text-primary transition-colors">Services</a>
+        <a href="#faq" class="text-3xl font-serif text-white hover:text-primary transition-colors">FAQ</a>
+        <a href="#contact" class="text-3xl font-serif text-white hover:text-primary transition-colors">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden hero-gradient">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-6 z-10 space-y-8">
+                <div class="inline-flex items-center gap-3 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-[10px] font-bold tracking-[0.3em] uppercase animate-fade-up">
+                    <span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                    Authentic Luxury in Bhilai
+                </div>
+                
+                <h1 class="text-6xl md:text-8xl font-serif leading-[0.9] text-white animate-fade-up" style="animation-delay: 0.1s">
+                    Elegance <br/>
+                    <span class="italic text-primary">Redefined.</span>
+                </h1>
+                
+                <p class="max-w-md text-stone-400 text-lg leading-relaxed font-light animate-fade-up" style="animation-delay: 0.2s">
+                    Experience a sanctuary of comfort at Hotel Anjani Palace. Where modern sophistication meets timeless hospitality in the heart of Bhilai.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4 animate-fade-up" style="animation-delay: 0.3s">
+                    <a href="#services" class="group relative px-8 py-4 bg-primary text-stone-950 font-bold text-sm tracking-widest uppercase overflow-hidden">
+                        <span class="relative z-10">Explore Rooms</span>
+                        <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </a>
+                    <a href="#about" class="px-8 py-4 border border-white/10 hover:border-primary/50 transition-colors font-bold text-sm tracking-widest uppercase">
+                        Our Story
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 relative flex justify-center items-center perspective-1000">
+                <div id="hero-image-tilt" class="tilt-container relative w-full aspect-[4/5] max-w-[450px]">
+                    <div class="absolute inset-0 border-[1px] border-primary/30 translate-x-6 translate-y-6 z-0"></div>
+                    <div class="absolute inset-0 bg-stone-800 z-10 overflow-hidden">
+                        <!-- Modern geometric placeholder -->
+                        <div class="w-full h-full bg-gradient-to-br from-stone-800 to-stone-900 flex items-center justify-center p-12">
+                            <div class="w-full h-full border border-white/5 flex items-center justify-center relative">
+                                <span class="text-primary/20 font-serif text-9xl">A</span>
+                                <div class="absolute bottom-10 left-10 text-xs tracking-widest text-primary/40 rotate-90 origin-left uppercase">Bhila's Signature</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 glass-panel p-8 z-20 hidden md:block">
+                        <p class="text-primary text-4xl font-serif mb-1 italic">Premium</p>
+                        <p class="text-[10px] tracking-[0.2em] uppercase text-stone-400">Guest Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience / About Section -->
+    <section id="about" class="py-32 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <div class="reveal-on-scroll">
+                    <h2 class="text-stone-500 text-xs font-bold tracking-[0.4em] uppercase mb-6">Discovery</h2>
+                    <h3 class="text-4xl md:text-5xl font-serif text-white mb-8 leading-tight">
+                        A dedicated retreat designed for the <span class="text-primary italic">modern traveler</span>.
+                    </h3>
+                    <p class="text-stone-400 leading-relaxed mb-8">
+                        Located in the vibrant city of Bhilai, Hotel Anjani Palace stands as a testament to refined living. We offer an environment where every detail is curated to provide you with the comfort of home and the luxury of a premium hotel.
+                    </p>
+                    <div class="editorial-line mb-8"></div>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-4 text-sm tracking-wide">
+                            <i data-lucide="check" class="w-4 h-4 text-primary"></i> 
+                            Curated Interior Design
+                        </li>
+                        <li class="flex items-center gap-4 text-sm tracking-wide">
+                            <i data-lucide="check" class="w-4 h-4 text-primary"></i> 
+                            Unparalleled Personal Service
+                        </li>
+                        <li class="flex items-center gap-4 text-sm tracking-wide">
+                            <i data-lucide="check" class="w-4 h-4 text-primary"></i> 
+                            Prime Business Location
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative grid grid-cols-2 gap-4 reveal-on-scroll" style="transition-delay: 0.2s">
+                    <div class="aspect-[3/4] bg-stone-900 border border-white/5 mt-12"></div>
+                    <div class="aspect-[3/4] bg-primary/10 border border-primary/20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-32 px-6 bg-stone-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                <div>
+                    <h2 class="text-primary text-xs font-bold tracking-[0.4em] uppercase mb-4">Accommodations</h2>
+                    <h3 class="text-4xl md:text-5xl font-serif text-white">Guest Amenities</h3>
+                </div>
+                <p class="max-w-xs text-stone-500 text-sm">Tailored services designed to meet the expectations of every guest, from business to leisure.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-px bg-white/5 border border-white/5">
+                <!-- Service 01 -->
+                <div class="group relative p-12 bg-stone-950 transition-colors hover:bg-stone-900">
+                    <span class="text-primary/40 font-serif text-5xl italic block mb-8">01</span>
+                    <h4 class="text-xl font-medium text-white mb-4">Luxury Suites</h4>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-8">Spacious rooms featuring premium linens, modern workspaces, and state-of-the-art climate control.</p>
+                    <i data-lucide="arrow-right" class="w-5 h-5 text-primary group-hover:translate-x-2 transition-transform"></i>
+                </div>
+                <!-- Service 02 -->
+                <div class="group relative p-12 bg-stone-950 transition-colors hover:bg-stone-900">
+                    <span class="text-primary/40 font-serif text-5xl italic block mb-8">02</span>
+                    <h4 class="text-xl font-medium text-white mb-4">Fine Dining</h4>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-8">A culinary journey featuring local specialties and international favorites prepared by our expert chefs.</p>
+                    <i data-lucide="arrow-right" class="w-5 h-5 text-primary group-hover:translate-x-2 transition-transform"></i>
+                </div>
+                <!-- Service 03 -->
+                <div class="group relative p-12 bg-stone-950 transition-colors hover:bg-stone-900">
+                    <span class="text-primary/40 font-serif text-5xl italic block mb-8">03</span>
+                    <h4 class="text-xl font-medium text-white mb-4">Banquets</h4>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-8">Sophisticated spaces for weddings, conferences, and private celebrations with full catering support.</p>
+                    <i data-lucide="arrow-right" class="w-5 h-5 text-primary group-hover:translate-x-2 transition-transform"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Experience (Parallax Effect) -->
+    <section class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-fixed bg-center bg-cover opacity-30 scale-110" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=2000');"></div>
+        <div class="absolute inset-0 bg-stone-950/60 backdrop-blur-sm"></div>
+        
+        <div class="relative z-10 text-center px-6 reveal-on-scroll">
+            <h2 class="text-white font-serif text-5xl md:text-7xl mb-8 italic">The Art of Living Well.</h2>
+            <p class="max-w-2xl mx-auto text-stone-300 text-lg font-light leading-relaxed">
+                We believe that every stay should be an experience worth remembering. At Hotel Anjani Palace, your comfort is our only priority.
+            </p>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-24 px-6 border-b border-white/5">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+            <div class="reveal-on-scroll">
+                <p class="text-primary font-serif text-4xl mb-2">24/7</p>
+                <p class="text-[10px] tracking-widest text-stone-500 uppercase">Concierge</p>
+            </div>
+            <div class="reveal-on-scroll" style="transition-delay: 0.1s">
+                <p class="text-primary font-serif text-4xl mb-2">High</p>
+                <p class="text-[10px] tracking-widest text-stone-500 uppercase">Security</p>
+            </div>
+            <div class="reveal-on-scroll" style="transition-delay: 0.2s">
+                <p class="text-primary font-serif text-4xl mb-2">Prime</p>
+                <p class="text-[10px] tracking-widest text-stone-500 uppercase">Bhilai Hub</p>
+            </div>
+            <div class="reveal-on-scroll" style="transition-delay: 0.3s">
+                <p class="text-primary font-serif text-4xl mb-2">100%</p>
+                <p class="text-[10px] tracking-widest text-stone-500 uppercase">Power Backup</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-32 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-white/20 font-serif text-2xl italic mb-4">Guest Voice</h2>
+            <div class="editorial-line mb-12"></div>
+            <p class="text-2xl font-serif text-stone-300 italic mb-4">"Customer Reviews Coming Soon"</p>
+            <div class="editorial-line mt-12"></div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-32 px-6 bg-stone-900/30">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-center font-serif text-4xl text-white mb-16">Concierge Inquiries</h2>
+            
+            <div class="space-y-4">
+                <div class="glass-panel rounded-lg overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center group faq-trigger">
+                        <span class="text-sm font-medium tracking-wide">What are the standard check-in and check-out times?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-primary transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-stone-400 text-sm hidden">
+                        Our standard check-in time is [Time] and check-out is [Time]. Early check-in or late check-out can be requested and is subject to availability.
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-lg overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center group faq-trigger">
+                        <span class="text-sm font-medium tracking-wide">Do you offer parking facilities?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-primary transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-stone-400 text-sm hidden">
+                        Yes, we provide secure on-site parking for all our staying guests and banquet visitors.
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-lg overflow-hidden">
+                    <button class="w-full p-6 text-left flex justify-between items-center group faq-trigger">
+                        <span class="text-sm font-medium tracking-wide">How can I book a banquet hall for an event?</span>
+                        <i data-lucide="plus" class="w-4 h-4 text-primary transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-6 text-stone-400 text-sm hidden">
+                        You can book our banquet halls by calling our reception or visiting the hotel. We recommend booking at least [Time Frame] in advance for major events.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div class="space-y-12 reveal-on-scroll">
+                    <div>
+                        <h2 class="text-primary text-xs font-bold tracking-[0.4em] uppercase mb-4">Contact</h2>
+                        <h3 class="text-4xl md:text-5xl font-serif text-white">Find Your Sanctuary</h3>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-stone-500 mb-1">Address</p>
+                                <p class="text-stone-300">[Business Address], Bhilai</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5 text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-stone-500 mb-1">Reservations</p>
+                                <p class="text-stone-300">[Phone Number]</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5 text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-stone-500 mb-1">Email</p>
+                                <p class="text-stone-300">[Email Address]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-10 reveal-on-scroll" style="transition-delay: 0.2s">
+                    <form onsubmit="return false;" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Full Name</label>
+                                <input type="text" class="w-full bg-stone-900/50 border-b border-white/10 p-3 focus:outline-none focus:border-primary transition-colors text-sm" placeholder="Your Name">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Inquiry Type</label>
+                                <select class="w-full bg-stone-900/50 border-b border-white/10 p-3 focus:outline-none focus:border-primary transition-colors text-sm">
+                                    <option>Room Booking</option>
+                                    <option>Banquet Inquiry</option>
+                                    <option>Dining Reservation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Message</label>
+                            <textarea rows="4" class="w-full bg-stone-900/50 border-b border-white/10 p-3 focus:outline-none focus:border-primary transition-colors text-sm" placeholder="Tell us your requirements..."></textarea>
+                        </div>
+                        <button class="w-full py-4 bg-primary text-stone-950 font-bold text-xs tracking-[0.3em] uppercase hover:bg-white transition-colors duration-300">
+                            Send Request
+                        </button>
+                        <p class="text-[10px] text-stone-500 text-center italic mt-4 italic">*This is a demo form. No data will be sent.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 border-t border-white/5 bg-stone-950">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 mb-20">
+            <div class="md:col-span-2">
+                <span class="font-serif text-3xl text-white mb-6 block">Hotel <span class="italic text-primary">Anjani</span> Palace</span>
+                <p class="text-stone-500 text-sm max-w-xs leading-relaxed">
+                    Setting the standard for luxury hospitality in Bhilai. Your premier choice for accommodation and celebrations.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white text-[10px] font-bold tracking-widest uppercase mb-6">Navigation</h4>
+                <ul class="space-y-3 text-stone-500 text-sm">
+                    <li><a href="#about" class="hover:text-primary transition-colors">Experience</a></li>
+                    <li><a href="#services" class="hover:text-primary transition-colors">Services</a></li>
+                    <li><a href="#faq" class="hover:text-primary transition-colors">FAQ</a></li>
+                    <li><a href="#contact" class="hover:text-primary transition-colors">Location</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-[10px] font-bold tracking-widest uppercase mb-6">Connect</h4>
+                <ul class="space-y-3 text-stone-500 text-sm">
+                    <li>[Social Links Coming Soon]</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] tracking-widest uppercase text-stone-600">
+            <p>&copy; 2024 Hotel Anjani Palace. All Rights Reserved.</p>
+            <p>Crafted by Vicky Web Agency</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Cursor Glow Effect
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // 3D Tilt Effect for Hero
+        const tiltContainer = document.getElementById('hero-image-tilt');
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const { innerWidth, innerHeight } = window;
+                const xPos = (clientX / innerWidth - 0.5) * 15;
+                const yPos = (clientY / innerHeight - 0.5) * -15;
+                tiltContainer.style.transform = `rotateY(${xPos}deg) rotateX(${yPos}deg)`;
+            });
+        }
+
+        // Navigation Scroll Effect
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'px-4');
+                nav.querySelector('div').classList.remove('bg-transparent');
+                nav.querySelector('div').classList.add('bg-stone-950/80');
+            } else {
+                nav.classList.remove('py-2', 'px-4');
+                nav.querySelector('div').classList.remove('bg-stone-950/80');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        // Reveal on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-up');
+                    entry.target.classList.remove('opacity-0');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const content = trigger.nextElementSibling;
+                const icon = trigger.querySelector('i');
+                const isHidden = content.classList.contains('hidden');
+                
+                // Close others
+                document.querySelectorAll('.faq-trigger').forEach(other => {
+                    other.nextElementSibling.classList.add('hidden');
+                    other.querySelector('i').style.transform = 'rotate(0deg)';
+                });
+
+                if (isHidden) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(45deg)';
+                }
+            });
+        });
+
+        // Smooth Parallax for bg
+        window.addEventListener('scroll', () => {
+            const parallax = document.querySelector('.bg-fixed');
+            const scrolled = window.pageYOffset;
+            parallax.style.transform = `translateY(${scrolled * 0.15}px)`;
+        });
+    </script>
+</body>
+</html>

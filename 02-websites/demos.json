@@ -5,15 +5,7 @@
     "location": "New York, USA",
     "slug": "em-llemd",
     "url": "/em-llemd/",
-    "created_at": "2026-08-12T15:03:26"
-  },
-  {
-    "business_name": "One Medical",
-    "business_type": "doctor",
-    "location": "New York, USA",
-    "slug": "one-medical",
-    "url": "/one-medical/",
-    "created_at": "2026-08-12T15:01:57"
+    "created_at": "2026-08-12T18:03:03"
   },
   {
     "business_name": "Robert Lechtenberg, M.D.",
@@ -21,7 +13,7 @@
     "location": "New York, USA",
     "slug": "robert-lechtenberg-m-d",
     "url": "/robert-lechtenberg-m-d/",
-    "created_at": "2026-08-12T15:01:15"
+    "created_at": "2026-08-12T18:02:21"
   },
   {
     "business_name": "Marie-France Conde Pediatrics",
@@ -29,7 +21,55 @@
     "location": "New York, USA",
     "slug": "marie-france-conde-pediatrics",
     "url": "/marie-france-conde-pediatrics/",
-    "created_at": "2026-08-12T15:00:37"
+    "created_at": "2026-08-12T18:01:42"
+  },
+  {
+    "business_name": "Joseph P. Addabbo Family Health Center",
+    "business_type": "doctor",
+    "location": "New York, USA",
+    "slug": "joseph-p-addabbo-family-health-center",
+    "url": "/joseph-p-addabbo-family-health-center/",
+    "created_at": "2026-08-12T18:01:00"
+  },
+  {
+    "business_name": "The Frederick Hotel",
+    "business_type": "hotel",
+    "location": "New York, USA",
+    "slug": "the-frederick-hotel",
+    "url": "/the-frederick-hotel/",
+    "created_at": "2026-08-12T15:36:55"
+  },
+  {
+    "business_name": "Conrad",
+    "business_type": "hotel",
+    "location": "New York, USA",
+    "slug": "conrad",
+    "url": "/conrad/",
+    "created_at": "2026-08-12T15:36:20"
+  },
+  {
+    "business_name": "Amsterdam Inn",
+    "business_type": "hotel",
+    "location": "New York, USA",
+    "slug": "amsterdam-inn",
+    "url": "/amsterdam-inn/",
+    "created_at": "2026-08-12T15:35:42"
+  },
+  {
+    "business_name": "Country Inn & Suites by Carlson",
+    "business_type": "hotel",
+    "location": "New York, USA",
+    "slug": "country-inn-and-suites-by-carlson",
+    "url": "/country-inn-and-suites-by-carlson/",
+    "created_at": "2026-08-12T15:34:31"
+  },
+  {
+    "business_name": "Hotel Churchill",
+    "business_type": "hotel",
+    "location": "New York, USA",
+    "slug": "hotel-churchill",
+    "url": "/hotel-churchill/",
+    "created_at": "2026-08-12T15:33:56"
   },
   {
     "business_name": "Lenox Health Greenwich Village",
@@ -133,6 +173,78 @@
     "location": "",
     "slug": "vickyai-agency-",
     "url": "/vickyai-agency-/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Beastie Boys Square",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "beastie-boys-square",
+    "url": "/beastie-boys-square/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Bhilai Niwas",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "bhilai-niwas",
+    "url": "/bhilai-niwas/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Brothers To The Rescue Corner",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "brothers-to-the-rescue-corner",
+    "url": "/brothers-to-the-rescue-corner/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Frieda Zames Way",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "frieda-zames-way",
+    "url": "/frieda-zames-way/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Hell S Kitchen",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "hell-s-kitchen",
+    "url": "/hell-s-kitchen/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Hotel Anjani Palace",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "hotel-anjani-palace",
+    "url": "/hotel-anjani-palace/",
+    "created_at": ""
+  },
+  {
+    "business_name": "Hotel Himalaya Park",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "hotel-himalaya-park",
+    "url": "/hotel-himalaya-park/",
+    "created_at": ""
+  },
+  {
+    "business_name": "One Medical",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "one-medical",
+    "url": "/one-medical/",
+    "created_at": ""
+  },
+  {
+    "business_name": "William Modell Way",
+    "business_type": "Website Demo",
+    "location": "",
+    "slug": "william-modell-way",
+    "url": "/william-modell-way/",
     "created_at": ""
   }
 ]

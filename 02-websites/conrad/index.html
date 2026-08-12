@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conrad | New York</title>
+    <meta name="description" content="Experience refined hospitality and contemporary design at Conrad, New York.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-bg': '#0F1113',
+                        'brand-accent': '#C5A367',
+                        'brand-surface': '#1A1D20',
+                        'brand-border': 'rgba(255,255,255,0.08)',
+                    },
+                    fontFamily: {
+                        display: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'subtle-float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #0F1113;
+            color: #E2E8F0;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(26, 29, 32, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197, 163, 103, 0.3), transparent);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 163, 103, 0.05) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            position: fixed;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-image-container {
+            perspective: 1000px;
+        }
+
+        .parallax-target {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0F1113; }
+        ::-webkit-scrollbar-thumb { background: #C5A367; border-radius: 2px; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cursor Follower -->
+    <div id="cursor-glow" class="cursor-glow hidden lg:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass rounded-full px-8 py-3">
+            <div class="flex items-center gap-2">
+                <span class="font-display text-2xl tracking-widest uppercase font-light">Conrad</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest font-medium">
+                <a href="#accommodations" class="hover:text-brand-accent transition-colors">Suites</a>
+                <a href="#dining" class="hover:text-brand-accent transition-colors">Dining</a>
+                <a href="#about" class="hover:text-brand-accent transition-colors">The Vision</a>
+                <a href="#contact" class="hover:text-brand-accent transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden sm:block px-6 py-2 bg-brand-accent text-brand-bg text-xs uppercase tracking-widest font-bold hover:bg-white transition-all duration-300">
+                    Inquire
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] glass translate-x-full transition-transform duration-500 md:hidden flex flex-col items-center justify-center gap-8">
+        <button id="close-menu" class="absolute top-8 right-8 text-white">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <a href="#accommodations" class="font-display text-3xl">Suites</a>
+        <a href="#dining" class="font-display text-3xl">Dining</a>
+        <a href="#about" class="font-display text-3xl">The Vision</a>
+        <a href="#contact" class="font-display text-3xl">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-6 space-y-8">
+                <div class="reveal">
+                    <span class="inline-block px-4 py-1 border border-brand-accent/30 rounded-full text-[10px] uppercase tracking-[0.3em] text-brand-accent font-medium mb-6">
+                        New York, USA
+                    </span>
+                    <h1 class="font-display text-6xl md:text-8xl leading-[1.1] font-light">
+                        Urban <br><span class="italic text-brand-accent">Sophistication</span>
+                    </h1>
+                </div>
+                
+                <p class="reveal delay-100 max-w-md text-slate-400 font-light leading-relaxed">
+                    A dialogue between modern architecture and timeless hospitality. Conrad offers a sanctuary of curated experiences in the heart of New York.
+                </p>
+
+                <div class="reveal delay-200 flex flex-wrap gap-6 pt-4">
+                    <a href="#accommodations" class="px-8 py-4 bg-brand-accent text-brand-bg text-xs uppercase tracking-widest font-bold flex items-center gap-3 hover:gap-5 transition-all">
+                        Explore Rooms <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <button class="px-8 py-4 border border-brand-border text-xs uppercase tracking-widest font-bold hover:bg-white/5 transition-all">
+                        The Experience
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 relative hero-image-container reveal delay-300">
+                <div id="hero-parallax" class="parallax-target relative aspect-[4/5] md:aspect-square overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200" 
+                         alt="Luxury Interior" 
+                         class="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-700 group-hover:scale-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-bg/80 via-transparent to-transparent"></div>
+                </div>
+                <!-- Decorative Elements -->
+                <div class="absolute -bottom-8 -left-8 glass p-6 hidden md:block animate-subtle-float">
+                    <div class="text-brand-accent mb-2">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-[10px] uppercase tracking-widest text-slate-400">Manhattan</div>
+                    <div class="font-display text-xl">Iconic Skyline</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-50">
+            <div class="w-px h-12 bg-gradient-to-b from-brand-accent to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Services / Pillars -->
+    <section id="accommodations" class="py-32 px-6 bg-[#0B0D0F]">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                <div class="max-w-2xl reveal">
+                    <h2 class="font-display text-4xl md:text-5xl mb-6">Designed for the <br><span class="italic">Modern Traveler</span></h2>
+                    <p class="text-slate-400 font-light">Every detail at Conrad is an intentional choice, from the curated art collections to the seamless integration of technology and comfort.</p>
+                </div>
+                <div class="reveal delay-100">
+                    <a href="#" class="text-xs uppercase tracking-widest border-b border-brand-accent pb-2 text-brand-accent hover:text-white transition-colors">View All Services</a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-1px bg-brand-border reveal delay-200">
+                <!-- Service 01 -->
+                <div class="p-10 bg-brand-bg group hover:bg-brand-surface transition-all duration-500">
+                    <div class="mb-12 text-brand-accent">
+                        <i data-lucide="bed-single" class="w-8 h-8 stroke-1"></i>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 italic">Tailored Suites</h3>
+                    <p class="text-sm text-slate-400 font-light leading-relaxed mb-8">Expansive floor plans featuring floor-to-ceiling views of the Manhattan cityscape.</p>
+                    <div class="w-0 group-hover:w-full h-px bg-brand-accent transition-all duration-700"></div>
+                </div>
+                <!-- Service 02 -->
+                <div class="p-10 bg-brand-bg group hover:bg-brand-surface transition-all duration-500">
+                    <div class="mb-12 text-brand-accent">
+                        <i data-lucide="utensils" class="w-8 h-8 stroke-1"></i>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 italic">Culinary Art</h3>
+                    <p class="text-sm text-slate-400 font-light leading-relaxed mb-8">Chef-driven menus that celebrate local ingredients with a global perspective.</p>
+                    <div class="w-0 group-hover:w-full h-px bg-brand-accent transition-all duration-700"></div>
+                </div>
+                <!-- Service 03 -->
+                <div class="p-10 bg-brand-bg group hover:bg-brand-surface transition-all duration-500">
+                    <div class="mb-12 text-brand-accent">
+                        <i data-lucide="sparkles" class="w-8 h-8 stroke-1"></i>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 italic">Wellness Spa</h3>
+                    <p class="text-sm text-slate-400 font-light leading-relaxed mb-8">A holistic retreat designed to restore balance amidst the urban rhythm.</p>
+                    <div class="w-0 group-hover:w-full h-px bg-brand-accent transition-all duration-700"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Value -->
+    <section id="about" class="py-32 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="relative reveal order-2 lg:order-1">
+                <div class="aspect-[16/10] bg-brand-surface overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=1200" alt="Lobby Lounge" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000">
+                </div>
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 border border-brand-accent/20 -z-10"></div>
+            </div>
+            <div class="space-y-8 reveal delay-200 order-1 lg:order-2">
+                <h2 class="font-display text-4xl md:text-5xl">The Conrad <br><span class="italic">Philosophy</span></h2>
+                <div class="editorial-line w-32"></div>
+                <p class="text-slate-400 font-light leading-relaxed">
+                    Located in New York, USA, Conrad is defined by a commitment to intuitive service and expressive design. We believe that true luxury is found in the moments of seamless connection—between people, their surroundings, and the city itself.
+                </p>
+                <div class="grid grid-cols-2 gap-8 pt-8">
+                    <div>
+                        <div class="text-brand-accent text-3xl font-display mb-2 italic underline">Curated</div>
+                        <div class="text-[10px] uppercase tracking-widest text-slate-500">Art & Interior</div>
+                    </div>
+                    <div>
+                        <div class="text-brand-accent text-3xl font-display mb-2 italic underline">Central</div>
+                        <div class="text-[10px] uppercase tracking-widest text-slate-500">Heart of New York</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Experience (Interactive Section) -->
+    <section id="dining" class="py-32 px-6 bg-brand-surface/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <span class="text-brand-accent text-xs uppercase tracking-[0.3em]">The Signature Experience</span>
+                <h2 class="font-display text-5xl mt-4">Elevated Moments</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-px bg-brand-border reveal delay-100 overflow-hidden rounded-sm">
+                <div class="relative aspect-video lg:aspect-auto h-full group overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1550966842-28aa90668e83?auto=format&fit=crop&q=80&w=1000" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Fine Dining">
+                    <div class="absolute inset-0 bg-brand-bg/40 group-hover:bg-brand-bg/20 transition-all"></div>
+                    <div class="absolute bottom-10 left-10">
+                        <h4 class="font-display text-3xl italic">The Rooftop Bar</h4>
+                        <p class="text-xs uppercase tracking-widest opacity-70 mt-2">Sunset Mixology</p>
+                    </div>
+                </div>
+                <div class="p-12 lg:p-20 bg-brand-bg flex flex-col justify-center">
+                    <h3 class="font-display text-4xl mb-6 italic">A Taste of the City</h3>
+                    <p class="text-slate-400 font-light leading-relaxed mb-8">
+                        Our dining venues offer a sensory journey through the flavors of New York. From intimate breakfast corners to our signature rooftop lounge, every plate is an invitation to explore.
+                    </p>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-4 text-sm font-light text-slate-300">
+                            <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Private Dining Available
+                        </li>
+                        <li class="flex items-center gap-4 text-sm font-light text-slate-300">
+                            <span class="w-1.5 h-1.5 bg-brand-accent rounded-full"></span> Seasonal Tasting Menus
+                        </li>
+                    </ul>
+                    <a href="#" class="w-fit px-8 py-4 border border-brand-accent text-brand-accent text-xs uppercase tracking-widest font-bold hover:bg-brand-accent hover:text-brand-bg transition-all">
+                        Reserve a Table
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-24 px-6 border-y border-brand-border">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale">
+            <span class="font-display text-xl tracking-[0.2em] uppercase">Vogue Travel</span>
+            <span class="font-display text-xl tracking-[0.2em] uppercase">Architectural Digest</span>
+            <span class="font-display text-xl tracking-[0.2em] uppercase">The New Yorker</span>
+            <span class="font-display text-xl tracking-[0.2em] uppercase">Forbes Life</span>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-32 px-6">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <i data-lucide="quote" class="w-12 h-12 text-brand-accent/20 mx-auto mb-8"></i>
+            <h2 class="font-display text-3xl md:text-4xl italic text-slate-300 mb-8">
+                “Customer Reviews Coming Soon”
+            </h2>
+            <div class="editorial-line w-24 mx-auto mb-8"></div>
+            <p class="text-xs uppercase tracking-widest text-slate-500">Conrad New York Guest Feedback</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-32 px-6 bg-[#0B0D0F]">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="font-display text-4xl text-center mb-16 italic">Essential Information</h2>
+            <div class="space-y-4">
+                <details class="group glass rounded-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <span class="text-sm uppercase tracking-widest">Check-in & Check-out times</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform group-open:rotate-45"></i>
+                    </summary>
+                    <div class="p-6 pt-0 text-slate-400 font-light text-sm leading-relaxed">
+                        Standard check-in is at 3:00 PM and check-out is at 11:00 AM. Early arrivals and late departures are subject to availability.
+                    </div>
+                </details>
+                <details class="group glass rounded-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <span class="text-sm uppercase tracking-widest">Pet Policy</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform group-open:rotate-45"></i>
+                    </summary>
+                    <div class="p-6 pt-0 text-slate-400 font-light text-sm leading-relaxed">
+                        We welcome small pets with prior notice. Please contact our concierge for specific details and associated fees.
+                    </div>
+                </details>
+                <details class="group glass rounded-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <span class="text-sm uppercase tracking-widest">Valet Parking</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform group-open:rotate-45"></i>
+                    </summary>
+                    <div class="p-6 pt-0 text-slate-400 font-light text-sm leading-relaxed">
+                        Secure valet parking is available for all guests at our main entrance in New York.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
+            <div class="reveal">
+                <h2 class="font-display text-5xl mb-8 italic">Begin Your <br>Journey</h2>
+                <p class="text-slate-400 font-light mb-12">Contact our reservations team to curate your stay at Conrad New York.</p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center gap-6">
+                        <div class="w-12 h-12 glass flex items-center justify-center text-brand-accent">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-500">Location</p>
+                            <p class="font-light">New York, USA</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="w-12 h-12 glass flex items-center justify-center text-brand-accent">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-500">Reservations</p>
+                            <p class="font-light">[Phone Number]</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="w-12 h-12 glass flex items-center justify-center text-brand-accent">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-500">General Inquiry</p>
+                            <p class="font-light">[Email Address]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal delay-200">
+                <form class="glass p-10 space-y-6" onsubmit="return false;">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-slate-400">First Name</label>
+                            <input type="text" class="w-full bg-white/5 border border-brand-border p-3 focus:outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-slate-400">Last Name</label>
+                            <input type="text" class="w-full bg-white/5 border border-brand-border p-3 focus:outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-slate-400">Email Address</label>
+                        <input type="email" class="w-full bg-white/5 border border-brand-border p-3 focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-slate-400">Service Interest</label>
+                        <select class="w-full bg-brand-surface border border-brand-border p-3 focus:outline-none focus:border-brand-accent transition-colors text-slate-400">
+                            <option>Stay & Accommodation</option>
+                            <option>Dining Reservation</option>
+                            <option>Private Event</option>
+                            <option>Wellness Program</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-slate-400">Message</label>
+                        <textarea rows="4" class="w-full bg-white/5 border border-brand-border p-3 focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+                    </div>
+                    <button class="w-full py-4 bg-brand-accent text-brand-bg text-xs uppercase tracking-widest font-bold hover:bg-white transition-all">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto glass p-16 text-center reveal">
+            <h2 class="font-display text-4xl md:text-6xl mb-10 italic">Awaits Your Arrival</h2>
+            <a href="#contact" class="px-12 py-5 bg-white text-brand-bg text-xs uppercase tracking-widest font-bold hover:bg-brand-accent transition-all inline-block">
+                Book Your Experience
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <span class="font-display text-xl tracking-widest uppercase font-light">Conrad</span>
+            </div>
+            
+            <div class="flex gap-8 text-[10px] uppercase tracking-widest text-slate-500">
+                <a href="#" class="hover:text-brand-accent">Privacy Policy</a>
+                <a href="#" class="hover:text-brand-accent">Terms of Service</a>
+                <a href="#" class="hover:text-brand-accent">Accessibility</a>
+            </div>
+
+            <div class="flex gap-6 text-slate-400">
+                <a href="#" class="hover:text-brand-accent"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-brand-accent"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-brand-accent"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+        <div class="text-center mt-12 text-[10px] uppercase tracking-widest text-slate-600">
+            &copy; 2024 Conrad New York. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Cursor Glow Effect
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // Hero Parallax Tilt
+        const heroParallax = document.getElementById('hero-parallax');
+        let request = null;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            if (!request) {
+                request = requestAnimationFrame(updateParallax);
+            }
+        });
+
+        function updateParallax() {
+            if (window.innerWidth > 1024) {
+                heroParallax.style.transform = `rotateY(${mouseX}deg) rotateX(${-mouseY}deg)`;
+            }
+            request = null;
+        }
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        // Smooth Scroll for Anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

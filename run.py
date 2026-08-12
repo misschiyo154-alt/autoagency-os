@@ -217,7 +217,24 @@ if not items:
     log("[ERROR] No lead completed website/email generation.")
     sys.exit(1)
 
-# 4. APPROVAL
+# 4. PUBLISH PREVIEW FIRST
+# The preview must be live before Boss approval. Outreach remains blocked until approval.
+log("\n[4/7] PUBLISH PREVIEW FOR APPROVAL")
+if args.deploy:
+    ok, _ = run_script(REDIRECT_UPDATER)
+    if not ok:
+        sys.exit(1)
+else:
+    log("[SKIP] Preview deploy config disabled.")
+
+if args.git_push:
+    ok, _ = run_script(GIT_PUSHER)
+    if not ok:
+        sys.exit(1)
+else:
+    log("[SKIP] Git push disabled.")
+
+# 5. APPROVAL
 if approval_required:
     payload = write_pending_approval(items)
     if not wait_for_approval(payload):
@@ -244,23 +261,9 @@ for idx in approved_indexes:
     if not ok:
         log(f"[WARNING] Email send failed for lead #{idx}; continuing.")
 
-# 6. DEPLOY WEBSITE DEMOS
-log("\n[6/7] PREPARE AGENCY DEMOS")
-if args.deploy:
-    ok, _ = run_script(REDIRECT_UPDATER)
-    if not ok:
-        sys.exit(1)
-else:
-    log("[SKIP] Deploy config disabled.")
-
-# 7. PUSH EVERYTHING GENERATED — website demos are previews; approval controls outreach.
-log("\n[7/7] GITHUB PUSH / CLOUDFLARE")
-if args.git_push:
-    ok, _ = run_script(GIT_PUSHER)
-    if not ok:
-        sys.exit(1)
-else:
-    log("[SKIP] Git push disabled.")
+# 7. OUTREACH COMPLETE
+log("\n[7/7] APPROVED OUTREACH COMPLETE")
+log("Preview was published before approval; only approved emails were sent.")
 
 # Mark approval file as complete while retaining item choices for Aira/email sender.
 try:

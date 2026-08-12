@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
+sys.path.insert(0, str(BASE_DIR))
 from config import AGENCY_URL
 
 PROMPT_PATH = BASE_DIR / "04-emails" / "email-prompt.md"

@@ -8,7 +8,8 @@ Location: {location}
 NON-NEGOTIABLE
 - The result must feel custom-built, expensive, modern and memorable — never like a generic template.
 - Use only the supplied business facts. Never invent phone numbers, emails, addresses, hours, prices, reviews, ratings, awards, history, certifications, social accounts or coordinates.
-- Missing factual data must be shown as tasteful placeholders such as [Phone Number], [Email Address], [Business Address].
+- Missing factual contact data may be shown as tasteful placeholders such as [Phone Number], [Email Address], [Business Address].
+- NEVER use placeholders for the website URL, domain, preview URL, booking URL, or agency URL. Do not write "Insert your URL here", "Your URL", "your-demo-url.com", or similar anywhere in the website.
 - No fake testimonials. If used, say “Customer Reviews Coming Soon”.
 - No fake booking/success states. Demo forms must not pretend to send.
 

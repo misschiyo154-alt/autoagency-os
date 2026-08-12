@@ -1,6 +1,7 @@
 import os
 import sys
 import re
+import json
 from pathlib import Path
 from datetime import datetime
 
@@ -131,7 +132,6 @@ latest_output.write_text(html, encoding="utf-8")
 registry = []
 if DEMO_INDEX_FILE.exists():
     try:
-        import json
         registry = json.loads(DEMO_INDEX_FILE.read_text(encoding="utf-8"))
         if not isinstance(registry, list): registry = []
     except Exception:

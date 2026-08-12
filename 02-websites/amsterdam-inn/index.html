@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amsterdam Inn | A New York Sanctuary</title>
+    <meta name="description" content="Refined accommodations in New York. Experience the perfect blend of European elegance and Manhattan energy.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- UI Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: '#0F1110', // Deep charcoal/ebony
+                            paper: '#F9F7F2', // Warm cream
+                            accent: '#C5A059', // Muted gold/sandstone
+                            muted: '#2A2D2B'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'reveal': 'reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { opacity: '0', transform: 'translateY(30px) blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) blur(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-nav {
+            background: rgba(15, 17, 16, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.07) 0%, rgba(15, 17, 16, 0) 70%);
+            pointer-events: none;
+            position: fixed;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+        }
+
+        .hero-perspective {
+            perspective: 1200px;
+        }
+
+        .hero-tilt {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        ::selection {
+            background: #C5A059;
+            color: #0F1110;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0F1110; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-brand-base text-brand-paper font-sans antialiased overflow-x-hidden">
+
+    <div id="cursor-glow" class="cursor-glow hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 border border-brand-accent flex items-center justify-center rotate-45 group-hover:rotate-0 transition-transform duration-500">
+                    <span class="rotate-[-45deg] group-hover:rotate-0 transition-transform duration-500 text-xs font-semibold">A</span>
+                </div>
+                <span class="text-xl font-display tracking-widest uppercase">Amsterdam Inn</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#experience" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Experience</a>
+                <a href="#rooms" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Rooms</a>
+                <a href="#amenities" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Amenities</a>
+                <a href="#contact" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Contact</a>
+                <button class="bg-brand-accent text-brand-base px-6 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors duration-300">
+                    Book Stay
+                </button>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden text-brand-accent p-2">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-brand-base translate-x-full transition-transform duration-500 md:hidden flex flex-col justify-center items-center gap-8">
+        <button id="menu-close" class="absolute top-6 right-6 text-brand-accent">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <a href="#experience" class="text-2xl font-display uppercase tracking-widest menu-link">Experience</a>
+        <a href="#rooms" class="text-2xl font-display uppercase tracking-widest menu-link">Rooms</a>
+        <a href="#amenities" class="text-2xl font-display uppercase tracking-widest menu-link">Amenities</a>
+        <a href="#contact" class="text-2xl font-display uppercase tracking-widest menu-link">Contact</a>
+        <button class="mt-4 bg-brand-accent text-brand-base px-10 py-4 text-sm font-bold uppercase tracking-widest">
+            Book Now
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
+            
+            <div class="md:col-span-6 z-10">
+                <div class="animate-reveal stagger-1">
+                    <span class="inline-block py-1 px-3 border border-brand-accent/30 text-[10px] uppercase tracking-[0.4em] text-brand-accent mb-6">Established Presence • New York</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-display mb-8 leading-[0.9] animate-reveal stagger-2">
+                    Urban Quiet. <br/>
+                    <span class="italic text-brand-accent">Reimagined.</span>
+                </h1>
+                <p class="text-lg text-brand-paper/70 max-w-md mb-10 leading-relaxed animate-reveal stagger-3">
+                    Discover a collection of curated spaces where Old World European charm meets the relentless pulse of Manhattan. 
+                </p>
+                <div class="flex flex-wrap gap-6 animate-reveal stagger-4">
+                    <button class="group flex items-center gap-3 bg-brand-accent text-brand-base px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all">
+                        Reserve Your View
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    <button class="flex items-center gap-3 border border-brand-accent/30 px-8 py-4 font-bold uppercase tracking-widest hover:bg-brand-accent/10 transition-all">
+                        Explore Rooms
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:col-span-6 relative hero-perspective h-[500px] md:h-[700px]">
+                <div id="hero-image-container" class="hero-tilt w-full h-full relative">
+                    <!-- Background layer -->
+                    <div class="absolute inset-0 bg-brand-accent/10 translate-x-4 translate-y-4"></div>
+                    <!-- Main image -->
+                    <div class="absolute inset-0 overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200" 
+                             alt="Luxury Suite at Amsterdam Inn" 
+                             class="w-full h-full object-cover grayscale-[20%] contrast-[110%]">
+                    </div>
+                    <!-- Overlaid glass panel -->
+                    <div class="absolute -bottom-10 -left-10 glass-card p-8 hidden lg:block animate-float">
+                        <div class="flex gap-4 items-center">
+                            <div class="text-brand-accent">
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-display italic">"The quietest corner of Manhattan."</p>
+                                <p class="text-[10px] uppercase tracking-widest opacity-50 mt-1">Guest Journal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+            <span class="text-[10px] uppercase tracking-[0.3em] opacity-40">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-brand-accent to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Services / Offerings -->
+    <section id="rooms" class="py-24 bg-brand-paper text-brand-base relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-end mb-20">
+                <div>
+                    <h2 class="text-5xl font-display mb-6 reveal-on-scroll">Refined Accommodations</h2>
+                    <p class="text-lg opacity-70 leading-relaxed max-w-lg reveal-on-scroll">
+                        Every floor of Amsterdam Inn tells a unique story of comfort, meticulously designed to provide a sanctuary from the New York skyline.
+                    </p>
+                </div>
+                <div class="flex justify-end reveal-on-scroll">
+                    <a href="#" class="group text-sm font-bold uppercase tracking-widest flex items-center gap-2 border-b border-brand-base pb-2">
+                        View All Suite Types
+                        <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="group cursor-pointer reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="overflow-hidden mb-6 h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-display mb-2">The Terrace Suite</h3>
+                            <p class="text-sm opacity-60 uppercase tracking-widest">Private Balcony • King Bed</p>
+                        </div>
+                        <i data-lucide="plus" class="w-5 h-5 opacity-40 group-hover:rotate-90 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group cursor-pointer reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="overflow-hidden mb-6 h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-display mb-2">Artist Studio</h3>
+                            <p class="text-sm opacity-60 uppercase tracking-widest">Skyline Views • Workspace</p>
+                        </div>
+                        <i data-lucide="plus" class="w-5 h-5 opacity-40 group-hover:rotate-90 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group cursor-pointer reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="overflow-hidden mb-6 h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-display mb-2">Canal Loft</h3>
+                            <p class="text-sm opacity-60 uppercase tracking-widest">High Ceilings • Soaking Tub</p>
+                        </div>
+                        <i data-lucide="plus" class="w-5 h-5 opacity-40 group-hover:rotate-90 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-24 border-y border-brand-accent/10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+            <div class="reveal-on-scroll">
+                <img src="https://images.unsplash.com/photo-1449156001437-3a1621acda2e?auto=format&fit=crop&q=80&w=1000" 
+                     alt="Amsterdam Inn Exterior" 
+                     class="w-full aspect-[4/5] object-cover shadow-2xl">
+            </div>
+            <div class="reveal-on-scroll">
+                <span class="text-brand-accent text-xs uppercase tracking-[0.4em] mb-6 block">Our Identity</span>
+                <h2 class="text-5xl font-display mb-8 leading-tight">Quiet Hospitality in a <span class="italic">Moving City</span>.</h2>
+                <div class="space-y-6 text-brand-paper/70 leading-relaxed">
+                    <p>Amsterdam Inn represents a bridge between eras. Located in New York, we offer travelers a place to disconnect from the external pace without losing touch with the city's energy.</p>
+                    <p>Our philosophy is simple: bespoke service, tactile luxury, and an unwavering commitment to the art of the stay.</p>
+                </div>
+                
+                <div class="mt-12 grid grid-cols-2 gap-8 border-t border-brand-accent/10 pt-12">
+                    <div>
+                        <h4 class="text-brand-accent font-display text-2xl mb-2">Location</h4>
+                        <p class="text-sm opacity-60 uppercase tracking-widest">New York, USA</p>
+                    </div>
+                    <div>
+                        <h4 class="text-brand-accent font-display text-2xl mb-2">Check-in</h4>
+                        <p class="text-sm opacity-60 uppercase tracking-widest">3:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Experience Section -->
+    <section id="experience" class="py-24 bg-[#0A0C0B]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal-on-scroll">
+                <h2 class="text-5xl font-display mb-4">The Amsterdam Rituals</h2>
+                <p class="text-brand-accent uppercase tracking-[0.3em] text-xs">A Curated Daily Experience</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-brand-accent/20 border border-brand-accent/20">
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="coffee" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">Morning Roast</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">Artisanal Dutch-press coffee delivered to your door at your preferred sunrise hour.</p>
+                </div>
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="concierge-bell" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">Nightly Turndown</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">Essential oils and curated linen mist to ensure a restful New York evening.</p>
+                </div>
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="book-open" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">The Library</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">A floor-to-ceiling collection of international literature and local history.</p>
+                </div>
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 400ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="bicycle" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">City Transit</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">Hand-crafted bicycles available for guests to explore the Manhattan grid.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-24 bg-brand-paper text-brand-base">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal-on-scroll">
+            <h2 class="text-4xl font-display mb-12">Commitment to Quality</h2>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full border border-brand-base/20 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest">Discrete Security</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full border border-brand-base/20 flex items-center justify-center mb-4">
+                        <i data-lucide="leaf" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest">Sustainable Ethos</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full border border-brand-base/20 flex items-center justify-center mb-4">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest">Bespoke Curation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div class="w-px h-20 bg-brand-accent/30 mb-12"></div>
+            <p class="text-2xl font-display italic text-brand-accent/60 reveal-on-scroll">Customer Reviews Coming Soon</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-brand-base border-t border-brand-accent/5">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-4xl font-display mb-12 text-center reveal-on-scroll">Common Questions</h2>
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border-b border-brand-accent/10 pb-4 reveal-on-scroll">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 group">
+                        <span class="text-lg font-display tracking-wide group-hover:text-brand-accent transition-colors">What are the check-in and check-out times?</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-content hidden pt-2 pb-6 text-brand-paper/50 text-sm leading-relaxed">
+                        Standard check-in is at 3:00 PM and check-out is at 11:00 AM. We offer early check-in and late check-out subject to availability upon request.
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="border-b border-brand-accent/10 pb-4 reveal-on-scroll">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 group">
+                        <span class="text-lg font-display tracking-wide group-hover:text-brand-accent transition-colors">Is valet parking available?</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-content hidden pt-2 pb-6 text-brand-paper/50 text-sm leading-relaxed">
+                        Yes, Amsterdam Inn offers secure valet parking services for all guests. Charges may apply depending on the length of stay.
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="border-b border-brand-accent/10 pb-4 reveal-on-scroll">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 group">
+                        <span class="text-lg font-display tracking-wide group-hover:text-brand-accent transition-colors">Do you offer a pet-friendly policy?</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-content hidden pt-2 pb-6 text-brand-paper/50 text-sm leading-relaxed">
+                        We welcome small pets in specifically designated suites. Please contact our concierge prior to booking to ensure availability of pet-friendly accommodations.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div class="reveal-on-scroll">
+                    <h2 class="text-5xl font-display mb-8">Inquiries & <br><span class="italic">Reservations</span></h2>
+                    <p class="text-brand-paper/60 mb-12 max-w-sm">Reach out to our dedicated concierge team for special requests, group bookings, or private events.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6">
+                            <div class="text-brand-accent mt-1"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-brand-accent mb-2">Location</h4>
+                                <p class="text-brand-paper/80">[Business Address]<br>New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="text-brand-accent mt-1"><i data-lucide="phone" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-brand-accent mb-2">Telephone</h4>
+                                <p class="text-brand-paper/80">[Phone Number]</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="text-brand-accent mt-1"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-brand-accent mb-2">Electronic</h4>
+                                <p class="text-brand-paper/80">[Email Address]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-on-scroll">
+                    <form onsubmit="return false;" class="glass-card p-10 space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Full Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Email Address</label>
+                                <input type="email" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Stay Details (Optional)</label>
+                            <input type="text" placeholder="Arrival Date - Departure Date" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors"></textarea>
+                        </div>
+                        <button class="w-full bg-brand-accent text-brand-base font-bold uppercase tracking-[0.2em] py-5 hover:bg-white transition-all">
+                            Send Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-32 bg-brand-paper text-brand-base text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none select-none overflow-hidden">
+            <span class="text-[25rem] font-display absolute -bottom-40 left-0 leading-none">AMSTERDAM</span>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <h2 class="text-6xl md:text-8xl font-display mb-10 reveal-on-scroll">Begin Your Journey.</h2>
+            <button class="bg-brand-base text-brand-paper px-12 py-6 font-bold uppercase tracking-widest hover:bg-brand-accent transition-all reveal-on-scroll">
+                Check Availability
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-brand-base border-t border-brand-accent/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 border border-brand-accent flex items-center justify-center rotate-45">
+                        <span class="rotate-[-45deg] text-[10px] font-semibold">A</span>
+                    </div>
+                    <span class="text-sm font-display tracking-widest uppercase">Amsterdam Inn</span>
+                </div>
+                
+                <div class="flex gap-8 text-[10px] uppercase tracking-widest opacity-40">
+                    <a href="#" class="hover:text-brand-accent transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">Terms of Stay</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">Accessibility</a>
+                </div>
+
+                <div class="text-[10px] uppercase tracking-widest opacity-40">
+                    &copy; 2024 Amsterdam Inn.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 3D Tilt Effect
+        const heroContainer = document.getElementById('hero-image-container');
+        const heroTilt = document.querySelector('.hero-tilt');
+
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                // Cursor Glow
+                const cursorGlow = document.getElementById('cursor-glow');
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+
+                // Hero Tilt
+                const rect = heroContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                heroTilt.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            heroContainer.addEventListener('mouseleave', () => {
+                heroTilt.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        }
+
+        // Scroll Reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-reveal');
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-45');
+            });
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        const closeMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+        };
+
+        menuClose.addEventListener('click', closeMenu);
+        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+        // Nav Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-3');
+                nav.classList.add('glass-nav');
+            } else {
+                nav.classList.remove('py-3');
+            }
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amsterdam Inn | A New York Sanctuary</title>
+    <meta name="description" content="Refined accommodations in New York. Experience the perfect blend of European elegance and Manhattan energy.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- UI Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: '#0F1110', // Deep charcoal/ebony
+                            paper: '#F9F7F2', // Warm cream
+                            accent: '#C5A059', // Muted gold/sandstone
+                            muted: '#2A2D2B'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'reveal': 'reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { opacity: '0', transform: 'translateY(30px) blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) blur(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-nav {
+            background: rgba(15, 17, 16, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.07) 0%, rgba(15, 17, 16, 0) 70%);
+            pointer-events: none;
+            position: fixed;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+        }
+
+        .hero-perspective {
+            perspective: 1200px;
+        }
+
+        .hero-tilt {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        ::selection {
+            background: #C5A059;
+            color: #0F1110;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0F1110; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-brand-base text-brand-paper font-sans antialiased overflow-x-hidden">
+
+    <div id="cursor-glow" class="cursor-glow hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 border border-brand-accent flex items-center justify-center rotate-45 group-hover:rotate-0 transition-transform duration-500">
+                    <span class="rotate-[-45deg] group-hover:rotate-0 transition-transform duration-500 text-xs font-semibold">A</span>
+                </div>
+                <span class="text-xl font-display tracking-widest uppercase">Amsterdam Inn</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#experience" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Experience</a>
+                <a href="#rooms" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Rooms</a>
+                <a href="#amenities" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Amenities</a>
+                <a href="#contact" class="text-xs uppercase tracking-[0.2em] hover:text-brand-accent transition-colors">Contact</a>
+                <button class="bg-brand-accent text-brand-base px-6 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors duration-300">
+                    Book Stay
+                </button>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden text-brand-accent p-2">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-brand-base translate-x-full transition-transform duration-500 md:hidden flex flex-col justify-center items-center gap-8">
+        <button id="menu-close" class="absolute top-6 right-6 text-brand-accent">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <a href="#experience" class="text-2xl font-display uppercase tracking-widest menu-link">Experience</a>
+        <a href="#rooms" class="text-2xl font-display uppercase tracking-widest menu-link">Rooms</a>
+        <a href="#amenities" class="text-2xl font-display uppercase tracking-widest menu-link">Amenities</a>
+        <a href="#contact" class="text-2xl font-display uppercase tracking-widest menu-link">Contact</a>
+        <button class="mt-4 bg-brand-accent text-brand-base px-10 py-4 text-sm font-bold uppercase tracking-widest">
+            Book Now
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
+            
+            <div class="md:col-span-6 z-10">
+                <div class="animate-reveal stagger-1">
+                    <span class="inline-block py-1 px-3 border border-brand-accent/30 text-[10px] uppercase tracking-[0.4em] text-brand-accent mb-6">Established Presence • New York</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-display mb-8 leading-[0.9] animate-reveal stagger-2">
+                    Urban Quiet. <br/>
+                    <span class="italic text-brand-accent">Reimagined.</span>
+                </h1>
+                <p class="text-lg text-brand-paper/70 max-w-md mb-10 leading-relaxed animate-reveal stagger-3">
+                    Discover a collection of curated spaces where Old World European charm meets the relentless pulse of Manhattan. 
+                </p>
+                <div class="flex flex-wrap gap-6 animate-reveal stagger-4">
+                    <button class="group flex items-center gap-3 bg-brand-accent text-brand-base px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all">
+                        Reserve Your View
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    <button class="flex items-center gap-3 border border-brand-accent/30 px-8 py-4 font-bold uppercase tracking-widest hover:bg-brand-accent/10 transition-all">
+                        Explore Rooms
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:col-span-6 relative hero-perspective h-[500px] md:h-[700px]">
+                <div id="hero-image-container" class="hero-tilt w-full h-full relative">
+                    <!-- Background layer -->
+                    <div class="absolute inset-0 bg-brand-accent/10 translate-x-4 translate-y-4"></div>
+                    <!-- Main image -->
+                    <div class="absolute inset-0 overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200" 
+                             alt="Luxury Suite at Amsterdam Inn" 
+                             class="w-full h-full object-cover grayscale-[20%] contrast-[110%]">
+                    </div>
+                    <!-- Overlaid glass panel -->
+                    <div class="absolute -bottom-10 -left-10 glass-card p-8 hidden lg:block animate-float">
+                        <div class="flex gap-4 items-center">
+                            <div class="text-brand-accent">
+                                <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-display italic">"The quietest corner of Manhattan."</p>
+                                <p class="text-[10px] uppercase tracking-widest opacity-50 mt-1">Guest Journal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+            <span class="text-[10px] uppercase tracking-[0.3em] opacity-40">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-brand-accent to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Services / Offerings -->
+    <section id="rooms" class="py-24 bg-brand-paper text-brand-base relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-end mb-20">
+                <div>
+                    <h2 class="text-5xl font-display mb-6 reveal-on-scroll">Refined Accommodations</h2>
+                    <p class="text-lg opacity-70 leading-relaxed max-w-lg reveal-on-scroll">
+                        Every floor of Amsterdam Inn tells a unique story of comfort, meticulously designed to provide a sanctuary from the New York skyline.
+                    </p>
+                </div>
+                <div class="flex justify-end reveal-on-scroll">
+                    <a href="#" class="group text-sm font-bold uppercase tracking-widest flex items-center gap-2 border-b border-brand-base pb-2">
+                        View All Suite Types
+                        <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="group cursor-pointer reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="overflow-hidden mb-6 h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-display mb-2">The Terrace Suite</h3>
+                            <p class="text-sm opacity-60 uppercase tracking-widest">Private Balcony • King Bed</p>
+                        </div>
+                        <i data-lucide="plus" class="w-5 h-5 opacity-40 group-hover:rotate-90 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group cursor-pointer reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="overflow-hidden mb-6 h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-display mb-2">Artist Studio</h3>
+                            <p class="text-sm opacity-60 uppercase tracking-widest">Skyline Views • Workspace</p>
+                        </div>
+                        <i data-lucide="plus" class="w-5 h-5 opacity-40 group-hover:rotate-90 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group cursor-pointer reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="overflow-hidden mb-6 h-[400px]">
+                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-display mb-2">Canal Loft</h3>
+                            <p class="text-sm opacity-60 uppercase tracking-widest">High Ceilings • Soaking Tub</p>
+                        </div>
+                        <i data-lucide="plus" class="w-5 h-5 opacity-40 group-hover:rotate-90 group-hover:opacity-100 transition-all"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-24 border-y border-brand-accent/10">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+            <div class="reveal-on-scroll">
+                <img src="https://images.unsplash.com/photo-1449156001437-3a1621acda2e?auto=format&fit=crop&q=80&w=1000" 
+                     alt="Amsterdam Inn Exterior" 
+                     class="w-full aspect-[4/5] object-cover shadow-2xl">
+            </div>
+            <div class="reveal-on-scroll">
+                <span class="text-brand-accent text-xs uppercase tracking-[0.4em] mb-6 block">Our Identity</span>
+                <h2 class="text-5xl font-display mb-8 leading-tight">Quiet Hospitality in a <span class="italic">Moving City</span>.</h2>
+                <div class="space-y-6 text-brand-paper/70 leading-relaxed">
+                    <p>Amsterdam Inn represents a bridge between eras. Located in New York, we offer travelers a place to disconnect from the external pace without losing touch with the city's energy.</p>
+                    <p>Our philosophy is simple: bespoke service, tactile luxury, and an unwavering commitment to the art of the stay.</p>
+                </div>
+                
+                <div class="mt-12 grid grid-cols-2 gap-8 border-t border-brand-accent/10 pt-12">
+                    <div>
+                        <h4 class="text-brand-accent font-display text-2xl mb-2">Location</h4>
+                        <p class="text-sm opacity-60 uppercase tracking-widest">New York, USA</p>
+                    </div>
+                    <div>
+                        <h4 class="text-brand-accent font-display text-2xl mb-2">Check-in</h4>
+                        <p class="text-sm opacity-60 uppercase tracking-widest">3:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Experience Section -->
+    <section id="experience" class="py-24 bg-[#0A0C0B]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal-on-scroll">
+                <h2 class="text-5xl font-display mb-4">The Amsterdam Rituals</h2>
+                <p class="text-brand-accent uppercase tracking-[0.3em] text-xs">A Curated Daily Experience</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-brand-accent/20 border border-brand-accent/20">
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="coffee" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">Morning Roast</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">Artisanal Dutch-press coffee delivered to your door at your preferred sunrise hour.</p>
+                </div>
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="concierge-bell" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">Nightly Turndown</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">Essential oils and curated linen mist to ensure a restful New York evening.</p>
+                </div>
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="book-open" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">The Library</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">A floor-to-ceiling collection of international literature and local history.</p>
+                </div>
+                <div class="bg-brand-base p-10 hover:bg-brand-accent/5 transition-colors reveal-on-scroll" style="transition-delay: 400ms;">
+                    <div class="text-brand-accent mb-6"><i data-lucide="bicycle" class="w-8 h-8 stroke-1"></i></div>
+                    <h3 class="text-xl font-display mb-4">City Transit</h3>
+                    <p class="text-sm text-brand-paper/50 leading-relaxed">Hand-crafted bicycles available for guests to explore the Manhattan grid.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-24 bg-brand-paper text-brand-base">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal-on-scroll">
+            <h2 class="text-4xl font-display mb-12">Commitment to Quality</h2>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full border border-brand-base/20 flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest">Discrete Security</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full border border-brand-base/20 flex items-center justify-center mb-4">
+                        <i data-lucide="leaf" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest">Sustainable Ethos</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 rounded-full border border-brand-base/20 flex items-center justify-center mb-4">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-widest">Bespoke Curation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div class="w-px h-20 bg-brand-accent/30 mb-12"></div>
+            <p class="text-2xl font-display italic text-brand-accent/60 reveal-on-scroll">Customer Reviews Coming Soon</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-brand-base border-t border-brand-accent/5">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-4xl font-display mb-12 text-center reveal-on-scroll">Common Questions</h2>
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border-b border-brand-accent/10 pb-4 reveal-on-scroll">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 group">
+                        <span class="text-lg font-display tracking-wide group-hover:text-brand-accent transition-colors">What are the check-in and check-out times?</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-content hidden pt-2 pb-6 text-brand-paper/50 text-sm leading-relaxed">
+                        Standard check-in is at 3:00 PM and check-out is at 11:00 AM. We offer early check-in and late check-out subject to availability upon request.
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="border-b border-brand-accent/10 pb-4 reveal-on-scroll">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 group">
+                        <span class="text-lg font-display tracking-wide group-hover:text-brand-accent transition-colors">Is valet parking available?</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-content hidden pt-2 pb-6 text-brand-paper/50 text-sm leading-relaxed">
+                        Yes, Amsterdam Inn offers secure valet parking services for all guests. Charges may apply depending on the length of stay.
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="border-b border-brand-accent/10 pb-4 reveal-on-scroll">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left py-4 group">
+                        <span class="text-lg font-display tracking-wide group-hover:text-brand-accent transition-colors">Do you offer a pet-friendly policy?</span>
+                        <i data-lucide="plus" class="w-4 h-4 transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-content hidden pt-2 pb-6 text-brand-paper/50 text-sm leading-relaxed">
+                        We welcome small pets in specifically designated suites. Please contact our concierge prior to booking to ensure availability of pet-friendly accommodations.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div class="reveal-on-scroll">
+                    <h2 class="text-5xl font-display mb-8">Inquiries & <br><span class="italic">Reservations</span></h2>
+                    <p class="text-brand-paper/60 mb-12 max-w-sm">Reach out to our dedicated concierge team for special requests, group bookings, or private events.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6">
+                            <div class="text-brand-accent mt-1"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-brand-accent mb-2">Location</h4>
+                                <p class="text-brand-paper/80">[Business Address]<br>New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="text-brand-accent mt-1"><i data-lucide="phone" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-brand-accent mb-2">Telephone</h4>
+                                <p class="text-brand-paper/80">[Phone Number]</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="text-brand-accent mt-1"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                            <div>
+                                <h4 class="text-xs uppercase tracking-widest text-brand-accent mb-2">Electronic</h4>
+                                <p class="text-brand-paper/80">[Email Address]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-on-scroll">
+                    <form onsubmit="return false;" class="glass-card p-10 space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Full Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Email Address</label>
+                                <input type="email" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Stay Details (Optional)</label>
+                            <input type="text" placeholder="Arrival Date - Departure Date" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-brand-accent mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-brand-accent transition-colors"></textarea>
+                        </div>
+                        <button class="w-full bg-brand-accent text-brand-base font-bold uppercase tracking-[0.2em] py-5 hover:bg-white transition-all">
+                            Send Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-32 bg-brand-paper text-brand-base text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none select-none overflow-hidden">
+            <span class="text-[25rem] font-display absolute -bottom-40 left-0 leading-none">AMSTERDAM</span>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <h2 class="text-6xl md:text-8xl font-display mb-10 reveal-on-scroll">Begin Your Journey.</h2>
+            <button class="bg-brand-base text-brand-paper px-12 py-6 font-bold uppercase tracking-widest hover:bg-brand-accent transition-all reveal-on-scroll">
+                Check Availability
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-brand-base border-t border-brand-accent/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 border border-brand-accent flex items-center justify-center rotate-45">
+                        <span class="rotate-[-45deg] text-[10px] font-semibold">A</span>
+                    </div>
+                    <span class="text-sm font-display tracking-widest uppercase">Amsterdam Inn</span>
+                </div>
+                
+                <div class="flex gap-8 text-[10px] uppercase tracking-widest opacity-40">
+                    <a href="#" class="hover:text-brand-accent transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">Terms of Stay</a>
+                    <a href="#" class="hover:text-brand-accent transition-colors">Accessibility</a>
+                </div>
+
+                <div class="text-[10px] uppercase tracking-widest opacity-40">
+                    &copy; 2024 Amsterdam Inn.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 3D Tilt Effect
+        const heroContainer = document.getElementById('hero-image-container');
+        const heroTilt = document.querySelector('.hero-tilt');
+
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                // Cursor Glow
+                const cursorGlow = document.getElementById('cursor-glow');
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+
+                // Hero Tilt
+                const rect = heroContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                heroTilt.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            heroContainer.addEventListener('mouseleave', () => {
+                heroTilt.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        }
+
+        // Scroll Reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-reveal');
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-45');
+            });
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        const closeMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+        };
+
+        menuClose.addEventListener('click', closeMenu);
+        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+        // Nav Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-3');
+                nav.classList.add('glass-nav');
+            } else {
+                nav.classList.remove('py-3');
+            }
+        });
+    </script>
+</body>
+</html>

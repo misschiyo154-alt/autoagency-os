@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Inn & Suites by Carlson | New York</title>
+    <meta name="description" content="Experience refined comfort and sophisticated hospitality at Country Inn & Suites by Carlson, New York.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Scripts & Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: '#FAF9F6', // Off-white/Parchment
+                            dark: '#1A1A1B', // Deep Charcoal
+                            accent: '#96735B', // Sophisticated Copper/Tan
+                            surface: '#FFFFFF',
+                            muted: '#6B7280'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF9F6;
+            color: #1A1A1B;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(250, 249, 246, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(26, 26, 27, 0.05);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .cursor-sheen {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: radial-gradient(circle 400px at var(--x) var(--y), rgba(150, 115, 91, 0.04), transparent 80%);
+            mix-blend-mode: multiply;
+        }
+
+        .hero-parallax-container {
+            perspective: 1200px;
+        }
+
+        .hero-parallax-element {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        .btn-premium:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .cursor-sheen { display: none; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-accent selection:text-white">
+
+    <div class="cursor-sheen" id="sheen"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex flex-col leading-none">
+                <span class="font-serif text-xl tracking-tight uppercase">Country Inn & Suites</span>
+                <span class="text-[10px] tracking-[0.2em] uppercase opacity-60">By Carlson • New York</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-10 text-xs tracking-widest uppercase font-medium">
+                <a href="#suites" class="hover:text-brand-accent transition-colors">The Suites</a>
+                <a href="#amenities" class="hover:text-brand-accent transition-colors">Amenities</a>
+                <a href="#experience" class="hover:text-brand-accent transition-colors">Experience</a>
+                <a href="#location" class="hover:text-brand-accent transition-colors">Location</a>
+                <a href="#booking" class="bg-brand-dark text-white px-6 py-3 hover:bg-brand-accent transition-all duration-300">Book A Stay</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden p-2" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-[60] translate-x-full transition-transform duration-500 bg-brand-base">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-end">
+                <button id="close-menu-btn" class="p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex flex-col space-y-8 mt-12 text-3xl font-serif">
+                <a href="#suites" class="mobile-link">The Suites</a>
+                <a href="#amenities" class="mobile-link">Amenities</a>
+                <a href="#experience" class="mobile-link">Experience</a>
+                <a href="#location" class="mobile-link">Location</a>
+                <a href="#booking" class="text-brand-accent italic">Book Now</a>
+            </div>
+            <div class="mt-auto border-t border-brand-dark/10 pt-8">
+                <p class="text-xs uppercase tracking-widest opacity-60">New York, USA</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen pt-32 pb-20 px-6 flex items-center overflow-hidden">
+            <div class="max-w-7xl mx-auto w-full editorial-grid">
+                <div class="col-span-12 lg:col-span-6 z-10 flex flex-col justify-center">
+                    <span class="reveal inline-block text-xs font-medium tracking-[0.3em] uppercase text-brand-accent mb-6">A New York Sanctuary</span>
+                    <h1 class="reveal stagger-1 text-5xl md:text-7xl lg:text-8xl font-serif leading-[0.9] mb-8">
+                        Modern Comfort, <br><span class="italic font-normal">Timeless Grace.</span>
+                    </h1>
+                    <p class="reveal stagger-2 text-lg text-brand-muted max-w-md mb-10 leading-relaxed">
+                        Discover a refined residential experience in the heart of New York. Thoughtfully designed spaces for the modern traveler.
+                    </p>
+                    <div class="reveal stagger-3 flex flex-wrap gap-6">
+                        <a href="#suites" class="bg-brand-dark text-white px-8 py-4 text-sm tracking-widest uppercase hover:bg-brand-accent transition-all">Explore Rooms</a>
+                        <a href="#amenities" class="btn-premium py-4 text-sm tracking-widest uppercase flex items-center group">
+                            Our Amenities 
+                            <i data-lucide="arrow-right" class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-span-12 lg:col-span-6 mt-12 lg:mt-0 hero-parallax-container relative">
+                    <div class="hero-parallax-element relative z-10">
+                        <div class="aspect-[4/5] bg-gray-200 overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200" 
+                                 alt="Premium Hotel Interior" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <!-- Floating Glass Detail -->
+                        <div class="absolute -bottom-10 -left-10 hidden lg:block p-8 bg-brand-surface/80 backdrop-blur-xl border border-white/20 shadow-lg max-w-xs reveal stagger-3">
+                            <p class="text-sm font-serif italic mb-2">"A sense of home in the city that never sleeps."</p>
+                            <div class="h-px w-12 bg-brand-accent opacity-40"></div>
+                        </div>
+                    </div>
+                    <!-- Background texture element -->
+                    <div class="absolute -top-10 -right-10 w-64 h-64 border border-brand-accent/20 -z-0"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="suites" class="py-24 bg-brand-dark text-brand-base">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                    <div class="max-w-2xl">
+                        <h2 class="reveal text-4xl md:text-5xl font-serif mb-6">Designed for Living</h2>
+                        <p class="reveal stagger-1 text-brand-base/60 text-lg">Whether you are here for business or leisure, our suites provide the perfect balance of utility and elegance.</p>
+                    </div>
+                    <div class="reveal stagger-2">
+                        <a href="#" class="text-xs tracking-widest uppercase border-b border-brand-accent pb-2">View All Suite Types</a>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-12">
+                    <!-- Service 1 -->
+                    <div class="reveal group">
+                        <div class="aspect-square mb-8 overflow-hidden bg-white/5">
+                            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" alt="Executive Suite" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Executive Suites</h3>
+                        <p class="text-brand-base/50 text-sm leading-relaxed mb-6">Spacious layouts featuring ergonomic workspaces and separate living areas for ultimate productivity.</p>
+                        <ul class="text-[10px] tracking-widest uppercase space-y-2 opacity-40">
+                            <li>• High-Speed Wi-Fi</li>
+                            <li>• Nespresso Machine</li>
+                            <li>• Premium Linens</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="reveal stagger-1 group">
+                        <div class="aspect-square mb-8 overflow-hidden bg-white/5">
+                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800" alt="Studio Living" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Studio King</h3>
+                        <p class="text-brand-base/50 text-sm leading-relaxed mb-6">Intimate and meticulously curated for the solo traveler or couple looking for a New York sanctuary.</p>
+                        <ul class="text-[10px] tracking-widest uppercase space-y-2 opacity-40">
+                            <li>• Walk-in Shower</li>
+                            <li>• Smart TV Integration</li>
+                            <li>• City Views</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="reveal stagger-2 group">
+                        <div class="aspect-square mb-8 overflow-hidden bg-white/5">
+                            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4df85b?auto=format&fit=crop&q=80&w=800" alt="Family Suite" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">The Family Collection</h3>
+                        <p class="text-brand-base/50 text-sm leading-relaxed mb-6">Connected rooms and flexible configurations to ensure the whole family stays close in total comfort.</p>
+                        <ul class="text-[10px] tracking-widest uppercase space-y-2 opacity-40">
+                            <li>• Kitchenette Options</li>
+                            <li>• Connecting Doors</li>
+                            <li>• Child-Friendly Amenities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Experience -->
+        <section id="amenities" class="py-24 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="order-2 lg:order-1 relative">
+                        <div class="reveal aspect-video bg-gray-200 overflow-hidden relative z-10">
+                            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=1000" alt="Dining Experience" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-10 -right-10 w-full h-full border border-brand-accent/20 -z-0"></div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <h2 class="reveal text-4xl md:text-5xl font-serif mb-8">The Beating Heart <br><span class="italic font-normal">of Hospitality.</span></h2>
+                        <div class="space-y-10">
+                            <div class="reveal stagger-1 flex gap-6">
+                                <span class="text-brand-accent font-serif text-2xl">01</span>
+                                <div>
+                                    <h4 class="text-lg font-medium mb-2">Morning Table</h4>
+                                    <p class="text-brand-muted text-sm leading-relaxed">Start your New York day with a curated selection of fresh, seasonal breakfast offerings served in our sun-drenched lounge.</p>
+                                </div>
+                            </div>
+                            <div class="reveal stagger-2 flex gap-6">
+                                <span class="text-brand-accent font-serif text-2xl">02</span>
+                                <div>
+                                    <h4 class="text-lg font-medium mb-2">The Fitness Hub</h4>
+                                    <p class="text-brand-muted text-sm leading-relaxed">Stay on track with our state-of-the-art cardiovascular equipment and strength training facilities, open 24/7.</p>
+                                </div>
+                            </div>
+                            <div class="reveal stagger-3 flex gap-6">
+                                <span class="text-brand-accent font-serif text-2xl">03</span>
+                                <div>
+                                    <h4 class="text-lg font-medium mb-2">Business Lounge</h4>
+                                    <p class="text-brand-muted text-sm leading-relaxed">Quiet, professional environments equipped with high-speed printing and meeting essentials for the modern executive.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section class="py-24 bg-brand-surface border-y border-brand-dark/5">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 text-center">
+                <div class="reveal">
+                    <i data-lucide="map-pin" class="w-8 h-8 mx-auto mb-6 text-brand-accent"></i>
+                    <h3 class="font-serif text-xl mb-4">Prime Location</h3>
+                    <p class="text-brand-muted text-sm">Strategically situated in New York for seamless access to business districts and cultural landmarks.</p>
+                </div>
+                <div class="reveal stagger-1">
+                    <i data-lucide="shield-check" class="w-8 h-8 mx-auto mb-6 text-brand-accent"></i>
+                    <h3 class="font-serif text-xl mb-4">Uncompromising Care</h3>
+                    <p class="text-brand-muted text-sm">Our team is dedicated to providing a secure, clean, and welcoming environment throughout your stay.</p>
+                </div>
+                <div class="reveal stagger-2">
+                    <i data-lucide="sparkles" class="w-8 h-8 mx-auto mb-6 text-brand-accent"></i>
+                    <h3 class="font-serif text-xl mb-4">Thoughtful Details</h3>
+                    <p class="text-brand-muted text-sm">From luxury bath products to our signature warm welcome, every detail is designed with you in mind.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-24 bg-brand-base">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <h2 class="reveal text-sm tracking-[0.3em] uppercase mb-12 opacity-60">Guest Feedback</h2>
+                <div class="reveal stagger-1 italic font-serif text-2xl md:text-3xl text-brand-dark/40">
+                    "Customer Reviews Coming Soon"
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-24 border-t border-brand-dark/5">
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="reveal text-4xl font-serif mb-16 text-center">Inquiries</h2>
+                <div class="space-y-6">
+                    <div class="reveal stagger-1 border-b border-brand-dark/10 pb-6 group cursor-pointer">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-medium">What are the standard check-in and check-out times?</h4>
+                            <i data-lucide="plus" class="w-5 h-5 group-hover:rotate-90 transition-transform"></i>
+                        </div>
+                        <div class="hidden mt-4 text-brand-muted text-sm leading-relaxed">
+                            Check-in begins at 3:00 PM and check-out is by 11:00 AM. Early arrivals and late departures are subject to availability.
+                        </div>
+                    </div>
+                    <div class="reveal stagger-2 border-b border-brand-dark/10 pb-6 group cursor-pointer">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-medium">Is high-speed internet included in the stay?</h4>
+                            <i data-lucide="plus" class="w-5 h-5 group-hover:rotate-90 transition-transform"></i>
+                        </div>
+                        <div class="hidden mt-4 text-brand-muted text-sm leading-relaxed">
+                            Yes, complimentary high-speed Wi-Fi is provided throughout the hotel, including all guest suites and public areas.
+                        </div>
+                    </div>
+                    <div class="reveal stagger-3 border-b border-brand-dark/10 pb-6 group cursor-pointer">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-medium">Do you offer on-site parking facilities?</h4>
+                            <i data-lucide="plus" class="w-5 h-5 group-hover:rotate-90 transition-transform"></i>
+                        </div>
+                        <div class="hidden mt-4 text-brand-muted text-sm leading-relaxed">
+                            We provide guest parking options. Please contact our front desk for current rates and availability during your visit.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="location" class="py-24 bg-brand-surface">
+            <div class="max-w-7xl mx-auto px-6 editorial-grid">
+                <div class="col-span-12 lg:col-span-5">
+                    <h2 class="reveal text-4xl font-serif mb-8">Reach Out</h2>
+                    <div class="space-y-8 reveal stagger-1">
+                        <div>
+                            <p class="text-[10px] tracking-widest uppercase opacity-50 mb-2">Location</p>
+                            <p class="text-lg">[Business Address]<br>New York, USA</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] tracking-widest uppercase opacity-50 mb-2">Connect</p>
+                            <p class="text-lg">[Phone Number]</p>
+                            <p class="text-lg">[Email Address]</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-7">
+                    <form id="contact-form" class="reveal stagger-2 grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] tracking-widest uppercase mb-2">Full Name</label>
+                            <input type="text" class="w-full bg-brand-base border-0 focus:ring-1 focus:ring-brand-accent p-4 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] tracking-widest uppercase mb-2">Email Address</label>
+                            <input type="email" class="w-full bg-brand-base border-0 focus:ring-1 focus:ring-brand-accent p-4 transition-all">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-[10px] tracking-widest uppercase mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-brand-base border-0 focus:ring-1 focus:ring-brand-accent p-4 transition-all"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <button type="submit" class="bg-brand-dark text-white px-12 py-4 text-xs tracking-[0.2em] uppercase hover:bg-brand-accent transition-all">Send Inquiry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section id="booking" class="py-32 relative overflow-hidden bg-brand-dark text-brand-base text-center">
+            <div class="absolute inset-0 opacity-20">
+                <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&q=80&w=1200" alt="Background" class="w-full h-full object-cover">
+            </div>
+            <div class="relative z-10 max-w-4xl mx-auto px-6">
+                <h2 class="reveal text-5xl md:text-7xl font-serif mb-12">Your New York story <br><span class="italic font-normal">begins here.</span></h2>
+                <a href="#" class="reveal stagger-1 inline-block bg-brand-accent text-white px-16 py-6 text-sm tracking-[0.3em] uppercase hover:scale-105 transition-transform duration-300">Reserve Your Stay</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-brand-base border-t border-brand-dark/5">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col leading-none">
+                <span class="font-serif text-lg tracking-tight uppercase">Country Inn & Suites</span>
+                <span class="text-[9px] tracking-[0.2em] uppercase opacity-60 italic text-center md:text-left">By Carlson</span>
+            </div>
+            
+            <div class="flex gap-8 text-[10px] tracking-widest uppercase opacity-60">
+                <a href="#" class="hover:text-brand-accent transition-colors">Privacy</a>
+                <a href="#" class="hover:text-brand-accent transition-colors">Accessibility</a>
+                <a href="#" class="hover:text-brand-accent transition-colors">Terms</a>
+            </div>
+
+            <div class="text-[10px] tracking-widest uppercase opacity-40">
+                &copy; 2024 • Country Inn & Suites by Carlson
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mouse Sheen Effect
+        const sheen = document.getElementById('sheen');
+        window.addEventListener('mousemove', (e) => {
+            sheen.style.setProperty('--x', e.clientX + 'px');
+            sheen.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        // 3D Parallax Effect for Hero
+        const heroElement = document.querySelector('.hero-parallax-element');
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 1024) {
+                targetX = (e.clientX - window.innerWidth / 2) / 40;
+                targetY = (e.clientY - window.innerHeight / 2) / 40;
+            }
+        });
+
+        function animateParallax() {
+            currentX += (targetX - currentX) * 0.1;
+            currentY += (targetY - currentY) * 0.1;
+            
+            if (heroElement) {
+                heroElement.style.transform = `rotateY(${currentX}deg) rotateX(${-currentY}deg)`;
+            }
+            requestAnimationFrame(animateParallax);
+        }
+        animateParallax();
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Logic
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const openBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+
+        openBtn.addEventListener('click', () => {
+            mobileDrawer.style.transform = 'translateX(0)';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileDrawer.style.transform = 'translateX(100%)';
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.style.transform = 'translateX(100%)';
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.group.cursor-pointer').forEach(item => {
+            item.addEventListener('click', () => {
+                const content = item.querySelector('div:last-child');
+                const icon = item.querySelector('[data-lucide="plus"], [data-lucide="minus"]');
+                content.classList.toggle('hidden');
+            });
+        });
+
+        // Contact Form Prevention
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Demo inquiry submission handled.');
+            alert('This is a demo. Your inquiry was not sent.');
+        });
+
+        // Reduced Motion Check
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+            cancelAnimationFrame(animateParallax);
+        }
+    </script>
+</body>
+</html>

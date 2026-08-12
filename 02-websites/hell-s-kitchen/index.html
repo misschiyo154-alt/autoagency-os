@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hell's Kitchen | New York Culinary Excellence</title>
+    <meta name="description" content="A premier culinary destination in the heart of New York, USA.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#0A0A0A',
+                        'brand-dark': '#121212',
+                        'brand-accent': '#C66F4B', // Sophisticated Copper/Sienna
+                        'brand-gray': '#F5F5F3',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'reveal': 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        reveal: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0A0A0A; color: #F5F5F3; -webkit-font-smoothing: antialiased; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .text-balance { text-wrap: balance; }
+        .mask-radial { mask-image: radial-gradient(circle at center, black 0%, transparent 80%); }
+        .cursor-light {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(198, 111, 75, 0.08) 0%, transparent 70%);
+            position: fixed; pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+        .reveal-obs { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal-obs.active { opacity: 1; transform: translateY(0); }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0A0A0A; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C66F4B; }
+
+        .image-parallax-container { perspective: 1000px; }
+        .parallax-target { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
+    </style>
+</head>
+<body class="selection:bg-brand-accent selection:text-white">
+
+    <!-- Cursor Spotlight -->
+    <div id="cursor-light" class="cursor-light hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 transition-all duration-500" id="main-nav">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif tracking-tighter hover:opacity-80 transition-opacity">
+                HELL'S KITCHEN<span class="text-brand-accent text-xs align-top ml-1">NY</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase opacity-70">
+                <a href="#offerings" class="hover:text-brand-accent transition-colors">Offerings</a>
+                <a href="#about" class="hover:text-brand-accent transition-colors">The House</a>
+                <a href="#experience" class="hover:text-brand-accent transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-brand-accent transition-colors border-b border-brand-accent/30 pb-1">Reservations</a>
+            </div>
+
+            <button class="md:hidden text-brand-gray" id="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-[60] bg-brand-black translate-x-full transition-transform duration-500 ease-in-out md:hidden">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-end">
+                <button id="menu-close" class="p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex flex-col space-y-8 mt-12 text-3xl font-serif">
+                <a href="#offerings" class="mobile-link">Offerings</a>
+                <a href="#about" class="mobile-link">The House</a>
+                <a href="#experience" class="mobile-link">Experience</a>
+                <a href="#contact" class="mobile-link">Reservations</a>
+            </div>
+            <div class="mt-auto space-y-4 text-sm opacity-50">
+                <p>New York, USA</p>
+                <p>[Phone Number]</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden px-6">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-7">
+                <span class="inline-block text-brand-accent font-medium tracking-[0.3em] uppercase text-[10px] mb-6 reveal-obs stagger-1">Est. New York City</span>
+                <h1 class="text-6xl md:text-8xl lg:text-[110px] font-serif leading-[0.9] tracking-tighter mb-8 reveal-obs stagger-2">
+                    The Art of <br><span class="italic text-brand-accent">Controlled</span> Fire.
+                </h1>
+                <p class="text-lg md:text-xl text-brand-gray/60 max-w-xl mb-10 leading-relaxed reveal-obs stagger-3">
+                    A sensory journey through the heart of Manhattan. Experience the raw intensity and refined precision that defines the Hell's Kitchen standard.
+                </p>
+                <div class="flex flex-wrap gap-6 reveal-obs stagger-3">
+                    <a href="#contact" class="px-10 py-5 bg-brand-accent text-white font-medium tracking-wider text-xs uppercase hover:bg-white hover:text-brand-black transition-all duration-500">
+                        Book a Table
+                    </a>
+                    <a href="#offerings" class="px-10 py-5 border border-white/10 text-white font-medium tracking-wider text-xs uppercase hover:bg-white/5 transition-all duration-500">
+                        Explore Menu
+                    </a>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-5 relative image-parallax-container hidden lg:block">
+                <div class="parallax-target relative">
+                    <div class="aspect-[4/5] w-full bg-[#1a1a1a] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000">
+                        <!-- Background image placeholder - visual depth via color and gradients -->
+                        <div class="w-full h-full bg-gradient-to-tr from-brand-black via-zinc-800 to-brand-accent/20 flex items-center justify-center">
+                           <div class="text-brand-accent opacity-20"><i data-lucide="flame" class="w-48 h-48"></i></div>
+                        </div>
+                    </div>
+                    <!-- Overlapping Glass Card -->
+                    <div class="absolute -bottom-10 -left-10 glass p-8 max-w-xs reveal-obs stagger-3">
+                        <p class="text-sm italic opacity-80 mb-4">"Culinary excellence isn't a goal, it's our baseline. Every plate tells the story of the city."</p>
+                        <div class="h-px w-12 bg-brand-accent mb-2"></div>
+                        <p class="text-[10px] tracking-widest uppercase opacity-50">Hell's Kitchen Executive Team</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative text -->
+        <div class="absolute bottom-10 right-10 text-[15vw] font-serif opacity-[0.02] pointer-events-none select-none">
+            MANHATTAN
+        </div>
+    </section>
+
+    <!-- Services / Offerings -->
+    <section id="offerings" class="py-32 px-6 bg-brand-dark">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-brand-accent text-xs font-medium tracking-[0.4em] uppercase mb-4">Our Services</h2>
+                    <p class="text-4xl md:text-5xl font-serif leading-tight">Meticulously curated culinary experiences designed for the discerning palate.</p>
+                </div>
+                <div class="text-brand-gray/40 text-sm md:text-right">
+                    Available in New York, USA
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-px bg-white/5 border border-white/5">
+                <!-- Service 1 -->
+                <div class="group bg-brand-black p-12 hover:bg-brand-accent transition-colors duration-700">
+                    <div class="mb-12 text-brand-accent group-hover:text-white transition-colors duration-500">
+                        <i data-lucide="utensils-crossed" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-6">Seasonal Menu</h3>
+                    <p class="text-brand-gray/50 group-hover:text-white/80 transition-colors duration-500 leading-relaxed mb-8">
+                        A revolving selection of ingredients sourced locally, prepared with techniques that respect the flame.
+                    </p>
+                    <a href="#" class="text-[10px] tracking-[0.2em] uppercase font-bold group-hover:text-white">View Menu</a>
+                </div>
+                <!-- Service 2 -->
+                <div class="group bg-brand-black p-12 hover:bg-brand-accent transition-colors duration-700">
+                    <div class="mb-12 text-brand-accent group-hover:text-white transition-colors duration-500">
+                        <i data-lucide="wine" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-6">Private Cellar</h3>
+                    <p class="text-brand-gray/50 group-hover:text-white/80 transition-colors duration-500 leading-relaxed mb-8">
+                        Access to an exclusive collection of vintages and bespoke cocktails designed to complement our bold flavors.
+                    </p>
+                    <a href="#" class="text-[10px] tracking-[0.2em] uppercase font-bold group-hover:text-white">The Collection</a>
+                </div>
+                <!-- Service 3 -->
+                <div class="group bg-brand-black p-12 hover:bg-brand-accent transition-colors duration-700">
+                    <div class="mb-12 text-brand-accent group-hover:text-white transition-colors duration-500">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-6">Private Events</h3>
+                    <p class="text-brand-gray/50 group-hover:text-white/80 transition-colors duration-500 leading-relaxed mb-8">
+                        Intimate dining spaces and tailored menus for corporate gatherings or personal celebrations in NYC.
+                    </p>
+                    <a href="#" class="text-[10px] tracking-[0.2em] uppercase font-bold group-hover:text-white">Enquire Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Value Section -->
+    <section id="about" class="py-32 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <div class="relative">
+                    <div class="aspect-square bg-zinc-900 border border-white/5 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="map-pin" class="w-32 h-32 text-brand-accent/10"></i>
+                        </div>
+                    </div>
+                    <div class="absolute -top-12 -right-12 w-48 h-48 glass rounded-full flex items-center justify-center text-center p-6 animate-float">
+                        <span class="text-[10px] tracking-widest uppercase font-bold leading-tight">Hell's Kitchen <br> Manhattan <br> New York</span>
+                    </div>
+                </div>
+                <div class="reveal-obs">
+                    <h2 class="text-brand-accent text-xs font-medium tracking-[0.4em] uppercase mb-4">The House</h2>
+                    <h3 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Uncompromising Quality in the Heart of the City.</h3>
+                    <div class="space-y-6 text-brand-gray/60 leading-relaxed text-lg">
+                        <p>Hell's Kitchen is more than a location; it is a philosophy. Born in New York, we believe that the highest form of hospitality lies in the balance between raw energy and sophisticated restraint.</p>
+                        <p>Our kitchen operates on the principles of transparency and intensity. Every element, from the custom furniture to the curated acoustics, is designed to elevate the guest experience into something truly memorable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section (Interactive Visual) -->
+    <section id="experience" class="py-32 px-6 bg-brand-black">
+        <div class="max-w-7xl mx-auto text-center mb-20">
+            <h2 class="text-brand-accent text-xs font-medium tracking-[0.4em] uppercase mb-4">The Signature Experience</h2>
+            <p class="text-4xl font-serif italic">Atmosphere. Flavor. Connection.</p>
+        </div>
+        
+        <div class="max-w-5xl mx-auto">
+            <div class="relative glass aspect-video overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-black/80 z-10"></div>
+                <div class="absolute inset-0 flex flex-col justify-end p-12 z-20">
+                    <div class="max-w-md">
+                        <p class="text-xs tracking-widest uppercase mb-4 text-brand-accent">Modern Noir Aesthetic</p>
+                        <p class="text-2xl font-serif leading-snug mb-6">Designed to provide a sanctuary from the New York rush, our space combines dark textures with warm light.</p>
+                    </div>
+                </div>
+                <!-- Visual Placeholder with Depth -->
+                <div class="absolute inset-0 bg-zinc-900 group-hover:scale-110 transition-transform duration-[2s]">
+                    <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]"></div>
+                    <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-brand-accent/20 blur-[120px]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-24 px-6 border-y border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-around gap-12 text-center md:text-left">
+            <div>
+                <span class="block text-brand-accent font-bold text-3xl mb-2 font-serif">Impeccable</span>
+                <span class="text-xs tracking-widest uppercase opacity-50">Sourcing Standard</span>
+            </div>
+            <div>
+                <span class="block text-brand-accent font-bold text-3xl mb-2 font-serif">Curated</span>
+                <span class="text-xs tracking-widest uppercase opacity-50">Wine Selection</span>
+            </div>
+            <div>
+                <span class="block text-brand-accent font-bold text-3xl mb-2 font-serif">Bespoke</span>
+                <span class="text-xs tracking-widest uppercase opacity-50">Atmospheric Design</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-32 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <i data-lucide="quote" class="w-12 h-12 text-brand-accent/20 mx-auto mb-10"></i>
+            <h2 class="text-3xl font-serif italic mb-4">Customer Reviews Coming Soon</h2>
+            <div class="h-px w-24 bg-brand-accent mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-32 px-6 bg-brand-dark/50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-center font-serif text-4xl mb-16">Common Enquiries</h2>
+            <div class="space-y-4">
+                <details class="group border-b border-white/5 pb-4">
+                    <summary class="flex justify-between items-center cursor-pointer list-none py-4">
+                        <span class="text-lg font-medium">Is there a dress code for Hell's Kitchen?</span>
+                        <i data-lucide="plus" class="w-5 h-5 group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <p class="text-brand-gray/50 pt-2 pb-6">We encourage a smart-casual or editorial aesthetic that reflects the sophisticated energy of the New York culinary scene.</p>
+                </details>
+                <details class="group border-b border-white/5 pb-4">
+                    <summary class="flex justify-between items-center cursor-pointer list-none py-4">
+                        <span class="text-lg font-medium">Do you cater to specific dietary requirements?</span>
+                        <i data-lucide="plus" class="w-5 h-5 group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <p class="text-brand-gray/50 pt-2 pb-6">Yes, our kitchen is equipped to handle most dietary restrictions. We recommend noting any allergies when making your reservation.</p>
+                </details>
+                <details class="group border-b border-white/5 pb-4">
+                    <summary class="flex justify-between items-center cursor-pointer list-none py-4">
+                        <span class="text-lg font-medium">How far in advance should I book?</span>
+                        <i data-lucide="plus" class="w-5 h-5 group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <p class="text-brand-gray/50 pt-2 pb-6">To ensure your preferred timing, we recommend booking at least two weeks in advance for weekend service.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div class="reveal-obs">
+                    <h2 class="text-brand-accent text-xs font-medium tracking-[0.4em] uppercase mb-4">Reservations</h2>
+                    <h3 class="text-5xl font-serif mb-12">Secure Your Table.</h3>
+                    
+                    <div class="space-y-12">
+                        <div class="flex items-start space-x-6">
+                            <div class="bg-brand-accent/10 p-4 text-brand-accent">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs tracking-widest uppercase opacity-40 mb-2 font-bold">Location</h4>
+                                <p class="text-xl font-serif">[Business Address]<br>New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="bg-brand-accent/10 p-4 text-brand-accent">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs tracking-widest uppercase opacity-40 mb-2 font-bold">Inquiries</h4>
+                                <p class="text-xl font-serif">[Phone Number]</p>
+                                <p class="text-sm opacity-60 mt-1">[Email Address]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-10 reveal-obs stagger-2">
+                    <form class="space-y-6" onsubmit="return false;">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] tracking-widest uppercase opacity-50">Name</label>
+                                <input type="text" class="w-full bg-white/5 border border-white/10 px-4 py-4 focus:border-brand-accent outline-none transition-colors">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] tracking-widest uppercase opacity-50">Guests</label>
+                                <select class="w-full bg-white/5 border border-white/10 px-4 py-4 focus:border-brand-accent outline-none transition-colors appearance-none">
+                                    <option>2 People</option>
+                                    <option>4 People</option>
+                                    <option>6+ People</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] tracking-widest uppercase opacity-50">Email</label>
+                            <input type="email" class="w-full bg-white/5 border border-white/10 px-4 py-4 focus:border-brand-accent outline-none transition-colors">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] tracking-widest uppercase opacity-50">Message / Special Request</label>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 px-4 py-4 focus:border-brand-accent outline-none transition-colors resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-accent py-5 font-bold tracking-[0.2em] text-[10px] uppercase hover:bg-white hover:text-brand-black transition-all duration-500">
+                            Check Availability
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="font-serif text-xl tracking-tighter">
+                HELL'S KITCHEN<span class="text-brand-accent">.</span>
+            </div>
+            
+            <div class="flex space-x-8 text-[10px] tracking-widest uppercase opacity-40 font-bold">
+                <a href="#" class="hover:text-brand-accent transition-colors">Instagram</a>
+                <a href="#" class="hover:text-brand-accent transition-colors">Twitter</a>
+                <a href="#" class="hover:text-brand-accent transition-colors">LinkedIn</a>
+            </div>
+
+            <div class="text-[10px] tracking-widest uppercase opacity-30 font-medium">
+                &copy; 2024 Hell's Kitchen. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Custom Cursor Effect
+        const cursor = document.getElementById('cursor-light');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            requestAnimationFrame(() => {
+                cursor.style.left = `${x}px`;
+                cursor.style.top = `${y}px`;
+            });
+        });
+
+        // Scroll Interactions
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('glass', 'py-3');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.remove('glass', 'py-3');
+                nav.classList.add('py-4');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-obs').forEach(el => observer.observe(el));
+
+        // 3D Parallax Effect
+        const parallaxContainer = document.querySelector('.image-parallax-container');
+        const parallaxTarget = document.querySelector('.parallax-target');
+
+        if (parallaxContainer && parallaxTarget && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            parallaxContainer.addEventListener('mousemove', (e) => {
+                const rect = parallaxContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                parallaxTarget.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            parallaxContainer.addEventListener('mouseleave', () => {
+                parallaxTarget.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        }
+
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const drawer = document.getElementById('mobile-drawer');
+        const links = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            drawer.classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuClose.addEventListener('click', toggleMenu);
+        links.forEach(l => l.addEventListener('click', toggleMenu));
+
+    </script>
+</body>
+</html>

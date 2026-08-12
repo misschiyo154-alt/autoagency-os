@@ -28,3 +28,9 @@ EMAIL_PASSWORD=
 ```bash
 python run.py
 ```
+
+FINAL WORKFLOW FIXES
+- Preview is published to the agency portfolio BEFORE Telegram approval, so Boss receives a real URL.
+- Aira recognizes demo/preview requests and returns actual registry URLs instead of [Link].
+- Aira can execute GitHub/Cloudflare update requests via git_push.py.
+- Client website prompt forbids website URL placeholders.

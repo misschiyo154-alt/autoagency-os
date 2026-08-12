@@ -245,6 +245,7 @@ Boss message:
 {text}
 
 Reply naturally and briefly.
+Never invent a preview URL, use [Link], or claim an action was completed unless the system has actually executed it.
 """
 
     try:
@@ -734,9 +735,71 @@ def looks_like_find_leads(text):
 # DETERMINISTIC INTENT
 # ============================================================
 
+def demo_registry():
+    registry_file = BASE_DIR / "02-websites" / "demos.json"
+    if not registry_file.exists():
+        return []
+    try:
+        data = json.loads(registry_file.read_text(encoding="utf-8"))
+        return data if isinstance(data, list) else []
+    except Exception as error:
+        print("Demo registry read error:", error)
+        return []
+
+
+def demo_links_text(limit=6):
+    registry = demo_registry()
+    if not registry:
+        return f"🌐 Agency portfolio: {AGENCY_URL}\n\nAbhi demo registry empty hai, Boss."
+    lines = ["🎨 Latest demo websites:\n"]
+    for i, item in enumerate(registry[:limit], 1):
+        slug = str(item.get("slug") or "").strip("/")
+        if not slug:
+            continue
+        url = f"{AGENCY_URL}{slug}/"
+        name = item.get("business_name") or "Website Demo"
+        lines.append(f"{i}. {name}\n   {url}")
+    lines += ["", f"📚 All demos: {AGENCY_URL}"]
+    return "\n".join(lines)
+
+
+def run_git_update():
+    git_pusher = BASE_DIR / "08-scripts" / "git_push.py"
+    if not git_pusher.exists():
+        return False, "git_push.py missing"
+    return run_script(git_pusher, timeout=600)
+
+
 def deterministic_intent(text):
 
     lower = text.lower().strip()
+
+    # --------------------------------------------------------
+    # DEMO / WEBSITE REQUESTS
+    # --------------------------------------------------------
+    demo_show_phrases = [
+        "demo website do", "demo link do", "demo dikhao", "demo website dikhao",
+        "website demo do", "preview link do", "preview dikhao", "latest demo",
+        "latest demos", "demo links", "demo link"
+    ]
+    demo_build_phrases = [
+        "demo banao", "demo website banao", "website banao", "ek website banao",
+        "demo generate karo", "demo generate kar", "website generate karo"
+    ]
+    if any(x in lower for x in demo_build_phrases):
+        return {"action": "build_demo", "quantity": 1, "business_type": extract_business_type(lower), "location": extract_location(text)}
+    if any(x in lower for x in demo_show_phrases):
+        return {"action": "demo"}
+
+    # --------------------------------------------------------
+    # GIT / CLOUDFLARE UPDATE
+    # --------------------------------------------------------
+    update_phrases = [
+        "git push", "github update", "github push", "cloudflare update",
+        "cloudflare deploy", "site update", "deploy update", "push update"
+    ]
+    if any(x in lower for x in update_phrases):
+        return {"action": "git_update"}
 
     # --------------------------------------------------------
     # FIND LEADS
@@ -930,6 +993,9 @@ Return ONLY valid JSON.
 Allowed actions:
 
 chat
+demo
+build_demo
+git_update
 start_workflow
 stop_workflow
 status
@@ -968,6 +1034,15 @@ Rules:
 
 9. "pending emails dikhao"
 => pending
+
+10. "ek demo website do" / "demo dikhao"
+=> demo
+
+11. "demo website banao" / "website banao"
+=> build_demo
+
+12. "git push karo" / "cloudflare update karo"
+=> git_update
 
 Extract:
 
@@ -1455,6 +1530,43 @@ async def execute_intent(
         intent["all"] = bool(intent.get("all"))
 
     # ========================================================
+    # DEMO LINKS
+    # ========================================================
+
+    if action == "demo":
+        await update.message.reply_text(demo_links_text())
+        return
+
+    # ========================================================
+    # BUILD ONE DEMO
+    # ========================================================
+
+    if action == "build_demo":
+        if workflow_running:
+            await update.message.reply_text("Boss, ek workflow already chal raha hai 😅")
+            return
+        start_lead_search(
+            quantity=1,
+            business_type=intent.get("business_type") or os.getenv("DEFAULT_BUSINESS_TYPE", "restaurants"),
+            location=intent.get("location") or os.getenv("DEFAULT_LOCATION", "New York, USA"),
+        )
+        await update.message.reply_text("🎨 Done Boss. Ek fresh premium demo generate kar rahi hoon. Ready hote hi actual preview URL bhejungi — placeholder link nahi.")
+        return
+
+    # ========================================================
+    # GIT / CLOUDFLARE UPDATE
+    # ========================================================
+
+    if action == "git_update":
+        await update.message.reply_text("🚀 GitHub update start kar rahi hoon, Boss. Cloudflare Git-connected hai toh uske baad deployment automatically trigger hoga.")
+        ok, output = await asyncio.to_thread(run_git_update)
+        if ok:
+            await update.message.reply_text("✅ GitHub updated successfully. Cloudflare deployment trigger ho gaya hoga.\n\n" + AGENCY_URL)
+        else:
+            await update.message.reply_text("❌ GitHub update fail hua. Main actual error de rahi hoon:\n\n" + (output[-2500:] or "Unknown error"))
+        return
+
+    # ========================================================
     # CHAT
     # ========================================================
 
@@ -1932,10 +2044,14 @@ async def approve_command(
 
         return
 
+    text = (update.message.text or "/approve") if update.message else "/approve"
+    nums = [int(x) for x in re.findall(r"\d+", text)]
     await execute_intent(
         update,
         {
-            "action": "approve"
+            "action": "approve",
+            "indexes": nums,
+            "all": ("all" in text.lower() or not nums),
         },
         "/approve"
     )

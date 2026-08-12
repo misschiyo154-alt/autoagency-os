@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beastie Boys Square | A New York Cultural Landmark</title>
+    <meta name="description" content="The definitive intersection of music, art, and urban culture in the heart of New York City.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0A0A0A',
+                            accent: '#D4AF37', // Gold/Brass metallic feel
+                            surface: '#161616',
+                            muted: '#A1A1AA',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    animation: {
+                        'reveal-up': 'revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        revealUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px) scale(0.98)', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)', filter: 'blur(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0A0A0A; color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3 Atemply%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .custom-cursor-sheen {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .reveal-on-scroll { opacity: 0; }
+        .reveal-on-scroll.active { animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .perspective-container { perspective: 1000px; }
+        .tilt-element { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
+
+        .letter-spacing-tight { letter-spacing: -0.04em; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <div class="noise-overlay"></div>
+    <div id="cursor-sheen" class="custom-cursor-sheen hidden lg:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-full px-6 py-3">
+            <a href="#" class="text-xl font-display font-extrabold tracking-tighter hover:opacity-80 transition-opacity">
+                BEASTIE BOYS <span class="text-brand-accent">SQUARE</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide uppercase">
+                <a href="#district" class="hover:text-brand-accent transition-colors">The District</a>
+                <a href="#experience" class="hover:text-brand-accent transition-colors">Culture</a>
+                <a href="#history" class="hover:text-brand-accent transition-colors">Legacy</a>
+                <a href="#contact" class="px-5 py-2 bg-white text-black rounded-full hover:bg-brand-accent transition-all duration-300 transform hover:scale-105">
+                    Visit Today
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-white" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-brand-bg translate-x-full transition-transform duration-500 ease-in-out md:hidden">
+        <div class="p-8 flex flex-col h-full">
+            <div class="flex justify-end">
+                <button id="close-menu-btn" class="p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex flex-col space-y-8 mt-12 text-4xl font-display font-bold">
+                <a href="#district" class="mobile-link">The District</a>
+                <a href="#experience" class="mobile-link">Culture</a>
+                <a href="#history" class="mobile-link">Legacy</a>
+                <a href="#contact" class="mobile-link text-brand-accent">Get In Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-8 animate-reveal-up">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
+                    </span>
+                    <span>Ludlow & Rivington, NYC</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-display font-extrabold leading-[0.9] letter-spacing-tight">
+                    THE HEART <br/>OF THE <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-yellow-200">L.E.S.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-brand-muted max-w-lg font-light leading-relaxed">
+                    Celebrating the cultural resonance of Beastie Boys Square. A definitive destination where hip-hop history meets modern New York vibrancy.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#district" class="group relative px-8 py-4 bg-brand-accent text-black font-bold rounded-sm overflow-hidden text-center">
+                        <span class="relative z-10">EXPLORE THE DISTRICT</span>
+                        <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </a>
+                    <a href="#history" class="px-8 py-4 border border-white/20 hover:border-white transition-colors font-bold rounded-sm text-center">
+                        OUR STORY
+                    </a>
+                </div>
+            </div>
+
+            <div class="perspective-container hidden lg:block">
+                <div id="hero-card" class="tilt-element relative aspect-[4/5] w-full max-w-md mx-auto">
+                    <div class="absolute inset-0 rounded-2xl glass overflow-hidden shadow-2xl">
+                        <!-- Abstract Visual Placeholder -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-zinc-800 to-black flex items-center justify-center">
+                            <div class="text-center">
+                                <i data-lucide="map-pin" class="w-16 h-16 text-brand-accent mx-auto mb-4 opacity-50"></i>
+                                <span class="text-zinc-500 font-display text-4xl font-bold tracking-tighter block">PAUL'S<br/>BOUTIQUE</span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
+                            <div class="text-sm font-bold text-brand-accent mb-2">NOW LIVE</div>
+                            <div class="text-2xl font-display font-bold italic">The Intersection of Sound.</div>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-6 -right-6 w-32 h-32 border-t-2 border-r-2 border-brand-accent/30 pointer-events-none"></div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 border-b-2 border-l-2 border-brand-accent/30 pointer-events-none"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Background Ambient Elements -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 blur-[120px] rounded-full -z-10"></div>
+    </section>
+
+    <!-- Services / District Highlights -->
+    <section id="district" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="reveal-on-scroll">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">THE HUB OF CULTURE</h2>
+                    <p class="text-brand-muted max-w-md">Discover the unique local businesses and artistic landmarks that define this historic intersection.</p>
+                </div>
+                <div class="text-brand-accent font-mono text-sm tracking-widest reveal-on-scroll">
+                    01 // DISTRICT SERVICES
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-px bg-white/10 border border-white/10">
+                <!-- Service 1 -->
+                <div class="group bg-brand-bg p-10 hover:bg-zinc-900 transition-all duration-500 reveal-on-scroll">
+                    <div class="mb-8 text-brand-accent group-hover:scale-110 transition-transform origin-left">
+                        <i data-lucide="music-2" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Musical Heritage</h3>
+                    <p class="text-brand-muted leading-relaxed font-light">Dedicated spaces preserving the history of New York's revolutionary hip-hop scene and vinyl culture.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="group bg-brand-bg p-10 hover:bg-zinc-900 transition-all duration-500 reveal-on-scroll">
+                    <div class="mb-8 text-brand-accent group-hover:scale-110 transition-transform origin-left">
+                        <i data-lucide="shopping-bag" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Curated Retail</h3>
+                    <p class="text-brand-muted leading-relaxed font-light">Boutique shops offering rare finds, streetwear, and artisanal goods synonymous with LES style.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="group bg-brand-bg p-10 hover:bg-zinc-900 transition-all duration-500 reveal-on-scroll">
+                    <div class="mb-8 text-brand-accent group-hover:scale-110 transition-transform origin-left">
+                        <i data-lucide="palette" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Urban Artistry</h3>
+                    <p class="text-brand-muted leading-relaxed font-light">Rotating public art installations and galleries featuring local creators and legendary street artists.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section (Interactive) -->
+    <section id="experience" class="py-24 px-6 bg-zinc-900/50">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="w-full lg:w-1/2 reveal-on-scroll">
+                <div class="relative">
+                    <div class="aspect-square bg-zinc-800 rounded-2xl flex items-center justify-center p-12 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1514525253361-bee8718a34a1?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center opacity-40 group-hover:scale-110 transition-transform duration-700"></div>
+                        <div class="relative z-10 glass p-8 text-center rounded-xl">
+                            <i data-lucide="mic" class="w-12 h-12 text-brand-accent mx-auto mb-4"></i>
+                            <h4 class="text-xl font-bold uppercase tracking-widest">Live From the Square</h4>
+                            <p class="text-xs text-brand-muted mt-2">COMMUNITY PROGRAMMING</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 space-y-8 reveal-on-scroll">
+                <h2 class="text-5xl font-display font-extrabold">A SIGNATURE EXPERIENCE.</h2>
+                <p class="text-brand-muted text-lg leading-relaxed">
+                    Beastie Boys Square isn't just a location—it's a movement. We host curated community events, seasonal markets, and cultural dialogues that keep the spirit of 1980s NYC alive in the modern day.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-start space-x-4">
+                        <div class="mt-1 text-brand-accent"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+                        <div>
+                            <span class="font-bold block">Community Led</span>
+                            <span class="text-brand-muted text-sm">Managed by locals who live and breathe the LES lifestyle.</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start space-x-4">
+                        <div class="mt-1 text-brand-accent"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+                        <div>
+                            <span class="font-bold block">Global Destination</span>
+                            <span class="text-brand-muted text-sm">A primary stop for cultural tourists and music aficionados worldwide.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust / Values -->
+    <section id="history" class="py-24 px-6 border-y border-white/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+            <div class="reveal-on-scroll">
+                <div class="text-4xl font-display font-bold text-brand-accent mb-2">NYC</div>
+                <div class="text-xs uppercase tracking-widest font-bold">Provenance</div>
+            </div>
+            <div class="reveal-on-scroll" style="transition-delay: 100ms;">
+                <div class="text-4xl font-display font-bold text-brand-accent mb-2">1989</div>
+                <div class="text-xs uppercase tracking-widest font-bold">The Legacy</div>
+            </div>
+            <div class="reveal-on-scroll" style="transition-delay: 200ms;">
+                <div class="text-4xl font-display font-bold text-brand-accent mb-2">BBS</div>
+                <div class="text-xs uppercase tracking-widest font-bold">Originality</div>
+            </div>
+            <div class="reveal-on-scroll" style="transition-delay: 300ms;">
+                <div class="text-4xl font-display font-bold text-brand-accent mb-2">L.E.S.</div>
+                <div class="text-xs uppercase tracking-widest font-bold">Rooted Community</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="py-24 px-6">
+        <div class="max-w-3xl mx-auto text-center reveal-on-scroll">
+            <h2 class="text-3xl font-display font-bold mb-12">VOICES OF THE SQUARE</h2>
+            <div class="glass p-12 rounded-3xl relative">
+                <i data-lucide="quote" class="w-12 h-12 text-white/10 absolute top-8 left-8"></i>
+                <p class="text-2xl italic font-light text-brand-muted italic">
+                    "Customer Reviews Coming Soon"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 px-6 bg-zinc-950">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-display font-bold mb-16 text-center">COMMON INQUIRIES</h2>
+            <div class="space-y-4">
+                <div class="reveal-on-scroll">
+                    <details class="group glass rounded-2xl overflow-hidden">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
+                            <span class="font-bold">What is Beastie Boys Square?</span>
+                            <span class="transition-transform group-open:rotate-180"><i data-lucide="chevron-down"></i></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-brand-muted">
+                            It is the officially designated intersection of Ludlow and Rivington Streets in Manhattan, New York, named in honor of the legendary hip-hop trio who immortalized the location on their iconic album art.
+                        </div>
+                    </details>
+                </div>
+                <div class="reveal-on-scroll">
+                    <details class="group glass rounded-2xl overflow-hidden">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
+                            <span class="font-bold">How can I support local businesses here?</span>
+                            <span class="transition-transform group-open:rotate-180"><i data-lucide="chevron-down"></i></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-brand-muted">
+                            Visit the many independent retailers, eateries, and galleries surrounding the square. Every purchase helps sustain the unique cultural fabric of the Lower East Side.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto glass rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
+            <div class="grid lg:grid-cols-2 gap-16 items-start relative z-10">
+                <div class="reveal-on-scroll">
+                    <h2 class="text-5xl font-display font-bold mb-8">GET IN <span class="text-brand-accent italic">TOUCH</span></h2>
+                    <p class="text-brand-muted mb-8 max-w-md">For collaborations, event inquiries, or community outreach, connect with the Beastie Boys Square stewards.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-brand-muted uppercase">Location</div>
+                                <div class="font-medium">[Business Address]</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                                <i data-lucide="mail"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-brand-muted uppercase">Email</div>
+                                <div class="font-medium">[Email Address]</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-on-scroll">
+                    <form onsubmit="return false" class="grid grid-cols-1 gap-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" placeholder="Your Name" class="bg-white/5 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-brand-accent transition-colors">
+                            <input type="email" placeholder="Email Address" class="bg-white/5 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-brand-accent transition-colors">
+                        </div>
+                        <textarea rows="4" placeholder="Your Inquiry" class="bg-white/5 border border-white/10 p-4 rounded-xl focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+                        <button class="w-full bg-white text-black font-bold p-4 rounded-xl hover:bg-brand-accent transition-all duration-300">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Abstract background shape for contact -->
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-accent/10 blur-[100px] rounded-full translate-x-1/2 translate-y-1/2"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-xl font-display font-extrabold tracking-tighter">
+                BEASTIE BOYS <span class="text-brand-accent">SQUARE</span>
+            </div>
+            <div class="text-brand-muted text-sm font-light">
+                © <span id="year"></span> Beastie Boys Square. All rights reserved. New York, USA.
+            </div>
+            <div class="flex space-x-6 text-brand-muted">
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Copyright Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Logic
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const links = document.querySelectorAll('.mobile-link');
+
+        const toggleMenu = (open) => {
+            mobileMenu.style.transform = open ? 'translateX(0)' : 'translateX(100%)';
+            document.body.style.overflow = open ? 'hidden' : '';
+        };
+
+        openBtn.addEventListener('click', () => toggleMenu(true));
+        closeBtn.addEventListener('click', () => toggleMenu(false));
+        links.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+
+        // Reveal Animations on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // Cursor Sheen & 3D Tilt Logic
+        const sheen = document.getElementById('cursor-sheen');
+        const heroCard = document.getElementById('hero-card');
+        let mouseX = 0, mouseY = 0;
+        let cardRotateX = 0, cardRotateY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Cursor Sheen Position
+            sheen.style.left = mouseX + 'px';
+            sheen.style.top = mouseY + 'px';
+
+            if (window.innerWidth > 1024 && heroCard) {
+                const rect = heroCard.getBoundingClientRect();
+                const cardX = mouseX - (rect.left + rect.width / 2);
+                const cardY = mouseY - (rect.top + rect.height / 2);
+                
+                cardRotateY = (cardX / rect.width) * 15; // Max 15 deg
+                cardRotateX = -(cardY / rect.height) * 15;
+            }
+        });
+
+        function animate() {
+            if (window.innerWidth > 1024 && heroCard) {
+                heroCard.style.transform = `rotateX(${cardRotateX}deg) rotateY(${cardRotateY}deg)`;
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Performance: Hide heavy effects on touch devices
+        if ('ontouchstart' in window) {
+            sheen.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

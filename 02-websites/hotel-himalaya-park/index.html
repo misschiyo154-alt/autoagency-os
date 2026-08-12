@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Himalaya Park | Bhilai — Refined Hospitality</title>
+    <meta name="description" content="Experience elevated comfort and sophisticated stays at Hotel Himalaya Park in Bhilai.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: '#0F1110',
+                            paper: '#FAF9F6',
+                            accent: '#A68B5B', // Muted Gold/Brass
+                            surface: '#F1EFE9',
+                            border: 'rgba(166, 139, 91, 0.2)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'slow-pan': 'slowPan 30s infinite alternate linear',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slowPan: {
+                            '0%': { transform: 'scale(1) translate(0, 0)' },
+                            '100%': { transform: 'scale(1.1) translate(-2%, -2%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #FAF9F6; color: #1A1A1A; overflow-x: hidden; }
+        .glass-nav { background: rgba(250, 249, 246, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(166, 139, 91, 0.1); }
+        .reveal { opacity: 0; }
+        .reveal.active { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        /* Custom Cursor Sheen */
+        #cursor-sheen {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle 400px at var(--x) var(--y), rgba(166, 139, 91, 0.04), transparent 80%);
+            z-index: 9999;
+        }
+
+        .hero-card-perspective { perspective: 1000px; }
+        .hero-card-inner { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="cursor-sheen" class="hidden lg:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-nav h-20">
+        <div class="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
+            <a href="#" class="text-xl font-serif tracking-tight flex items-center gap-2">
+                <span class="text-brand-accent uppercase tracking-[0.2em] text-xs font-sans font-medium block">Hotel</span>
+                <span class="font-medium">Himalaya Park</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#accommodations" class="text-xs uppercase tracking-widest font-medium hover:text-brand-accent transition-colors">Stays</a>
+                <a href="#services" class="text-xs uppercase tracking-widest font-medium hover:text-brand-accent transition-colors">Amenities</a>
+                <a href="#about" class="text-xs uppercase tracking-widest font-medium hover:text-brand-accent transition-colors">Our Story</a>
+                <a href="#contact" class="text-xs uppercase tracking-widest font-medium hover:text-brand-accent transition-colors">Contact</a>
+                <a href="#reserve" class="bg-brand-accent text-white px-6 py-3 text-xs uppercase tracking-widest font-medium hover:bg-opacity-90 transition-all">Book Room</a>
+            </div>
+
+            <button id="mobile-toggle" class="md:hidden p-2" aria-label="Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-base z-[60] translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col p-10">
+        <button id="mobile-close" class="self-end text-brand-paper p-2">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="flex flex-col gap-8 mt-12">
+            <a href="#accommodations" class="text-3xl font-serif text-brand-paper">Stays</a>
+            <a href="#services" class="text-3xl font-serif text-brand-paper">Amenities</a>
+            <a href="#about" class="text-3xl font-serif text-brand-paper">Our Story</a>
+            <a href="#contact" class="text-3xl font-serif text-brand-paper">Contact</a>
+            <a href="#reserve" class="inline-block bg-brand-accent text-white px-8 py-4 text-center mt-10">Check Availability</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-6 reveal animate-fade-in-up">
+                    <span class="inline-block text-brand-accent uppercase tracking-[0.3em] text-xs font-bold mb-6">Discover Bhilai</span>
+                    <h1 class="text-5xl lg:text-7xl font-serif leading-[1.1] mb-8">
+                        The intersection of <br>
+                        <span class="italic font-normal">quiet luxury</span> and <br>
+                        modern comfort.
+                    </h1>
+                    <p class="text-lg text-gray-600 max-w-lg mb-10 leading-relaxed">
+                        Experience a sanctuary designed for the discerning traveler. Hotel Himalaya Park offers a refined base in the heart of Bhilai, where hospitality meets architectural grace.
+                    </p>
+                    <div class="flex flex-wrap gap-5">
+                        <a href="#accommodations" class="bg-brand-accent text-white px-10 py-5 text-sm uppercase tracking-widest font-medium hover:shadow-xl transition-all">Explore Rooms</a>
+                        <a href="#contact" class="border border-brand-accent/30 text-brand-accent px-10 py-5 text-sm uppercase tracking-widest font-medium hover:bg-brand-surface transition-all">Plan Visit</a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 hero-card-perspective reveal animate-fade-in-up stagger-2">
+                    <div id="hero-card" class="hero-card-inner relative aspect-[4/5] bg-brand-surface overflow-hidden shadow-2xl">
+                        <!-- Simulated Image with visual depth -->
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200');"></div>
+                        <div class="absolute inset-0 bg-brand-base/10"></div>
+                        
+                        <!-- Floater Element -->
+                        <div class="absolute bottom-8 right-8 bg-brand-paper/90 backdrop-blur-md p-6 max-w-xs border border-brand-accent/10 shadow-lg translate-z-20">
+                            <p class="text-xs uppercase tracking-widest text-brand-accent mb-2 font-bold">Featured Stay</p>
+                            <p class="font-serif text-xl mb-4 italic">The Presidential Suite</p>
+                            <div class="h-[1px] w-12 bg-brand-accent mb-4"></div>
+                            <p class="text-xs text-gray-500 leading-relaxed">Thoughtfully appointed interiors designed to foster rest and productivity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative Text background -->
+        <div class="absolute top-1/2 -right-20 -translate-y-1/2 select-none pointer-events-none opacity-[0.03]">
+            <h2 class="text-[20rem] font-serif whitespace-nowrap">HIMALAYA</h2>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="py-24 bg-brand-surface border-y border-brand-accent/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-xl reveal">
+                    <h2 class="text-3xl md:text-4xl font-serif mb-6">Exceptional stays, tailored for you.</h2>
+                    <p class="text-gray-600">From business travel to leisure weekends, our amenities are crafted to ensure a seamless experience in Bhilai.</p>
+                </div>
+                <a href="#" class="text-xs uppercase tracking-widest font-bold border-b border-brand-accent pb-1 reveal">View All Amenities</a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="group bg-brand-paper p-10 border border-brand-accent/5 hover:border-brand-accent/30 transition-all duration-500 reveal stagger-1">
+                    <i data-lucide="coffee" class="w-8 h-8 text-brand-accent mb-8"></i>
+                    <h3 class="text-xl font-serif mb-4">On-Site Dining</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Experience curated culinary delights from local favorites to international staples at our in-house restaurant.</p>
+                    <ul class="text-[10px] uppercase tracking-widest text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-brand-accent rounded-full"></div> Breakfast Included</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-brand-accent rounded-full"></div> 24/7 Room Service</li>
+                    </ul>
+                </div>
+                <!-- Service 2 -->
+                <div class="group bg-brand-paper p-10 border border-brand-accent/5 hover:border-brand-accent/30 transition-all duration-500 reveal stagger-2">
+                    <i data-lucide="briefcase" class="w-8 h-8 text-brand-accent mb-8"></i>
+                    <h3 class="text-xl font-serif mb-4">Corporate Events</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Sophisticated meeting spaces and high-speed connectivity designed for productive professional gatherings.</p>
+                    <ul class="text-[10px] uppercase tracking-widest text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-brand-accent rounded-full"></div> AV Equipment</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-brand-accent rounded-full"></div> Dedicated Host</li>
+                    </ul>
+                </div>
+                <!-- Service 3 -->
+                <div class="group bg-brand-paper p-10 border border-brand-accent/5 hover:border-brand-accent/30 transition-all duration-500 reveal stagger-3">
+                    <i data-lucide="map-pin" class="w-8 h-8 text-brand-accent mb-8"></i>
+                    <h3 class="text-xl font-serif mb-4">Prime Location</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">Situated strategically within Bhilai, providing easy access to major industrial and commercial hubs.</p>
+                    <ul class="text-[10px] uppercase tracking-widest text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-brand-accent rounded-full"></div> Airport Transfers</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-brand-accent rounded-full"></div> Local Guidance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Experience -->
+    <section id="about" class="py-24 lg:py-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="relative reveal">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551882547-ff43c63fedfe?auto=format&fit=crop&q=80&w=1200" alt="Hospitality Detail" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 w-2/3 aspect-square bg-brand-base flex items-center justify-center p-12 text-center">
+                        <div>
+                            <p class="text-brand-accent text-5xl font-serif mb-2 leading-none italic">Bhilai</p>
+                            <p class="text-brand-paper uppercase tracking-[0.4em] text-[10px] font-bold">The Destination</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal stagger-2">
+                    <h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Elevating your <br>staying experience.</h2>
+                    <div class="space-y-6 text-gray-600 leading-relaxed">
+                        <p>Hotel Himalaya Park stands as a pillar of hospitality in Bhilai, dedicated to providing a refined environment for both work and rest. We believe that true hospitality is found in the details—the warmth of a greeting, the cleanliness of a room, and the seamless nature of your stay.</p>
+                        <p>Our philosophy is simple: create a home away from home that doesn't compromise on luxury or functionality. Whether you are here for a business summit or a family event, we provide the quietude and service required to make your visit memorable.</p>
+                    </div>
+                    <div class="mt-12 grid grid-cols-2 gap-8 border-t border-brand-accent/10 pt-12">
+                        <div>
+                            <p class="font-serif text-2xl mb-1">Check-In</p>
+                            <p class="text-xs uppercase tracking-widest text-brand-accent font-bold">[Check-in Time]</p>
+                        </div>
+                        <div>
+                            <p class="font-serif text-2xl mb-1">Check-Out</p>
+                            <p class="text-xs uppercase tracking-widest text-brand-accent font-bold">[Check-out Time]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Reviews -->
+    <section class="py-24 bg-brand-base text-brand-paper">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="reveal">
+                <span class="inline-block text-brand-accent uppercase tracking-[0.3em] text-xs font-bold mb-6">Guest Experience</span>
+                <h2 class="text-4xl font-serif mb-16 italic">Words from our residents.</h2>
+                <div class="max-w-2xl mx-auto py-20 border-y border-brand-paper/10">
+                    <p class="text-2xl font-serif text-brand-accent/80 italic mb-8">“Customer Reviews Coming Soon”</p>
+                    <div class="flex justify-center gap-1">
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-accent text-brand-accent"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-accent text-brand-accent"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-accent text-brand-accent"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-accent text-brand-accent"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-brand-accent text-brand-accent"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-brand-paper">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl font-serif mb-12 text-center reveal">Frequently Asked Questions</h2>
+            <div class="space-y-4 reveal">
+                <div class="border border-brand-accent/10 rounded-lg p-6 bg-brand-surface/30">
+                    <h4 class="font-medium mb-2">Do you offer parking for guests?</h4>
+                    <p class="text-gray-600 text-sm">Yes, we provide secure parking facilities for all our residents during their stay.</p>
+                </div>
+                <div class="border border-brand-accent/10 rounded-lg p-6 bg-brand-surface/30">
+                    <h4 class="font-medium mb-2">How do I reach the hotel from the railway station?</h4>
+                    <p class="text-gray-600 text-sm">We are conveniently located in Bhilai. Please contact our reception to arrange a pickup service or for specific directions.</p>
+                </div>
+                <div class="border border-brand-accent/10 rounded-lg p-6 bg-brand-surface/30">
+                    <h4 class="font-medium mb-2">Is Wi-Fi available in the rooms?</h4>
+                    <p class="text-gray-600 text-sm">High-speed wireless internet is available throughout the property, including all guest rooms and public areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 lg:py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight">Get in touch with us.</h2>
+                    <p class="text-gray-600 mb-12 max-w-md">For reservations, event inquiries, or special requests, please reach out to our dedicated hospitality team.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 bg-brand-surface flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-brand-accent"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1">Visit Us</p>
+                                <p class="text-lg">[Business Address], Bhilai</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 bg-brand-surface flex items-center justify-center">
+                                <i data-lucide="phone" class="w-5 h-5 text-brand-accent"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1">Call Us</p>
+                                <p class="text-lg">[Phone Number]</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 bg-brand-surface flex items-center justify-center">
+                                <i data-lucide="mail" class="w-5 h-5 text-brand-accent"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-1">Email Us</p>
+                                <p class="text-lg">[Email Address]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-surface p-10 lg:p-16 border border-brand-accent/10 reveal stagger-2">
+                    <form class="space-y-6" onsubmit="return false;">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-2">Full Name</label>
+                                <input type="text" class="w-full bg-brand-paper border border-brand-accent/10 px-4 py-3 outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-2">Email</label>
+                                <input type="email" class="w-full bg-brand-paper border border-brand-accent/10 px-4 py-3 outline-none focus:border-brand-accent transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-2">Subject</label>
+                            <select class="w-full bg-brand-paper border border-brand-accent/10 px-4 py-3 outline-none focus:border-brand-accent transition-colors">
+                                <option>Room Reservation</option>
+                                <option>Event Space Inquiry</option>
+                                <option>General Inquiry</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-2">Message</label>
+                            <textarea rows="4" class="w-full bg-brand-paper border border-brand-accent/10 px-4 py-3 outline-none focus:border-brand-accent transition-colors"></textarea>
+                        </div>
+                        <button type="button" class="w-full bg-brand-accent text-white py-4 uppercase tracking-[0.2em] text-xs font-bold hover:shadow-lg transition-all">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="reserve" class="py-20 bg-brand-base text-center reveal">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="text-brand-paper text-3xl md:text-4xl font-serif mb-8">Ready to experience refined comfort in Bhilai?</h2>
+            <a href="#" class="inline-block bg-brand-accent text-white px-12 py-5 text-sm uppercase tracking-widest font-bold hover:scale-105 transition-all">Check Current Availability</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-paper py-16 border-t border-brand-accent/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div>
+                    <a href="#" class="text-xl font-serif tracking-tight mb-2 block">
+                        <span class="font-medium">Hotel Himalaya Park</span>
+                    </a>
+                    <p class="text-xs text-gray-400 uppercase tracking-widest">A Vicky Web Agency Production</p>
+                </div>
+                <div class="flex gap-8">
+                    <a href="#" class="text-xs uppercase tracking-widest font-bold text-gray-500 hover:text-brand-accent">Privacy</a>
+                    <a href="#" class="text-xs uppercase tracking-widest font-bold text-gray-500 hover:text-brand-accent">Terms</a>
+                    <a href="#" class="text-xs uppercase tracking-widest font-bold text-gray-500 hover:text-brand-accent">Sitemap</a>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-brand-accent/5 text-[10px] uppercase tracking-[0.3em] text-gray-400 text-center">
+                © 2024 Hotel Himalaya Park Bhilai. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileClose = document.getElementById('mobile-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Cursor Sheen & Hero Parallax
+        const sheen = document.getElementById('cursor-sheen');
+        const heroCard = document.getElementById('hero-card');
+        let mouseX = 0, mouseY = 0;
+        let cardX = 0, cardY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            // Update sheen position
+            sheen.style.setProperty('--x', e.clientX + 'px');
+            sheen.style.setProperty('--y', e.clientY + 'px');
+
+            // Hero card parallax logic
+            if (window.innerWidth > 1024 && heroCard) {
+                const rect = heroCard.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                mouseX = (e.clientX - centerX) / (rect.width / 2);
+                mouseY = (e.clientY - centerY) / (rect.height / 2);
+            }
+        });
+
+        function animate() {
+            // Smoothly interpolate the card rotation
+            cardX += (mouseY * -10 - cardX) * 0.1;
+            cardY += (mouseX * 10 - cardY) * 0.1;
+
+            if (heroCard) {
+                heroCard.style.transform = `rotateX(${cardX}deg) rotateY(${cardY}deg)`;
+            }
+            requestAnimationFrame(animate);
+        }
+        
+        if (window.innerWidth > 1024) {
+            animate();
+        }
+
+        // Reduced Motion Support
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (motionQuery.matches) {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+            // Disable card animation
+            animate = () => {};
+        }
+    </script>
+</body>
+</html>

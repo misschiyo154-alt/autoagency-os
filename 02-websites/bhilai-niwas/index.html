@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhilai Niwas | Refined Urban Sanctuary</title>
+    <meta name="description" content="Experience premium hospitality and modern comfort at Bhilai Niwas, Bhilai's premier destination for the discerning traveler.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Frameworks & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'stone-dark': '#1C1C1C',
+                        'stone-light': '#F9F7F2',
+                        'accent-gold': '#C5A059',
+                        'glass-white': 'rgba(255, 255, 255, 0.7)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'reveal': 'reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        reveal: {
+                            '0%': { transform: 'scaleX(0)', transformOrigin: 'left' },
+                            '100%': { transform: 'scaleX(1)', transformOrigin: 'left' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F9F7F2;
+            color: #1C1C1C;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.05) 0%, rgba(255,255,255,0) 70%);
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(28, 28, 28, 0.05);
+        }
+
+        .hero-image-container {
+            perspective: 1000px;
+        }
+
+        .parallax-element {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        .reveal-delay-1 { animation-delay: 0.1s; }
+        .reveal-delay-2 { animation-delay: 0.2s; }
+        .reveal-delay-3 { animation-delay: 0.3s; }
+
+        .service-card:hover .service-icon {
+            transform: translateY(-5px);
+            color: #C5A059;
+        }
+
+        .cta-button {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(0);
+        }
+
+        /* Hide scrollbar for cleaner UI */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #F9F7F2; }
+        ::-webkit-scrollbar-thumb { background: #D1D1D1; border-radius: 10px; }
+        
+        .staggered-reveal { opacity: 0; }
+        .is-visible .staggered-reveal { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav px-6 py-4 lg:px-12 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-xl lg:text-2xl font-display tracking-tight font-semibold flex items-center gap-2">
+                BHILAI NIWAS
+            </a>
+
+            <div class="hidden md:flex items-center space-x-10 text-sm font-medium tracking-wide uppercase">
+                <a href="#rooms" class="hover:text-accent-gold transition-colors">Accommodations</a>
+                <a href="#amenities" class="hover:text-accent-gold transition-colors">Amenities</a>
+                <a href="#about" class="hover:text-accent-gold transition-colors">About</a>
+                <a href="#contact" class="hover:text-accent-gold transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <a href="#contact" class="hidden sm:inline-block bg-stone-dark text-white px-8 py-3 text-xs font-bold uppercase tracking-widest cta-button">
+                    Reserve Now
+                </a>
+                <button class="md:hidden" id="menu-toggle" aria-label="Menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-stone-light translate-x-full transition-transform duration-500 ease-in-out md:hidden">
+        <div class="p-8 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-16">
+                <span class="font-display text-xl">BHILAI NIWAS</span>
+                <button id="menu-close"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex flex-col space-y-8 text-3xl font-display">
+                <a href="#rooms" class="mobile-link">Accommodations</a>
+                <a href="#amenities" class="mobile-link">Amenities</a>
+                <a href="#about" class="mobile-link">About</a>
+                <a href="#contact" class="mobile-link">Contact</a>
+            </div>
+            <div class="mt-auto border-t border-stone-200 pt-8">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-4">Location</p>
+                <p class="font-medium text-lg">[Business Address], Bhilai</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-6 z-10">
+                <div class="overflow-hidden mb-4">
+                    <span class="block text-accent-gold font-medium tracking-[0.3em] uppercase text-xs animate-fade-up">Quiet Luxury in Bhilai</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-display leading-[1.1] mb-8 animate-fade-up reveal-delay-1">
+                    Refined <br><span class="italic">Atmosphere</span>, <br>True Comfort.
+                </h1>
+                <p class="text-lg text-gray-600 max-w-md mb-10 leading-relaxed animate-fade-up reveal-delay-2">
+                    Experience a sophisticated retreat where modern design meets local warmth. Your private sanctuary in the heart of Bhilai.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 animate-fade-up reveal-delay-3">
+                    <a href="#rooms" class="bg-stone-dark text-white px-10 py-5 text-sm font-bold uppercase tracking-widest text-center cta-button">
+                        Explore Rooms
+                    </a>
+                    <a href="#about" class="border border-stone-300 px-10 py-5 text-sm font-bold uppercase tracking-widest text-center hover:bg-stone-100 transition-colors">
+                        The Experience
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 relative hero-image-container">
+                <div id="hero-parallax" class="parallax-element relative z-10 w-full aspect-[4/5] bg-stone-200 overflow-hidden shadow-2xl">
+                    <!-- Placeholder Image -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" 
+                         style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200');">
+                    </div>
+                </div>
+                <!-- Abstract Design Elements -->
+                <div class="absolute -bottom-6 -left-6 w-48 h-48 border border-accent-gold/20 -z-0"></div>
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-accent-gold/5 rounded-full blur-3xl -z-0"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="rooms" class="py-24 bg-stone-dark text-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-4xl md:text-5xl font-display mb-6">Designed for Rest</h2>
+                    <p class="text-gray-400 text-lg">Every detail of Bhilai Niwas is curated to provide a sense of calm and effortless living.</p>
+                </div>
+                <a href="#contact" class="text-accent-gold border-b border-accent-gold pb-2 text-sm uppercase tracking-widest hover:text-white transition-colors">View All Suites</a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group cursor-pointer staggered-reveal">
+                    <div class="aspect-[16/10] bg-stone-800 overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" alt="Deluxe Room" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <h3 class="text-xl font-display mb-2">Deluxe Sanctuary</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">Perfect for the solo professional seeking quiet focus and premium rest.</p>
+                    <div class="h-px w-full bg-stone-700 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                </div>
+
+                <div class="group cursor-pointer staggered-reveal" style="transition-delay: 0.1s;">
+                    <div class="aspect-[16/10] bg-stone-800 overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" alt="Executive Suite" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <h3 class="text-xl font-display mb-2">Executive Suite</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">Spacious layouts with integrated work zones and panoramic city views.</p>
+                    <div class="h-px w-full bg-stone-700 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                </div>
+
+                <div class="group cursor-pointer staggered-reveal" style="transition-delay: 0.2s;">
+                    <div class="aspect-[16/10] bg-stone-800 overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=800" alt="Presidential Niwas" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <h3 class="text-xl font-display mb-2">The Heritage Suite</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">Our flagship accommodation offering the ultimate in Bhilai hospitality.</p>
+                    <div class="h-px w-full bg-stone-700 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities / Signature Experience -->
+    <section id="amenities" class="py-24 overflow-hidden">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="relative">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4 pt-12">
+                            <div class="aspect-square bg-stone-200 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=600" alt="Spa" class="w-full h-full object-cover">
+                            </div>
+                            <div class="aspect-[3/4] bg-stone-200 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1551882547-ff43c63ebb7e?auto=format&fit=crop&q=80&w=600" alt="Lobby" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="aspect-[3/4] bg-stone-200 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600" alt="Dining" class="w-full h-full object-cover">
+                            </div>
+                            <div class="aspect-square bg-stone-200 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=600" alt="Lounge" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="staggered-reveal">
+                    <h2 class="text-4xl md:text-5xl font-display mb-8">The Niwas <br><span class="italic">Experience</span></h2>
+                    <div class="space-y-8">
+                        <div class="flex gap-6 group">
+                            <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center border border-stone-200 group-hover:border-accent-gold transition-colors duration-500">
+                                <i data-lucide="utensils" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm uppercase tracking-widest mb-2">Curated Dining</h4>
+                                <p class="text-gray-600 leading-relaxed">A fusion of regional flavors and international classics, prepared with seasonal precision.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 group">
+                            <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center border border-stone-200 group-hover:border-accent-gold transition-colors duration-500">
+                                <i data-lucide="wifi" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm uppercase tracking-widest mb-2">High-Speed Connectivity</h4>
+                                <p class="text-gray-600 leading-relaxed">Secure, enterprise-grade internet throughout the property for seamless professional needs.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 group">
+                            <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center border border-stone-200 group-hover:border-accent-gold transition-colors duration-500">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm uppercase tracking-widest mb-2">Private Security</h4>
+                                <p class="text-gray-600 leading-relaxed">Round-the-clock security and concierge services ensuring a safe and discreet stay.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-20 border-y border-stone-200">
+        <div class="container mx-auto px-6 lg:px-12 text-center">
+            <p class="text-xs uppercase tracking-[0.4em] text-gray-400 mb-12">Earning Your Confidence Through</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center opacity-60">
+                <span class="font-display italic text-2xl">Intuitive Service</span>
+                <span class="font-display italic text-2xl">Modern Safety</span>
+                <span class="font-display italic text-2xl">Bespoke Living</span>
+                <span class="font-display italic text-2xl">Quiet Privacy</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 bg-stone-light">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-sm font-bold uppercase tracking-widest mb-12">Voices of Bhilai Niwas</h2>
+                <div class="bg-white p-16 shadow-sm border border-stone-100">
+                    <p class="text-2xl font-display italic text-gray-400">Customer Reviews Coming Soon</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24">
+        <div class="container mx-auto px-6 lg:px-12 max-w-3xl">
+            <h2 class="text-4xl font-display mb-12 text-center">Essential Information</h2>
+            <div class="space-y-4">
+                <details class="group border-b border-stone-200 pb-4 cursor-pointer">
+                    <summary class="flex justify-between items-center list-none font-medium text-lg">
+                        What are the check-in and check-out times?
+                        <i data-lucide="plus" class="w-5 h-5 group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-gray-600 leading-relaxed">Check-in is typically available from [Time Placeholder] and check-out is by [Time Placeholder]. Early check-in or late check-out is subject to availability.</p>
+                </details>
+                <details class="group border-b border-stone-200 pb-4 cursor-pointer">
+                    <summary class="flex justify-between items-center list-none font-medium text-lg">
+                        Do you provide airport transfers?
+                        <i data-lucide="plus" class="w-5 h-5 group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-gray-600 leading-relaxed">Yes, we can arrange secure airport transfers upon prior request. Please contact our concierge with your flight details.</p>
+                </details>
+                <details class="group border-b border-stone-200 pb-4 cursor-pointer">
+                    <summary class="flex justify-between items-center list-none font-medium text-lg">
+                        Is parking available on-site?
+                        <i data-lucide="plus" class="w-5 h-5 group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-gray-600 leading-relaxed">We offer secure, on-site parking for all our guests at no additional charge.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-[#111] text-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div>
+                    <h2 class="text-5xl font-display mb-8">Begin Your <br><span class="italic text-accent-gold">Stay.</span></h2>
+                    <p class="text-gray-400 mb-12 text-lg">Ready to experience the tranquility of Bhilai Niwas? Connect with us for reservations and inquiries.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="map-pin" class="text-accent-gold w-6 h-6"></i>
+                            <span class="text-gray-300">[Business Address], Bhilai</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="phone" class="text-accent-gold w-6 h-6"></i>
+                            <span class="text-gray-300">[Phone Number]</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i data-lucide="mail" class="text-accent-gold w-6 h-6"></i>
+                            <span class="text-gray-300">[Email Address]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#1a1a1a] p-8 md:p-12 border border-white/5">
+                    <form class="space-y-6" onsubmit="event.preventDefault();">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-widest text-gray-400">Name</label>
+                                <input type="text" placeholder="John Doe" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-accent-gold transition-colors">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-widest text-gray-400">Email</label>
+                                <input type="email" placeholder="john@example.com" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-accent-gold transition-colors">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-widest text-gray-400">Inquiry Type</label>
+                            <select class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-accent-gold transition-colors">
+                                <option>Room Reservation</option>
+                                <option>Corporate Event</option>
+                                <option>Other Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-widest text-gray-400">Message</label>
+                            <textarea rows="4" placeholder="How can we assist you?" class="w-full bg-white/5 border border-white/10 p-4 outline-none focus:border-accent-gold transition-colors"></textarea>
+                        </div>
+                        <button class="w-full bg-accent-gold text-stone-dark font-bold uppercase tracking-[0.2em] py-5 hover:bg-white transition-colors duration-500">
+                            Send Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black text-gray-500 border-t border-white/5">
+        <div class="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <span class="text-white font-display text-xl tracking-tighter">BHILAI NIWAS</span>
+                <p class="text-xs mt-2 uppercase tracking-widest opacity-50">© 2024 Bhilai Niwas. All rights reserved.</p>
+            </div>
+            
+            <div class="flex gap-8 text-xs uppercase tracking-widest font-bold">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+                <a href="https://vickyweb.agency" target="_blank" class="hover:text-accent-gold transition-colors">Designed by Vicky Web Agency</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Cursor Glow Effect
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Hero Parallax Interaction
+        const heroSection = document.querySelector('section');
+        const heroParallax = document.getElementById('hero-parallax');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+
+        if (window.innerWidth > 1024) {
+            document.addEventListener('mousemove', (e) => {
+                targetX = (e.clientX - window.innerWidth / 2) / 30;
+                targetY = (e.clientY - window.innerHeight / 2) / 30;
+            });
+
+            function animate() {
+                mouseX += (targetX - mouseX) * 0.1;
+                mouseY += (targetY - mouseY) * 0.1;
+                
+                heroParallax.style.transform = `rotateY(${mouseX}deg) rotateX(${-mouseY}deg) translateY(${mouseY * 0.5}px)`;
+                
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Navbar Scroll State
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'shadow-xl');
+            } else {
+                nav.classList.remove('py-2', 'shadow-xl');
+            }
+        });
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        const closeMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+        };
+
+        menuClose.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+        
+        // Hide glow on touch devices
+        if ('ontouchstart' in window) {
+            glow.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

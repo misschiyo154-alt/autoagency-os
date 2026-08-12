@@ -18,6 +18,7 @@ IMPORTANT:
 - Always use the provided demo URL exactly as given.
 - The demo URL must appear as a normal URL.
 - Do not replace the demo URL with "your-demo-url.com".
+- Never output [Link], [Demo Link], [Demo Website], "Insert your URL here", or any URL placeholder.
 - End with the exact sender name and agency name provided below.
 
 BUSINESS INFORMATION:

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Frederick Hotel | New York</title>
+    <meta name="description" content="Experience sophisticated luxury at The Frederick Hotel in the heart of New York.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- UI Framework & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: '#0C0D0E',
+                            surface: '#16181A',
+                            accent: '#C5A367', // Muted Gold
+                            text: '#F2F2F2',
+                            muted: '#A0A0A0'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'subtle-float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0C0D0E;
+            color: #F2F2F2;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cursor-sheen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(197, 163, 103, 0.08), transparent 40%);
+            z-index: 9999;
+        }
+
+        .hero-image-container {
+            perspective: 1000px;
+        }
+
+        .parallax-target {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0C0D0E; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: #C5A367; }
+    </style>
+</head>
+<body class="font-sans selection:bg-brand-accent selection:text-brand-base">
+
+    <!-- Pointer Interaction Layer -->
+    <div class="cursor-sheen hidden lg:block" id="sheen"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-12">
+                <a href="#" class="text-2xl font-serif tracking-widest uppercase">
+                    The Frederick<span class="text-brand-accent">.</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.2em] font-medium text-brand-muted">
+                    <a href="#accommodations" class="hover:text-brand-accent transition-colors">Suites</a>
+                    <a href="#experience" class="hover:text-brand-accent transition-colors">Experience</a>
+                    <a href="#about" class="hover:text-brand-accent transition-colors">About</a>
+                    <a href="#contact" class="hover:text-brand-accent transition-colors">Contact</a>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <a href="#contact" class="hidden sm:block text-[11px] uppercase tracking-[0.2em] px-8 py-3 glass hover:bg-brand-accent hover:text-brand-base transition-all duration-500">
+                    Reserve
+                </a>
+                <button class="md:hidden p-2 text-brand-text" id="menuToggle">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-brand-base flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
+        <button id="closeMenu" class="absolute top-6 right-6 p-2 text-brand-muted">
+            <i data-lucide="x"></i>
+        </button>
+        <a href="#accommodations" class="text-3xl font-serif hover:text-brand-accent transition-colors">Suites</a>
+        <a href="#experience" class="text-3xl font-serif hover:text-brand-accent transition-colors">Experience</a>
+        <a href="#about" class="text-3xl font-serif hover:text-brand-accent transition-colors">About</a>
+        <a href="#contact" class="text-3xl font-serif hover:text-brand-accent transition-colors">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-6 z-10">
+                <span class="block text-brand-accent text-[12px] uppercase tracking-[0.4em] mb-6 reveal">New York City</span>
+                <h1 class="text-6xl md:text-8xl font-serif font-light leading-[1.1] mb-8 reveal stagger-1">
+                    An Intersection <br> of <span class="italic">Atmosphere.</span>
+                </h1>
+                <p class="text-brand-muted text-lg max-w-md leading-relaxed mb-10 reveal stagger-2">
+                    Experience the pulse of Manhattan from the refined tranquility of The Frederick Hotel. Where architectural history meets contemporary New York luxury.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 reveal stagger-3">
+                    <a href="#accommodations" class="bg-brand-accent text-brand-base px-10 py-4 text-[12px] uppercase tracking-widest font-semibold hover:bg-white transition-colors text-center">
+                        Explore Suites
+                    </a>
+                    <a href="#about" class="px-10 py-4 border border-white/10 text-[12px] uppercase tracking-widest font-semibold hover:bg-white/5 transition-colors text-center">
+                        Our Story
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 relative hero-image-container reveal stagger-2">
+                <div class="parallax-target relative aspect-[4/5] w-full max-w-[500px] ml-auto">
+                    <!-- Layered Image Effect -->
+                    <div class="absolute -inset-4 border border-brand-accent/20 translate-x-8 translate-y-8 pointer-events-none"></div>
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200" 
+                         alt="Luxury Interior" 
+                         class="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                    <div class="absolute bottom-10 -left-20 glass p-8 hidden xl:block animate-subtle-float">
+                        <p class="text-[10px] uppercase tracking-widest text-brand-accent mb-2">Location</p>
+                        <p class="font-serif text-xl">Lower Manhattan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:block">
+            <div class="w-[1px] h-20 bg-gradient-to-b from-brand-accent to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Accommodations / Services -->
+    <section id="accommodations" class="py-32 px-6 bg-brand-surface relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div class="max-w-2xl">
+                    <h2 class="text-4xl md:text-5xl font-serif mb-6 reveal">Curated Sanctuaries</h2>
+                    <p class="text-brand-muted reveal stagger-1">Every detail of our guest rooms is designed to offer a respite from the city's energy without losing its spirit.</p>
+                </div>
+                <div class="reveal stagger-2">
+                    <a href="#" class="text-[11px] uppercase tracking-[0.3em] border-b border-brand-accent pb-2 hover:text-brand-accent transition-colors">View All Accommodations</a>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Suite 1 -->
+                <div class="group cursor-pointer reveal stagger-1">
+                    <div class="aspect-[3/4] overflow-hidden mb-6 relative">
+                        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" 
+                             alt="Superior Room" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-brand-base/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <h3 class="text-xl font-serif mb-2">Superior Queen</h3>
+                    <p class="text-brand-muted text-sm uppercase tracking-widest">Starting from $349 / night</p>
+                </div>
+                <!-- Suite 2 -->
+                <div class="group cursor-pointer reveal stagger-2">
+                    <div class="aspect-[3/4] overflow-hidden mb-6 relative">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" 
+                             alt="Luxury Suite" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-brand-base/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <h3 class="text-xl font-serif mb-2">Tribeca King Suite</h3>
+                    <p class="text-brand-muted text-sm uppercase tracking-widest">Starting from $529 / night</p>
+                </div>
+                <!-- Suite 3 -->
+                <div class="group cursor-pointer reveal stagger-3">
+                    <div class="aspect-[3/4] overflow-hidden mb-6 relative">
+                        <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f24d?auto=format&fit=crop&q=80&w=800" 
+                             alt="Penthouse" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-brand-base/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <h3 class="text-xl font-serif mb-2">Premier Studio</h3>
+                    <p class="text-brand-muted text-sm uppercase tracking-widest">Starting from $459 / night</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Experience Section -->
+    <section id="experience" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="relative order-2 lg:order-1">
+                <div class="reveal">
+                    <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&q=80&w=1000" 
+                         alt="Dining at The Frederick" 
+                         class="w-full h-auto grayscale-[40%]">
+                </div>
+                <div class="absolute -bottom-10 -right-10 glass p-10 max-w-xs reveal stagger-2">
+                    <i data-lucide="coffee" class="text-brand-accent mb-4"></i>
+                    <h4 class="font-serif text-2xl mb-2">Artisan Living</h4>
+                    <p class="text-sm text-brand-muted leading-relaxed">Enjoy curated amenities and local dining experiences that capture the essence of New York's culinary scene.</p>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <h2 class="text-4xl md:text-5xl font-serif mb-8 reveal">The Art of the Stay</h2>
+                <div class="space-y-8 reveal stagger-1">
+                    <div class="flex gap-6">
+                        <div class="text-brand-accent mt-1"><i data-lucide="map-pin" size="20"></i></div>
+                        <div>
+                            <h4 class="font-serif text-xl mb-2">Prime Location</h4>
+                            <p class="text-brand-muted text-sm leading-relaxed">Situated in the heart of downtown, we provide seamless access to the city's premier cultural landmarks and boutiques.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-brand-accent mt-1"><i data-lucide="shield-check" size="20"></i></div>
+                        <div>
+                            <h4 class="font-serif text-xl mb-2">Personalized Service</h4>
+                            <p class="text-brand-muted text-sm leading-relaxed">Our concierge team is dedicated to crafting a bespoke New York itinerary tailored to your specific interests.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-brand-accent mt-1"><i data-lucide="wind" size="20"></i></div>
+                        <div>
+                            <h4 class="font-serif text-xl mb-2">Boutique Comfort</h4>
+                            <p class="text-brand-muted text-sm leading-relaxed">Experience a blend of historic charm and modern convenience, ensuring every night is a peaceful retreat.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust / Benefits Section -->
+    <section class="py-24 px-6 border-y border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between gap-12 text-center md:text-left">
+            <div class="flex-1 min-w-[200px] reveal stagger-1">
+                <p class="text-3xl font-serif mb-2">24/7</p>
+                <p class="text-[10px] uppercase tracking-[0.3em] text-brand-muted">Guest Support</p>
+            </div>
+            <div class="flex-1 min-w-[200px] reveal stagger-2">
+                <p class="text-3xl font-serif mb-2">Curated</p>
+                <p class="text-[10px] uppercase tracking-[0.3em] text-brand-muted">Local Experiences</p>
+            </div>
+            <div class="flex-1 min-w-[200px] reveal stagger-3">
+                <p class="text-3xl font-serif mb-2">Secure</p>
+                <p class="text-[10px] uppercase tracking-[0.3em] text-brand-muted">Direct Booking</p>
+            </div>
+            <div class="flex-1 min-w-[200px] reveal stagger-4">
+                <p class="text-3xl font-serif mb-2">Eco-Conscious</p>
+                <p class="text-[10px] uppercase tracking-[0.3em] text-brand-muted">Modern Amenities</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-32 px-6 bg-brand-surface">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-4xl font-serif mb-12 reveal">Guest Perspectives</h2>
+            <div class="glass p-12 reveal stagger-1">
+                <p class="text-xl italic font-serif text-brand-muted mb-8 italic">"Customer Reviews Coming Soon"</p>
+                <div class="flex justify-center gap-1">
+                    <i data-lucide="star" class="w-4 h-4 text-brand-accent fill-brand-accent"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-brand-accent fill-brand-accent"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-brand-accent fill-brand-accent"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-brand-accent fill-brand-accent"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-brand-accent fill-brand-accent"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-32 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-serif mb-16 text-center reveal">Frequently Asked</h2>
+            <div class="space-y-4">
+                <div class="glass p-6 reveal">
+                    <button class="flex justify-between items-center w-full text-left font-serif text-lg">
+                        What are the standard check-in and check-out times?
+                        <i data-lucide="chevron-down" class="text-brand-accent"></i>
+                    </button>
+                    <div class="mt-4 text-brand-muted text-sm leading-relaxed hidden">
+                        Standard check-in is at 3:00 PM and check-out is at 11:00 AM. Early check-in or late check-out may be available upon request and is subject to availability.
+                    </div>
+                </div>
+                <div class="glass p-6 reveal stagger-1">
+                    <button class="flex justify-between items-center w-full text-left font-serif text-lg">
+                        Is The Frederick Hotel pet-friendly?
+                        <i data-lucide="chevron-down" class="text-brand-accent"></i>
+                    </button>
+                    <div class="mt-4 text-brand-muted text-sm leading-relaxed hidden">
+                        We welcome small pets in designated rooms. Please contact us directly to discuss our pet policy and associated fees.
+                    </div>
+                </div>
+                <div class="glass p-6 reveal stagger-2">
+                    <button class="flex justify-between items-center w-full text-left font-serif text-lg">
+                        What is the cancellation policy?
+                        <i data-lucide="chevron-down" class="text-brand-accent"></i>
+                    </button>
+                    <div class="mt-4 text-brand-muted text-sm leading-relaxed hidden">
+                        Cancellations must be made 48 hours prior to arrival to avoid a penalty of one night's room rate and tax. Some promotional rates may have different policies.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 bg-brand-surface">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
+            <div class="reveal">
+                <h2 class="text-5xl font-serif mb-8">Begin Your <br> <span class="italic">Journey.</span></h2>
+                <div class="space-y-8">
+                    <div class="flex items-start gap-4">
+                        <i data-lucide="map-pin" class="text-brand-accent"></i>
+                        <div>
+                            <p class="uppercase text-[10px] tracking-widest text-brand-muted mb-1">Address</p>
+                            <p class="font-serif text-lg">New York, USA <br> [Business Address]</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i data-lucide="phone" class="text-brand-accent"></i>
+                        <div>
+                            <p class="uppercase text-[10px] tracking-widest text-brand-muted mb-1">Inquiries</p>
+                            <p class="font-serif text-lg">[Phone Number]</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <i data-lucide="mail" class="text-brand-accent"></i>
+                        <div>
+                            <p class="uppercase text-[10px] tracking-widest text-brand-muted mb-1">Email</p>
+                            <p class="font-serif text-lg">[Email Address]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass p-10 reveal stagger-1">
+                <form class="space-y-6" onsubmit="return false;">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-brand-muted">First Name</label>
+                            <input type="text" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-accent outline-none transition-colors">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-brand-muted">Last Name</label>
+                            <input type="text" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-accent outline-none transition-colors">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-brand-muted">Email Address</label>
+                        <input type="email" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-accent outline-none transition-colors">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-brand-muted">Message</label>
+                        <textarea rows="4" class="w-full bg-white/5 border border-white/10 p-4 focus:border-brand-accent outline-none transition-colors"></textarea>
+                    </div>
+                    <button class="w-full py-5 bg-brand-accent text-brand-base uppercase text-[11px] font-bold tracking-[0.3em] hover:bg-white transition-colors">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <a href="#" class="text-3xl font-serif tracking-widest uppercase mb-6 block">The Frederick.</a>
+                    <p class="text-brand-muted max-w-sm text-sm leading-relaxed">
+                        A boutique hotel sanctuary in Lower Manhattan, dedicated to providing a refined New York experience since our inception.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="text-brand-accent uppercase text-[10px] tracking-widest mb-6 font-bold">Explore</h5>
+                    <ul class="space-y-4 text-sm text-brand-muted">
+                        <li><a href="#" class="hover:text-white transition-colors">Rooms & Suites</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Special Offers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Dining</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Neighborhood</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-brand-accent uppercase text-[10px] tracking-widest mb-6 font-bold">Connect</h5>
+                    <ul class="space-y-4 text-sm text-brand-muted">
+                        <li><a href="#" class="hover:text-white transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Facebook</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-white/5 text-[10px] uppercase tracking-widest text-brand-muted">
+                <p>&copy; 2024 The Frederick Hotel. All rights reserved.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Reveal Animations on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Cursor Sheen Effect
+        const sheen = document.getElementById('sheen');
+        if (window.matchMedia("(pointer: fine)").matches) {
+            window.addEventListener('mousemove', (e) => {
+                sheen.style.setProperty('--x', e.clientX + 'px');
+                sheen.style.setProperty('--y', e.clientY + 'px');
+            });
+        }
+
+        // Hero Parallax Tilt
+        const parallaxContainer = document.querySelector('.hero-image-container');
+        const parallaxTarget = document.querySelector('.parallax-target');
+
+        if (window.matchMedia("(pointer: fine)").matches) {
+            parallaxContainer.addEventListener('mousemove', (e) => {
+                const rect = parallaxContainer.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                requestAnimationFrame(() => {
+                    parallaxTarget.style.transform = `
+                        rotateY(${x * 10}deg) 
+                        rotateX(${y * -10}deg) 
+                        scale3d(1.02, 1.02, 1.02)
+                    `;
+                });
+            });
+
+            parallaxContainer.addEventListener('mouseleave', () => {
+                requestAnimationFrame(() => {
+                    parallaxTarget.style.transform = `rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass', 'py-4');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('glass', 'py-4');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        const closeMobileMenu = () => {
+            mobileMenu.classList.add('translate-x-full');
+        };
+
+        closeMenu.addEventListener('click', closeMobileMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+
+        // FAQ Accordion
+        document.querySelectorAll('.glass button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                const isHidden = content.classList.contains('hidden');
+                
+                // Close others
+                document.querySelectorAll('.glass .mt-4').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.glass i').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                if (isHidden) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

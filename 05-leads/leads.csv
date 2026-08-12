@@ -1,6 +1,6 @@
 Business Name,Business Type,Location,Email,Website,Phone,Demo URL,Status
-Joseph P. Addabbo Family Health Center,doctor,"New York, USA",communications@addabbo.org,https://www.addabbo.org,+1 718 945 7150,https://fda9a12a.autoagency-os.pages.dev/joseph-p-addabbo-family-health-center/,WEBSITE_FAILED
-Marie-France Conde Pediatrics,doctor,"New York, USA",,,+1-718-282-4900,https://fda9a12a.autoagency-os.pages.dev/marie-france-conde-pediatrics/,EMAIL_FAILED
-"Robert Lechtenberg, M.D.",doctor,"New York, USA",,,,https://fda9a12a.autoagency-os.pages.dev/robert-lechtenberg-m-d/,EMAIL_FAILED
-One Medical,doctor,"New York, USA",techsupport@onemedical.com,https://www.onemedical.com/locations/nyc/cobblehill,+1-212-441-4380,https://fda9a12a.autoagency-os.pages.dev/one-medical/,EMAIL_FAILED
-EmèlleMD,doctor,"New York, USA",user@domain.com,https://www.emellemd.com,+1-718-797-0789,https://fda9a12a.autoagency-os.pages.dev/em-llemd/,EMAIL_FAILED
+Joseph P. Addabbo Family Health Center,doctor,"New York, USA",communications@addabbo.org,https://www.addabbo.org,+1 718 945 7150,https://fda9a12a.autoagency-os.pages.dev/joseph-p-addabbo-family-health-center/,WAITING_APPROVAL
+Marie-France Conde Pediatrics,doctor,"New York, USA",,,+1-718-282-4900,https://fda9a12a.autoagency-os.pages.dev/marie-france-conde-pediatrics/,WAITING_APPROVAL
+"Robert Lechtenberg, M.D.",doctor,"New York, USA",,,,https://fda9a12a.autoagency-os.pages.dev/robert-lechtenberg-m-d/,WAITING_APPROVAL
+One Medical,doctor,"New York, USA",techsupport@onemedical.com,https://www.onemedical.com/locations/nyc/cobblehill,+1-212-441-4380,https://fda9a12a.autoagency-os.pages.dev/one-medical/,WEBSITE_FAILED
+EmèlleMD,doctor,"New York, USA",user@domain.com,https://www.emellemd.com,+1-718-797-0789,https://fda9a12a.autoagency-os.pages.dev/em-llemd/,WAITING_APPROVAL
