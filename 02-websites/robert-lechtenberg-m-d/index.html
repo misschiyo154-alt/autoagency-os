@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Lechtenberg, M.D. | Medical Practice New York</title>
+    <meta name="description" content="Personalized medical care and diagnostic excellence in New York by Robert Lechtenberg, M.D.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Frameworks & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a2e2b', // Deep Spruce
+                        accent: '#c5a358', // Muted Gold
+                        surface: '#f9f8f6', // Warm Alabaster
+                        glass: 'rgba(255, 255, 255, 0.7)',
+                    },
+                    fontFamily: {
+                        display: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .cursor-glow {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(197, 163, 88, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .reveal {
+            opacity: 0;
+        }
+
+        .reveal.visible {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .tilt-container {
+            perspective: 1000px;
+        }
+
+        .tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        
+        @media (hover: none) {
+            .cursor-glow { display: none; }
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-primary font-sans antialiased selection:bg-accent/30 overflow-x-hidden">
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 transition-all duration-500" id="main-nav">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-panel rounded-full px-8 py-3">
+            <div class="flex items-center gap-2">
+                <span class="font-display text-2xl tracking-tight font-medium">Robert Lechtenberg, M.D.</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium tracking-wide uppercase">
+                <a href="#services" class="hover:text-accent transition-colors">Services</a>
+                <a href="#about" class="hover:text-accent transition-colors">About</a>
+                <a href="#philosophy" class="hover:text-accent transition-colors">Philosophy</a>
+                <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden md:block bg-primary text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all border border-transparent hover:border-accent">
+                    Inquire
+                </a>
+                <button class="md:hidden p-2" id="mobile-menu-toggle">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-[60] bg-primary transition-transform duration-500 translate-x-full md:hidden">
+        <div class="p-8 flex flex-col h-full">
+            <div class="flex justify-end">
+                <button id="close-drawer" class="text-white p-2">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+            </div>
+            <div class="flex flex-col gap-8 mt-12 text-white font-display text-4xl italic">
+                <a href="#services" class="mobile-link">Services</a>
+                <a href="#about" class="mobile-link">About</a>
+                <a href="#philosophy" class="mobile-link">Philosophy</a>
+                <a href="#contact" class="mobile-link">Contact</a>
+            </div>
+            <div class="mt-auto text-white/50 text-sm">
+                <p>New York, USA</p>
+                <p>[Phone Number]</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 z-10">
+                    <div class="reveal opacity-0 animate-fade-up">
+                        <span class="inline-block py-1 px-4 rounded-full border border-accent/30 text-accent text-xs font-semibold uppercase tracking-widest mb-6">
+                            Concierge Medicine | New York
+                        </span>
+                        <h1 class="font-display text-6xl md:text-8xl leading-[0.9] mb-8">
+                            A <span class="italic">legacy</span> of precision, <br>a future of <span class="text-accent">wellness</span>.
+                        </h1>
+                        <p class="text-lg md:text-xl text-primary/70 max-w-xl mb-10 leading-relaxed font-light">
+                            Dr. Robert Lechtenberg provides sophisticated medical oversight with a focus on comprehensive health longevity and diagnostic excellence in the heart of New York.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#contact" class="group relative px-8 py-4 bg-primary text-white rounded-full overflow-hidden transition-all duration-300 flex items-center justify-center">
+                                <span class="relative z-10 font-medium">Schedule Consultation</span>
+                                <div class="absolute inset-0 bg-accent transition-transform duration-300 translate-y-full group-hover:translate-y-0"></div>
+                            </a>
+                            <a href="#philosophy" class="px-8 py-4 border border-primary/20 rounded-full hover:bg-white transition-all flex items-center justify-center font-medium">
+                                Our Philosophy
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative tilt-container hidden lg:block">
+                    <div id="hero-tilt-card" class="tilt-card relative z-10 w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
+                        <!-- Abstract medical-aesthetic placeholder -->
+                        <div class="absolute inset-0 bg-[#e5e1db] flex items-center justify-center">
+                            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1200" alt="Medical Workspace" class="w-full h-full object-cover opacity-80 mix-blend-multiply">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 text-white">
+                            <p class="font-display text-2xl italic">"Health is the ultimate luxury."</p>
+                            <p class="text-xs uppercase tracking-widest opacity-70 mt-2">— R. Lechtenberg, M.D.</p>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-12 -right-12 w-48 h-48 border border-accent/20 rounded-full animate-float"></div>
+                    <div class="absolute -bottom-8 -left-8 w-24 h-24 bg-accent/10 rounded-full blur-2xl"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-32 px-6 bg-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                    <div class="max-w-2xl">
+                        <h2 class="font-display text-5xl md:text-6xl mb-6">Specialized <span class="italic">Care</span></h2>
+                        <p class="text-primary/60 text-lg">Comprehensive internal medicine designed around your lifestyle. We prioritize depth of investigation over volume of patients.</p>
+                    </div>
+                    <div class="text-accent font-medium tracking-widest uppercase text-sm mb-2">
+                        Practice Specializations
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-1px bg-primary/10 border border-primary/10">
+                    <div class="bg-white p-12 hover:bg-surface transition-all duration-500 reveal">
+                        <div class="w-12 h-12 bg-surface flex items-center justify-center rounded-lg mb-8 text-accent">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h3 class="font-display text-3xl mb-4">Preventative Medicine</h3>
+                        <p class="text-primary/70 leading-relaxed font-light">Proactive health screenings and risk assessments tailored to your unique genetic and environmental profile.</p>
+                    </div>
+                    <div class="bg-white p-12 hover:bg-surface transition-all duration-500 reveal stagger-1">
+                        <div class="w-12 h-12 bg-surface flex items-center justify-center rounded-lg mb-8 text-accent">
+                            <i data-lucide="microscope"></i>
+                        </div>
+                        <h3 class="font-display text-3xl mb-4">Diagnostic Excellence</h3>
+                        <p class="text-primary/70 leading-relaxed font-light">Detailed analysis of complex symptoms using advanced clinical reasoning and targeted diagnostic pathways.</p>
+                    </div>
+                    <div class="bg-white p-12 hover:bg-surface transition-all duration-500 reveal stagger-2">
+                        <div class="w-12 h-12 bg-surface flex items-center justify-center rounded-lg mb-8 text-accent">
+                            <i data-lucide="heart-pulse"></i>
+                        </div>
+                        <h3 class="font-display text-3xl mb-4">Concierge Wellness</h3>
+                        <p class="text-primary/70 leading-relaxed font-light">A personal physician relationship that ensures direct access, extended consultations, and seamless coordination.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-32 px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="relative order-2 lg:order-1">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden glass-panel p-4">
+                        <div class="w-full h-full rounded-xl overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=1200" alt="Professional Studio" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-primary/10"></div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 bg-white p-8 rounded-2xl shadow-xl max-w-[240px] hidden md:block border border-primary/5">
+                        <p class="font-display text-xl italic mb-2">Patient-First Ethics</p>
+                        <p class="text-xs text-primary/60">Based in New York, practicing a model of care that values time, empathy, and scientific rigor.</p>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 reveal">
+                    <h2 class="font-display text-5xl md:text-6xl mb-8">Meet <br>Dr. Lechtenberg</h2>
+                    <div class="space-y-6 text-lg text-primary/70 font-light leading-relaxed">
+                        <p>With a practice established in the heart of New York, Robert Lechtenberg, M.D. represents a commitment to the fundamental principles of medicine: observation, evidence, and humanity.</p>
+                        <p>Our approach transcends the standard clinical visit. We believe that optimal health requires an architect—someone who understands the intricate systems of the human body and how they interact with your lifestyle, goals, and environment.</p>
+                        <div class="pt-8">
+                            <div class="grid grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-medium text-primary mb-1">Location</h4>
+                                    <p class="text-sm">New York, USA</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-primary mb-1">Focus</h4>
+                                    <p class="text-sm">Internal Medicine</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Experience (Philosophy) -->
+        <section id="philosophy" class="py-32 px-6 bg-primary text-white overflow-hidden">
+            <div class="max-w-7xl mx-auto relative">
+                <div class="text-center mb-24 reveal">
+                    <h2 class="font-display text-5xl md:text-7xl mb-8">The Signature <span class="italic">Approach</span></h2>
+                    <p class="text-white/60 max-w-2xl mx-auto">Elevating the clinical experience through three core pillars of practice.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+                    <div class="group reveal stagger-1">
+                        <div class="text-6xl font-display italic text-accent/30 group-hover:text-accent transition-colors duration-500 mb-6">01</div>
+                        <h3 class="text-2xl font-display mb-4">Unrushed Consultation</h3>
+                        <p class="text-white/50 font-light leading-relaxed">We schedule fewer appointments daily to ensure every patient receives the focus and time their health deserves.</p>
+                    </div>
+                    <div class="group reveal stagger-2">
+                        <div class="text-6xl font-display italic text-accent/30 group-hover:text-accent transition-colors duration-500 mb-6">02</div>
+                        <h3 class="text-2xl font-display mb-4">Evidence-Based Clarity</h3>
+                        <p class="text-white/50 font-light leading-relaxed">Medical decisions are guided by the latest clinical research and refined by years of practical experience.</p>
+                    </div>
+                    <div class="group reveal stagger-3">
+                        <div class="text-6xl font-display italic text-accent/30 group-hover:text-accent transition-colors duration-500 mb-6">03</div>
+                        <h3 class="text-2xl font-display mb-4">Total Privacy</h3>
+                        <p class="text-white/50 font-light leading-relaxed">Discretion and confidentiality are the cornerstones of our practice, maintaining a secure environment for all patients.</p>
+                    </div>
+                </div>
+
+                <!-- Background Text -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.03] text-[20vw] font-display whitespace-nowrap">
+                    EXCELLENCE
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-32 px-6 bg-surface">
+            <div class="max-w-4xl mx-auto text-center reveal">
+                <i data-lucide="quote" class="w-12 h-12 text-accent/40 mx-auto mb-8"></i>
+                <h3 class="font-display text-4xl italic mb-8">"Patient experiences are the true measure of a practice."</h3>
+                <div class="py-12 border-y border-primary/10">
+                    <p class="text-primary/40 tracking-widest uppercase text-sm">Customer Reviews Coming Soon</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-32 px-6">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="font-display text-5xl mb-16 text-center">Inquiry <span class="italic">Guide</span></h2>
+                <div class="space-y-4">
+                    <div class="glass-panel rounded-2xl overflow-hidden reveal">
+                        <button class="w-full p-8 text-left flex justify-between items-center group" onclick="toggleFaq(this)">
+                            <span class="font-medium">How do I schedule an initial consultation?</span>
+                            <i data-lucide="plus" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-8">
+                            <p class="pb-8 text-primary/60">You may contact the office directly via the inquiry form below or through the provided contact details. Our team will coordinate a brief preliminary call to ensure our services align with your needs.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-2xl overflow-hidden reveal stagger-1">
+                        <button class="w-full p-8 text-left flex justify-between items-center group" onclick="toggleFaq(this)">
+                            <span class="font-medium">Does the practice accept insurance?</span>
+                            <i data-lucide="plus" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-8">
+                            <p class="pb-8 text-primary/60">We operate as a private practice to ensure the highest quality of care and direct access. Please inquire directly regarding specific insurance documentation and out-of-network reimbursement possibilities.</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel rounded-2xl overflow-hidden reveal stagger-2">
+                        <button class="w-full p-8 text-left flex justify-between items-center group" onclick="toggleFaq(this)">
+                            <span class="font-medium">Where is the office located?</span>
+                            <i data-lucide="plus" class="w-5 h-5 transition-transform duration-300"></i>
+                        </button>
+                        <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-8">
+                            <p class="pb-8 text-primary/60">Our practice is centrally located in New York, USA. Exact address details are shared upon confirmation of your appointment to maintain patient privacy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-32 px-6 bg-white relative">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div class="reveal">
+                    <h2 class="font-display text-6xl mb-8">Begin the <span class="italic">Conversation</span></h2>
+                    <p class="text-lg text-primary/60 mb-12">For appointments, media inquiries, or professional consultations, please reach out via the secure form or contact details below.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex gap-6 items-start">
+                            <div class="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Location</h4>
+                                <p class="text-primary/60">[Business Address]<br>New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 items-start">
+                            <div class="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Telephone</h4>
+                                <p class="text-primary/60">[Phone Number]</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 items-start">
+                            <div class="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-1">Email</h4>
+                                <p class="text-primary/60">[Email Address]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal stagger-1">
+                    <form class="glass-panel p-8 md:p-12 rounded-3xl space-y-6" onsubmit="return false;">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase tracking-widest font-semibold opacity-50">Full Name</label>
+                                <input type="text" class="w-full bg-surface/50 border-b border-primary/10 py-3 focus:border-accent outline-none transition-colors" placeholder="Jane Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase tracking-widest font-semibold opacity-50">Email Address</label>
+                                <input type="email" class="w-full bg-surface/50 border-b border-primary/10 py-3 focus:border-accent outline-none transition-colors" placeholder="jane@example.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase tracking-widest font-semibold opacity-50">Service of Interest</label>
+                            <select class="w-full bg-surface/50 border-b border-primary/10 py-3 focus:border-accent outline-none transition-colors appearance-none">
+                                <option>General Consultation</option>
+                                <option>Preventative Screening</option>
+                                <option>Executive Wellness</option>
+                                <option>Other Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase tracking-widest font-semibold opacity-50">Message</label>
+                            <textarea rows="4" class="w-full bg-surface/50 border-b border-primary/10 py-3 focus:border-accent outline-none transition-colors resize-none" placeholder="How can we assist you?"></textarea>
+                        </div>
+                        <button class="w-full py-4 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-all flex items-center justify-center gap-2 group">
+                            Send Inquiry
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <p class="text-[10px] text-center opacity-40 uppercase tracking-tighter">Demo form only — No information will be transmitted.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-24 px-6 text-center">
+            <div class="max-w-4xl mx-auto reveal">
+                <h2 class="font-display text-4xl md:text-5xl mb-10">Committed to clinical excellence <br>and individual <span class="italic">well-being</span>.</h2>
+                <a href="#contact" class="inline-block px-12 py-5 border-2 border-primary rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-300">
+                    Book Your Appointment
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface pt-24 pb-12 px-6 border-t border-primary/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <span class="font-display text-3xl tracking-tight mb-6 block">Robert Lechtenberg, M.D.</span>
+                    <p class="text-primary/60 max-w-sm font-light">A modern medical practice focused on precision diagnostics and personalized internal medicine in New York City.</p>
+                </div>
+                <div>
+                    <h5 class="text-xs uppercase tracking-widest font-bold mb-6">Navigation</h5>
+                    <ul class="space-y-4 text-sm text-primary/60">
+                        <li><a href="#services" class="hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="#about" class="hover:text-accent transition-colors">About</a></li>
+                        <li><a href="#philosophy" class="hover:text-accent transition-colors">Philosophy</a></li>
+                        <li><a href="#contact" class="hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xs uppercase tracking-widest font-bold mb-6">Legal</h5>
+                    <ul class="space-y-4 text-sm text-primary/60">
+                        <li>Privacy Policy</li>
+                        <li>Terms of Service</li>
+                        <li>HIPAA Compliance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-primary/10 gap-4">
+                <p class="text-xs text-primary/40 italic">&copy; 2024 Robert Lechtenberg, M.D. All Rights Reserved.</p>
+                <div class="flex gap-6 grayscale opacity-40">
+                    <!-- Standard social icons or placeholders -->
+                    <i data-lucide="linkedin" class="w-4 h-4"></i>
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Reveal animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Cursor Light Effect
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+            });
+        });
+
+        // 3D Tilt Effect for Hero Card
+        const heroCard = document.getElementById('hero-tilt-card');
+        if (heroCard && window.matchMedia("(hover: hover)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = heroCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                heroCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                heroCard.style.transform = `rotateX(0deg) rotateY(0deg)`;
+            });
+        }
+
+        // Mobile Menu Logic
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const closeDrawer = document.getElementById('close-drawer');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileDrawer.classList.toggle('translate-x-full');
+        }
+
+        mobileToggle.addEventListener('click', toggleMenu);
+        closeDrawer.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // FAQ Toggle
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+            } else {
+                nav.classList.remove('py-2');
+            }
+        });
+    </script>
+</body>
+</html>

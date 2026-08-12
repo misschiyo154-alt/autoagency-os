@@ -1,328 +1,60 @@
-import os
-import csv
-import re
-import smtplib
+import os, csv, re, smtplib, argparse
 from email.message import EmailMessage
 from pathlib import Path
 from dotenv import load_dotenv
 
-
-# ==========================
-# LOAD ENV
-# ==========================
-
-load_dotenv()
-
-EMAIL = os.getenv("EMAIL")
-PASSWORD = os.getenv("EMAIL_PASSWORD")
-
-
-# ==========================
-# FILES
-# ==========================
-
-LEADS_FILE = "05-leads/leads.csv"
-EMAIL_DIR = Path("04-emails/generated")
-
-
-# ==========================
-# CREATE SLUG
-# ==========================
-
-def create_slug(business_name):
-
-    slug = business_name.lower()
-
-    slug = slug.replace(
-        "&",
-        "and"
-    )
-
-    slug = re.sub(
-        r"[^a-z0-9]+",
-        "-",
-        slug
-    )
-
-    return slug.strip("-")
-
-
-# ==========================
-# LOAD LEADS
-# ==========================
-
-with open(
-    LEADS_FILE,
-    "r",
-    newline="",
-    encoding="utf-8"
-) as file:
-
-    reader = csv.DictReader(file)
-
-    leads = list(reader)
-
-
-# ==========================
-# FIELDNAMES
-# ==========================
-
-fieldnames = [
-    "Business Name",
-    "Business Type",
-    "Location",
-    "Email",
-    "Website",
-    "Demo URL",
-    "Status"
-]
-
-
-# ==========================
-# FIND FIRST READY LEAD
-# ==========================
-
-target_index = None
-
-receiver = None
-
-for index, lead in enumerate(leads):
-
-    email = (
-        lead.get("Email") or ""
-    ).strip()
-
-    status = (
-        lead.get("Status") or ""
-    ).strip().upper()
-
-    if (
-        email
-        and status == "EMAIL_READY"
-    ):
-
-        target_index = index
-
-        receiver = email
-
-        break
-
-
-# ==========================
-# NO READY LEAD
-# ==========================
-
-if target_index is None:
-
-    print(
-        "\n⚠️ No EMAIL_READY leads found."
-    )
-
-    raise SystemExit(0)
-
-
-# ==========================
-# BUSINESS
-# ==========================
-
-business_name = (
-    leads[target_index]
-    .get("Business Name") or ""
-).strip()
-
-
-slug = create_slug(
-    business_name
-)
-
-
-# ==========================
-# EMAIL FILE
-# ==========================
-
-email_file = (
-    EMAIL_DIR /
-    f"{slug}.txt"
-)
-
-
-if not email_file.exists():
-
-    print(
-        f"\n❌ Email file not found:"
-    )
-
-    print(
-        f"   {email_file}"
-    )
-
-    raise SystemExit(1)
-
-
-# ==========================
-# READ EMAIL
-# ==========================
-
-with open(
-    email_file,
-    "r",
-    encoding="utf-8"
-) as file:
-
-    content = file.read().strip()
-
-
-lines = content.splitlines()
-
-subject = "Website Redesign"
-
-body = content
-
-
-if (
-    lines
-    and lines[0]
-    .lower()
-    .startswith("subject:")
-):
-
-    subject = (
-        lines[0]
-        .replace(
-            "Subject:",
-            ""
-        )
-        .strip()
-    )
-
-    body = "\n".join(
-        lines[1:]
-    ).strip()
-
-
-# ==========================
-# PRINT
-# ==========================
-
-print(
-    "\n===================================="
-)
-
-print(
-    f"📧 Sending email to: "
-    f"{business_name}"
-)
-
-print(
-    f"Receiver : {receiver}"
-)
-
-print(
-    f"Email    : {email_file}"
-)
-
-print(
-    "===================================="
-)
-
-
-# ==========================
-# CREATE MESSAGE
-# ==========================
-
-msg = EmailMessage()
-
-msg["From"] = EMAIL
-
-msg["To"] = receiver
-
-msg["Subject"] = subject
-
-msg.set_content(
-    body
-)
-
-
-# ==========================
-# SEND
-# ==========================
-
-try:
-
-    with smtplib.SMTP(
-        "smtp.gmail.com",
-        587
-    ) as smtp:
-
-        smtp.starttls()
-
-        smtp.login(
-            EMAIL,
-            PASSWORD
-        )
-
-        smtp.send_message(
-            msg
-        )
-
-
-    # ==========================
-    # MARK SENT
-    # ==========================
-
-    leads[target_index]["Status"] = "SENT"
-
-
-    # ==========================
-    # SAVE CSV
-    # ==========================
-
-    temp_file = (
-        LEADS_FILE + ".tmp"
-    )
-
-    with open(
-        temp_file,
-        "w",
-        newline="",
-        encoding="utf-8"
-    ) as file:
-
-        writer = csv.DictWriter(
-            file,
-            fieldnames=fieldnames,
-            extrasaction="ignore"
-        )
-
-        writer.writeheader()
-
-        writer.writerows(
-            leads
-        )
-
-
-    os.replace(
-        temp_file,
-        LEADS_FILE
-    )
-
-
-    print(
-        "\n✅ Email Sent Successfully!"
-    )
-
-    print(
-        f"📌 Status: "
-        f"{business_name} → SENT"
-    )
-
-
-except Exception as e:
-
-    print(
-        "\n❌ Email Failed"
-    )
-
-    print(e)
-
-    raise SystemExit(1)
+BASE_DIR=Path(__file__).resolve().parents[1]
+load_dotenv(BASE_DIR/'.env')
+EMAIL=os.getenv('EMAIL')
+PASSWORD=os.getenv('EMAIL_PASSWORD')
+LEADS_FILE=BASE_DIR/'05-leads'/'leads.csv'
+EMAIL_DIR=BASE_DIR/'04-emails'/'generated'
+
+def slugify(name):
+    return re.sub(r'[^a-z0-9]+','-',(name or '').lower().replace('&','and')).strip('-')
+
+def send_one(index):
+    if not EMAIL or not PASSWORD:
+        print('[ERROR] EMAIL / EMAIL_PASSWORD missing in .env')
+        return False
+    with open(LEADS_FILE,'r',newline='',encoding='utf-8') as f: leads=list(csv.DictReader(f))
+    if index<1 or index>len(leads): return False
+    lead=leads[index-1]
+    receiver=(lead.get('Email') or '').strip()
+    name=(lead.get('Business Name') or '').strip()
+    if not receiver:
+        print(f'[SKIP] {name}: no email')
+        return False
+    path=EMAIL_DIR/f'{slugify(name)}.txt'
+    if not path.exists():
+        print(f'[SKIP] {name}: email draft missing')
+        return False
+    content=path.read_text(encoding='utf-8').strip()
+    lines=content.splitlines(); subject='Website Redesign'; body=content
+    if lines and lines[0].lower().startswith('subject:'):
+        subject=lines[0].split(':',1)[1].strip(); body='\n'.join(lines[1:]).strip()
+    msg=EmailMessage(); msg['From']=EMAIL; msg['To']=receiver; msg['Subject']=subject; msg.set_content(body)
+    try:
+        with smtplib.SMTP('smtp.gmail.com',587,timeout=30) as smtp:
+            smtp.starttls(); smtp.login(EMAIL,PASSWORD); smtp.send_message(msg)
+    except Exception as exc:
+        print(f'[ERROR] {name}: {exc}'); return False
+    lead['Status']='SENT'
+    lead['Sent At']=__import__('datetime').datetime.now().isoformat(timespec='seconds')
+    fields=list(leads[0].keys())
+    if 'Sent At' not in fields: fields.append('Sent At')
+    with open(LEADS_FILE,'w',newline='',encoding='utf-8') as f:
+        w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore'); w.writeheader(); w.writerows(leads)
+    print(f'[SENT] {name} -> {receiver}')
+    return True
+
+def main():
+    ap=argparse.ArgumentParser(); ap.add_argument('--index',type=int); ap.add_argument('--all-ready',action='store_true'); args=ap.parse_args()
+    with open(LEADS_FILE,'r',newline='',encoding='utf-8') as f: leads=list(csv.DictReader(f))
+    if args.index: send_one(args.index); return
+    if args.all_ready:
+        for i,l in enumerate(leads,1):
+            if (l.get('Status') or '').upper()=='EMAIL_READY': send_one(i)
+        return
+    print('Use --index N or --all-ready')
+if __name__=='__main__': main()

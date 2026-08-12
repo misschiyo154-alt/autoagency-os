@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marie-France Conde Pediatrics | Modern Care in New York</title>
+    <meta name="description" content="Premium pediatric care by Marie-France Conde Pediatrics in New York, USA. Dedicated to modern, comprehensive health for the next generation.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f7f8f6',
+                            100: '#eceee9',
+                            200: '#d9ddd2',
+                            300: '#bbc3b3',
+                            400: '#9aa58f',
+                            500: '#7a876d', // Primary Sage
+                            600: '#616d56',
+                            700: '#4d5645',
+                            800: '#3f4639',
+                            900: '#363b31',
+                        },
+                        stone: {
+                            950: '#121211',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'reveal': 'reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        reveal: {
+                            '0%': { transform: 'scaleX(0)', transformOrigin: 'left' },
+                            '100%': { transform: 'scaleX(1)', transformOrigin: 'left' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-nav {
+            background: rgba(247, 248, 246, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(122, 135, 109, 0.1);
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(122, 135, 109, 0.05) 0%, rgba(247, 248, 246, 0) 70%);
+        }
+
+        .mouse-sheen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(122, 135, 109, 0.04), transparent 40%);
+            z-index: 999;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        .reveal-obs { opacity: 0; }
+        .reveal-obs.active { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .perspective { perspective: 1000px; }
+        .tilt-card { 
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f7f8f6; }
+        ::-webkit-scrollbar-thumb { background: #d9ddd2; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-brand-50 text-stone-900 font-sans selection:bg-brand-200 overflow-x-hidden">
+
+    <div class="mouse-sheen hidden lg:block" id="sheen"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[100] glass-nav transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="group flex flex-col leading-none">
+                <span class="font-serif text-xl md:text-2xl tracking-tight text-brand-900">Marie-France Conde</span>
+                <span class="text-[10px] uppercase tracking-[0.2em] text-brand-500 font-medium">Pediatrics</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-10 text-sm font-medium text-brand-800">
+                <a href="#services" class="hover:text-brand-500 transition-colors">Services</a>
+                <a href="#about" class="hover:text-brand-500 transition-colors">Philosophy</a>
+                <a href="#experience" class="hover:text-brand-500 transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-brand-500 transition-colors">Contact</a>
+                <a href="#contact" class="bg-brand-900 text-white px-6 py-3 rounded-none hover:bg-brand-700 transition-all duration-300">
+                    Schedule Visit
+                </a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="md:hidden p-2 text-brand-900" id="menuBtn">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="drawer" class="fixed inset-0 z-[110] bg-white translate-x-full transition-transform duration-500 ease-in-out">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-16">
+                <span class="font-serif text-xl">Menu</span>
+                <button id="closeBtn"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex flex-col space-y-8 text-3xl font-serif">
+                <a href="#services" class="mobile-link">Services</a>
+                <a href="#about" class="mobile-link">Philosophy</a>
+                <a href="#experience" class="mobile-link">Experience</a>
+                <a href="#contact" class="mobile-link">Contact</a>
+            </div>
+            <div class="absolute bottom-12 left-8 right-8">
+                <p class="text-sm text-brand-400 mb-4">Location</p>
+                <p class="font-medium">New York, USA</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center pt-20 overflow-hidden hero-gradient">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 z-10">
+                    <span class="inline-block px-3 py-1 border border-brand-300 rounded-full text-[10px] uppercase tracking-widest text-brand-600 mb-6 animate-fade-up">
+                        Modern Pediatric Excellence
+                    </span>
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-stone-950 leading-[1.1] mb-8 animate-fade-up stagger-1">
+                        Comprehensive care for the <span class="italic font-normal">growing</span> child.
+                    </h1>
+                    <p class="max-w-md text-lg text-brand-700 mb-10 animate-fade-up stagger-2 leading-relaxed">
+                        Marie-France Conde Pediatrics provides personalized, modern healthcare in the heart of New York, blending clinical expertise with a nurturing environment.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-up stagger-3">
+                        <a href="#contact" class="inline-flex items-center justify-center bg-brand-900 text-white px-8 py-4 text-sm font-medium hover:bg-brand-700 transition-all group">
+                            New Patient Inquiry
+                            <i data-lucide="arrow-right" class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#services" class="inline-flex items-center justify-center border border-brand-200 px-8 py-4 text-sm font-medium hover:bg-white transition-all">
+                            Explore Services
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative perspective hidden lg:block">
+                    <div id="heroCard" class="tilt-card relative w-full aspect-[4/5] bg-brand-200 overflow-hidden shadow-2xl">
+                        <!-- Abstract layered visual composition -->
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center grayscale-[0.2] opacity-90 transition-transform duration-700 hover:scale-105"></div>
+                        <div class="absolute inset-0 bg-brand-900/10 mix-blend-multiply"></div>
+                        <div class="absolute bottom-0 left-0 p-8 text-white z-20">
+                            <p class="text-xs uppercase tracking-tighter opacity-70 mb-1">Clinic Environment</p>
+                            <p class="font-serif text-2xl">Tailored to NYC Families</p>
+                        </div>
+                        <!-- Glass Decorative Element -->
+                        <div class="absolute top-12 -right-8 w-48 h-64 glass-nav border border-white/30 backdrop-blur-xl translate-z-10 shadow-lg p-6">
+                            <div class="w-10 h-1 h-1 bg-brand-500 mb-4"></div>
+                            <p class="text-xs font-medium text-brand-900 leading-relaxed uppercase tracking-tighter">Certified expertise meets compassionate guidance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20">
+                    <div class="max-w-2xl">
+                        <h2 class="text-3xl md:text-5xl font-serif text-stone-950 mb-6 reveal-obs">Specialized Pediatric Care</h2>
+                        <p class="text-brand-600 leading-relaxed text-lg reveal-obs">A focus on physical health, developmental milestones, and emotional well-being at every stage of childhood.</p>
+                    </div>
+                    <div class="mt-8 md:mt-0 reveal-obs">
+                        <span class="text-brand-400 font-serif text-6xl opacity-20">01</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <!-- Service 1 -->
+                    <div class="group reveal-obs stagger-1">
+                        <div class="mb-8 overflow-hidden aspect-square bg-brand-50 flex items-center justify-center">
+                            <i data-lucide="stethoscope" class="w-12 h-12 text-brand-300 group-hover:text-brand-500 transition-colors duration-500"></i>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Well-Child Visits</h3>
+                        <p class="text-brand-600 text-sm leading-relaxed mb-6">Regular health assessments and vaccinations to ensure your child stays on a healthy growth trajectory from infancy to adolescence.</p>
+                        <div class="h-px w-full bg-brand-100 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="group reveal-obs stagger-2">
+                        <div class="mb-8 overflow-hidden aspect-square bg-brand-50 flex items-center justify-center">
+                            <i data-lucide="brain-circuit" class="w-12 h-12 text-brand-300 group-hover:text-brand-500 transition-colors duration-500"></i>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Developmental Screening</h3>
+                        <p class="text-brand-600 text-sm leading-relaxed mb-6">Comprehensive evaluations of cognitive, social, and emotional milestones to provide early support where it's needed most.</p>
+                        <div class="h-px w-full bg-brand-100 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="group reveal-obs stagger-3">
+                        <div class="mb-8 overflow-hidden aspect-square bg-brand-50 flex items-center justify-center">
+                            <i data-lucide="thermometer" class="w-12 h-12 text-brand-300 group-hover:text-brand-500 transition-colors duration-500"></i>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Acute Care & Illness</h3>
+                        <p class="text-brand-600 text-sm leading-relaxed mb-6">Responsive treatment for common childhood ailments, ensuring your child returns to health with minimal disruption to their life.</p>
+                        <div class="h-px w-full bg-brand-100 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy / About -->
+        <section id="about" class="py-32 bg-brand-50 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="relative reveal-obs">
+                    <div class="aspect-[3/4] bg-brand-200 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000" alt="Consultation Room" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000">
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 bg-brand-900 text-white p-12 hidden md:block">
+                        <p class="font-serif text-3xl italic">A decade of practice in New York City.</p>
+                    </div>
+                </div>
+                <div class="reveal-obs stagger-2">
+                    <h2 class="text-4xl md:text-5xl font-serif text-stone-950 mb-8 leading-tight">Founded on the principle of the 'Whole Child'.</h2>
+                    <p class="text-brand-700 text-lg leading-relaxed mb-8 italic">
+                        "Healthcare is more than a diagnosis; it's a partnership between physician, parent, and child."
+                    </p>
+                    <p class="text-brand-600 leading-relaxed mb-10">
+                        At Marie-France Conde Pediatrics, we recognize that every family in New York has unique needs. Our philosophy integrates modern evidence-based medicine with a deep understanding of the developmental and environmental factors that impact a child’s health in a metropolitan setting.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8 border-t border-brand-200 pt-10">
+                        <div>
+                            <h4 class="font-medium text-brand-900 mb-2">Evidence Based</h4>
+                            <p class="text-xs text-brand-500 leading-relaxed uppercase tracking-tighter">Clinical excellence is our baseline.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-brand-900 mb-2">Family Centered</h4>
+                            <p class="text-xs text-brand-500 leading-relaxed uppercase tracking-tighter">Coordinated care for busy lives.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Experience -->
+        <section id="experience" class="py-32 bg-white">
+            <div class="max-w-5xl mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-serif text-stone-950 mb-16 reveal-obs">The Patient Experience</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-brand-100 border border-brand-100 reveal-obs">
+                    <div class="bg-white p-12 text-left group hover:bg-brand-50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-white transition-all">
+                            <span class="font-serif italic">1</span>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Streamlined Intake</h3>
+                        <p class="text-sm text-brand-600 leading-relaxed">Digital-first documentation to minimize office wait times and maximize your direct consultation with the physician.</p>
+                    </div>
+                    <div class="bg-white p-12 text-left group hover:bg-brand-50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-white transition-all">
+                            <span class="font-serif italic">2</span>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Dedicated Consultation</h3>
+                        <p class="text-sm text-brand-600 leading-relaxed">Appointments are structured to allow for thorough discussions, never feeling rushed or impersonal.</p>
+                    </div>
+                    <div class="bg-white p-12 text-left group hover:bg-brand-50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-white transition-all">
+                            <span class="font-serif italic">3</span>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Coordination of Care</h3>
+                        <p class="text-sm text-brand-600 leading-relaxed">We work closely with specialists and school systems to ensure a cohesive approach to your child's wellbeing.</p>
+                    </div>
+                    <div class="bg-white p-12 text-left group hover:bg-brand-50 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center mb-6 group-hover:bg-brand-900 group-hover:text-white transition-all">
+                            <span class="font-serif italic">4</span>
+                        </div>
+                        <h3 class="text-xl font-serif mb-4">Follow-up Support</h3>
+                        <p class="text-sm text-brand-600 leading-relaxed">Continued guidance beyond the office visit through our secure patient communication portal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-24 bg-brand-900 text-brand-100">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <p class="font-serif text-2xl italic opacity-80 mb-4">"Dedicated to the families of New York."</p>
+                <div class="w-20 h-px bg-brand-500 mx-auto mb-12"></div>
+                <p class="text-sm uppercase tracking-widest text-brand-400">Customer Reviews Coming Soon</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-32 bg-white">
+            <div class="max-w-3xl mx-auto px-6">
+                <h2 class="text-4xl font-serif text-center mb-16">Frequently Asked</h2>
+                <div class="space-y-6">
+                    <div class="border-b border-brand-100 pb-6">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <span class="font-medium text-brand-900">Do you accept new patients?</span>
+                            <i data-lucide="plus" class="w-5 h-5 text-brand-400"></i>
+                        </button>
+                        <div class="faq-content hidden pt-4 text-brand-600 text-sm leading-relaxed">
+                            Yes, we are currently welcoming new families to our practice. Please use the contact form below to initiate the enrollment process.
+                        </div>
+                    </div>
+                    <div class="border-b border-brand-100 pb-6">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <span class="font-medium text-brand-900">What insurances do you take?</span>
+                            <i data-lucide="plus" class="w-5 h-5 text-brand-400"></i>
+                        </button>
+                        <div class="faq-content hidden pt-4 text-brand-600 text-sm leading-relaxed">
+                            We work with a variety of providers. Please contact our office with your insurance details for specific coverage information.
+                        </div>
+                    </div>
+                    <div class="border-b border-brand-100 pb-6">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <span class="font-medium text-brand-900">What is your approach to vaccinations?</span>
+                            <i data-lucide="plus" class="w-5 h-5 text-brand-400"></i>
+                        </button>
+                        <div class="faq-content hidden pt-4 text-brand-600 text-sm leading-relaxed">
+                            Our practice follows the CDC and American Academy of Pediatrics immunization schedule to ensure the highest level of community and personal safety.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-32 bg-brand-50 border-t border-brand-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    <div>
+                        <h2 class="text-5xl font-serif mb-8">Get in touch.</h2>
+                        <p class="text-brand-600 mb-12 max-w-md leading-relaxed">For appointments or general inquiries, please fill out the form or reach us via our contact details below.</p>
+                        
+                        <div class="space-y-8">
+                            <div class="flex items-start">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-brand-500 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium text-brand-900">Location</h4>
+                                    <p class="text-brand-600">[Business Address]<br>New York, USA</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="phone" class="w-6 h-6 text-brand-500 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium text-brand-900">Phone</h4>
+                                    <p class="text-brand-600">[Phone Number]</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-lucide="mail" class="w-6 h-6 text-brand-500 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium text-brand-900">Email</h4>
+                                    <p class="text-brand-600">[Email Address]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 shadow-sm border border-brand-100">
+                        <form class="space-y-6" onsubmit="event.preventDefault()">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-[10px] uppercase tracking-widest text-brand-400 mb-2 font-medium">Parent Name</label>
+                                    <input type="text" placeholder="Your Name" class="w-full border-b border-brand-100 py-3 focus:border-brand-500 outline-none transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] uppercase tracking-widest text-brand-400 mb-2 font-medium">Child Name</label>
+                                    <input type="text" placeholder="Child's Name" class="w-full border-b border-brand-100 py-3 focus:border-brand-500 outline-none transition-colors">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-brand-400 mb-2 font-medium">Email Address</label>
+                                <input type="email" placeholder="email@example.com" class="w-full border-b border-brand-100 py-3 focus:border-brand-500 outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-brand-400 mb-2 font-medium">Message</label>
+                                <textarea rows="4" placeholder="How can we help?" class="w-full border-b border-brand-100 py-3 focus:border-brand-500 outline-none transition-colors resize-none"></textarea>
+                            </div>
+                            <button class="w-full bg-brand-900 text-white py-5 text-sm font-medium hover:bg-brand-700 transition-colors uppercase tracking-widest">
+                                Submit Inquiry
+                            </button>
+                            <p class="text-[10px] text-brand-400 text-center italic mt-4">Demo form. For display purposes only.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-white border-t border-brand-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+                <a href="#" class="group flex flex-col leading-none">
+                    <span class="font-serif text-xl tracking-tight text-brand-900">Marie-France Conde</span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-brand-500 font-medium">Pediatrics</span>
+                </a>
+                
+                <div class="flex space-x-8 text-[10px] uppercase tracking-widest font-medium text-brand-400">
+                    <a href="#" class="hover:text-brand-900 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-brand-900 transition-colors">Patient Portal</a>
+                    <a href="#" class="hover:text-brand-900 transition-colors">Terms</a>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="text-brand-400 hover:text-brand-900 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-brand-400 hover:text-brand-900 transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div class="mt-16 text-center text-[10px] text-brand-300 uppercase tracking-widest">
+                &copy; 2024 Marie-France Conde Pediatrics. Built by Vicky Web Agency.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mouse Sheen Effect
+        const sheen = document.getElementById('sheen');
+        document.addEventListener('mousemove', (e) => {
+            sheen.style.setProperty('--mouse-x', `${e.clientX}px`);
+            sheen.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
+
+        // Hero Card Tilt Effect
+        const heroCard = document.getElementById('heroCard');
+        if (heroCard && window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const { innerWidth, innerHeight } = window;
+                const moveX = (clientX - innerWidth / 2) / innerWidth * 15;
+                const moveY = (clientY - innerHeight / 2) / innerHeight * -15;
+                
+                heroCard.style.transform = `rotateY(${moveX}deg) rotateX(${moveY}deg)`;
+            });
+        }
+
+        // Reveal Animations on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-obs').forEach(el => observer.observe(el));
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                const isOpen = !content.classList.contains('hidden');
+                
+                // Close all others
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.faq-toggle i').forEach(i => {
+                    i.setAttribute('data-lucide', 'plus');
+                });
+
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    icon.setAttribute('data-lucide', 'minus');
+                }
+                lucide.createIcons();
+            });
+        });
+
+        // Mobile Nav Drawer
+        const menuBtn = document.getElementById('menuBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const drawer = document.getElementById('drawer');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            drawer.classList.remove('translate-x-full');
+        });
+
+        const closeDrawer = () => {
+            drawer.classList.add('translate-x-full');
+        };
+
+        closeBtn.addEventListener('click', closeDrawer);
+        mobileLinks.forEach(link => link.addEventListener('click', closeDrawer));
+
+        // Navbar Scroll Styling
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('py-2');
+                nav.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body>
+</html>

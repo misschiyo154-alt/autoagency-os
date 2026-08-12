@@ -1,0 +1,55 @@
+AUTOAGENCYOS / AIRA READY BUILD
+
+1) Put this project at:
+   C:\AutoAgencyOS
+
+2) Create .env from .env.example and fill:
+   TELEGRAM_BOT_TOKEN
+   TELEGRAM_CHAT_ID
+   GEMINI_API_KEY
+   GROQ_API_KEY
+   EMAIL
+   EMAIL_PASSWORD
+
+3) Keep these autonomous settings (change if needed):
+   AUTO_LEADS_ENABLED=true
+   AUTO_LEAD_INTERVAL_MINUTES=60
+   AUTO_LEAD_QUANTITY=5
+   AUTO_LEAD_BUSINESS_TYPES=doctors,dentists,clinics,lawyers,restaurants,salons,gyms,hotels
+   AUTO_LEAD_LOCATION=New York, USA
+
+4) Test Aira:
+   .venv\Scripts\activate
+   python telegram_bot.py
+
+5) Install 24/7 Windows startup:
+   powershell -ExecutionPolicy Bypass -File .\install_aira_startup.ps1
+
+6) Telegram approval:
+   /pending
+   /approve 1
+   /approve 1,3,5
+   /approve all
+   /reject 2
+
+Natural language also works:
+   "pehle aur teesre ko approve kar"
+   "saare approve kar"
+   "5 dentists ke leads lao"
+   "workflow chalu karo"
+   "status bata"
+
+IMPORTANT ARCHITECTURE:
+- Demos are published to the agency Pages site as PREVIEW work before outreach approval.
+- Approval controls outreach/email sending, not the public demo preview.
+- Agency homepage keeps newest 6 demos visible and puts older work behind See more.
+- Client email uses the agency demo URL, never a fake separate domain.
+- Aira auto-restarts after a crash through start_aira.bat + Windows Scheduled Task.
+
+
+AI FIX
+- Aira now tries multiple current Gemini models and saves the exact last AI error to 09-history/last_ai_error.txt.
+- Telegram /aidiag shows the configured models and last error.
+
+STARTUP FIX
+- install_aira_startup.ps1 now uses the full Windows identity and InteractiveToken, avoiding the previous Register-ScheduledTask UserId error.

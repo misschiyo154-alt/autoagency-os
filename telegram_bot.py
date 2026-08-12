@@ -105,7 +105,7 @@ SEND_EMAIL_FILE = (
 )
 
 APPROVAL_FILE = BASE_DIR / "09-history" / "pending_approval.json"
-AGENCY_URL = "https://vickywebagency.pages.dev/"
+AGENCY_URL = os.getenv("AGENCY_URL", "https://fda9a12a.autoagency-os.pages.dev/").rstrip("/") + "/"
 approval_notified_key = None
 
 
@@ -766,6 +766,16 @@ def deterministic_intent(text):
         }
 
     # --------------------------------------------------------
+    # APPROVAL / REJECTION
+    # --------------------------------------------------------
+    if lower.startswith("approve") or lower.startswith("/approve"):
+        nums=[int(x) for x in re.findall(r"\d+", lower)]
+        return {"action":"approve","indexes":nums,"all":("all" in lower or not nums)}
+
+    if lower.startswith("reject") or lower.startswith("/reject"):
+        return {"action":"reject"}
+
+    # --------------------------------------------------------
     # STOP
     # --------------------------------------------------------
 
@@ -982,7 +992,9 @@ Return exactly:
     "action": "...",
     "quantity": null,
     "business_type": null,
-    "location": null
+    "location": null,
+    "indexes": [],
+    "all": false
 }}
 """
 
@@ -1298,20 +1310,9 @@ def workflow_worker():
                         break
 
             try:
-
-                workflow_process.wait(
-                    timeout=30
-                )
-
-            except subprocess.TimeoutExpired:
-
-                try:
-
-                    workflow_process.terminate()
-
-                except Exception:
-
-                    pass
+                workflow_process.wait()
+            except Exception as error:
+                print("Workflow wait error:", error)
 
         else:
 
@@ -1449,6 +1450,9 @@ async def execute_intent(
         "action",
         "chat"
     )
+    if action == "approve":
+        intent["indexes"] = [int(x) for x in (intent.get("indexes") or []) if str(x).isdigit()]
+        intent["all"] = bool(intent.get("all"))
 
     # ========================================================
     # CHAT
@@ -1685,26 +1689,27 @@ async def execute_intent(
     # ========================================================
 
     if action == "approve":
-
         if not APPROVAL_FILE.exists():
-            await update.message.reply_text(
-                "Boss, abhi koi website publish approval pending nahi hai."
-            )
+            await update.message.reply_text("Boss, abhi koi pending approval nahi hai.")
             return
-
         try:
-            data = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
-            if str(data.get("status", "")).upper() != "WAITING_APPROVAL":
+            data=json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
+            if str(data.get("status", "")).upper() not in {"WAITING_APPROVAL","PARTIAL_APPROVED"}:
                 await update.message.reply_text("Boss, abhi active approval request nahi hai.")
                 return
-            data["status"] = "APPROVED"
-            data["approved_at"] = datetime.now().isoformat(timespec="seconds")
-            APPROVAL_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
-            await update.message.reply_text(
-                "✅ Approved Boss.\n\n"
-                "Ab GitHub push + Cloudflare deployment continue hoga.\n"
-                f"Permanent URL: {AGENCY_URL}"
-            )
+            requested=intent.get("indexes") or []
+            if intent.get("all") or not requested:
+                requested=[int(x.get("index")) for x in data.get("items",[]) if x.get("index") is not None]
+            approved=[]
+            for item in data.get("items",[]):
+                idx=int(item.get("index",0))
+                if idx in requested:
+                    item["approval"]="APPROVED"; approved.append(idx)
+            data["status"]="APPROVED" if approved and len(approved)==len(data.get("items",[])) else "PARTIAL_APPROVED"
+            data["approved_indexes"]=approved
+            data["approved_at"]=datetime.now().isoformat(timespec="seconds")
+            APPROVAL_FILE.write_text(json.dumps(data,indent=2,ensure_ascii=False),encoding="utf-8")
+            await update.message.reply_text("✅ Approved: " + ", ".join(map(str,approved)) + "\nAira approved leads ke emails send karegi aur workflow continue karegi.")
         except Exception as error:
             await update.message.reply_text(f"Boss, approval save nahi hua: {error}")
         return
@@ -1724,6 +1729,7 @@ async def execute_intent(
         try:
             data = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
             data["status"] = "REJECTED"
+            for item in data.get("items", []): item["approval"] = "REJECTED"
             data["rejected_at"] = datetime.now().isoformat(timespec="seconds")
             APPROVAL_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
             await update.message.reply_text(
@@ -2128,6 +2134,31 @@ async def greeting_job(
 
 
 # ============================================================
+# AUTONOMOUS 24/7 WORKER
+# ============================================================
+
+async def autonomous_job(context: ContextTypes.DEFAULT_TYPE):
+    if os.getenv("AIRA_AUTONOMOUS", "true").lower() not in {"1", "true", "yes", "on"}:
+        return
+    if workflow_running or APPROVAL_FILE.exists():
+        return
+    # Start the same full workflow Aira uses from Telegram, with safe defaults.
+    start_lead_search(
+        quantity=int(os.getenv("AIRA_AUTO_QUANTITY", "5")),
+        business_type=os.getenv("DEFAULT_BUSINESS_TYPE", "restaurants"),
+        location=os.getenv("DEFAULT_LOCATION", "New York, USA"),
+    )
+    if OWNER_CHAT_ID:
+        try:
+            await context.bot.send_message(
+                chat_id=int(OWNER_CHAT_ID),
+                text="🤖 Aira ne autonomous cycle start kar diya — fresh leads → websites → emails → approval."
+            )
+        except Exception as error:
+            print("Autonomous notification error:", error)
+
+
+# ============================================================
 # DAILY LIMIT MONITOR
 # ============================================================
 
@@ -2145,17 +2176,13 @@ async def monitor_job(
                 key = f"{data.get('created_at')}:{data.get('business_name')}"
                 if key != approval_notified_key:
                     approval_notified_key = key
-                    await context.bot.send_message(
-                        chat_id=int(OWNER_CHAT_ID),
-                        text=(
-                            "🟡 WEBSITE APPROVAL REQUIRED\n\n"
-                            f"Business: {data.get('business_name', 'Unknown')}\n"
-                            f"Preview: {data.get('demo_url', AGENCY_URL)}\n"
-                            f"Agency: {AGENCY_URL}\n\n"
-                            "Reply /approve to publish\n"
-                            "Reply /reject to cancel"
-                        )
-                    )
+                    items=data.get("items", [])
+                    lines=["🟡 WEBSITE / EMAIL APPROVAL REQUIRED", ""]
+                    for item in items:
+                        lines.append(f"{item.get('index')}. {item.get('business_name','Unknown')} — {item.get('demo_url',AGENCY_URL)}")
+                    lines += ["", f"Agency: {AGENCY_URL}", "", "/approve all  → approve every lead", "/approve 1 3 5 → approve selected leads", "/reject → cancel this batch"]
+                    text="\n".join(lines)
+                    await context.bot.send_message(chat_id=int(OWNER_CHAT_ID), text=text)
         except Exception as error:
             print("Approval monitor error:", error)
 
@@ -2317,6 +2344,12 @@ def main():
             monitor_job,
             interval=5,
             first=5
+        )
+
+        app.job_queue.run_repeating(
+            autonomous_job,
+            interval=3600,
+            first=30
         )
 
     print(

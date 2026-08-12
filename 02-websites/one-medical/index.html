@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Medical | Modern Healthcare in New York</title>
+    <meta name="description" content="Premium, personalized medical care in the heart of New York. Experience healthcare designed around you.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'medical-ivory': '#FAF9F6',
+                        'medical-teal': '#1B4332',
+                        'medical-slate': '#2D3436',
+                        'accent-gold': '#C5A059'
+                    },
+                    fontFamily: {
+                        display: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .texture-overlay {
+            background-image: url("https://www.transparenttextures.com/patterns/fine-dust.png");
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .cursor-sheen {
+            background: radial-gradient(circle 400px at var(--x) var(--y), rgba(255,255,255,0.15), transparent 80%);
+            pointer-events: none;
+        }
+
+        .reveal-element {
+            opacity: 0;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(-5deg);
+            color: #C5A059;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-tilt { transform: none !important; }
+            .reveal-element { opacity: 1 !important; transform: none !important; animation: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-medical-ivory text-medical-slate font-sans selection:bg-medical-teal selection:text-white antialiased overflow-x-hidden">
+    <div class="fixed inset-0 texture-overlay z-50"></div>
+    <div id="sheen" class="fixed inset-0 z-40 transition-opacity duration-300 opacity-0 cursor-sheen"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[60] px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-panel px-6 py-3 rounded-full shadow-sm">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-medical-teal rounded-full flex items-center justify-center text-white transition-transform duration-500 group-hover:rotate-[360deg]">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                </div>
+                <span class="font-display text-2xl font-semibold tracking-tight">One Medical</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+                <a href="#services" class="hover:text-accent-gold transition-colors">Services</a>
+                <a href="#about" class="hover:text-accent-gold transition-colors">About</a>
+                <a href="#experience" class="hover:text-accent-gold transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-accent-gold transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden sm:block px-6 py-2 bg-medical-teal text-white rounded-full text-sm font-medium hover:bg-medical-slate transition-all duration-300 transform hover:-translate-y-0.5">
+                    Request Appointment
+                </a>
+                <button id="mobile-menu-btn" class="md:hidden p-2">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-[70] translate-x-full transition-transform duration-500 ease-in-out">
+        <div class="absolute inset-0 bg-medical-slate/40 backdrop-blur-sm" id="drawer-overlay"></div>
+        <div class="absolute right-0 top-0 h-full w-4/5 max-w-sm bg-medical-ivory p-8 flex flex-col">
+            <button id="drawer-close" class="self-end p-2 mb-12">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div class="flex flex-col gap-8 text-2xl font-display">
+                <a href="#services" class="drawer-link">Services</a>
+                <a href="#about" class="drawer-link">About</a>
+                <a href="#experience" class="drawer-link">Experience</a>
+                <a href="#contact" class="drawer-link">Contact</a>
+            </div>
+            <div class="mt-auto">
+                <a href="#contact" class="block w-full py-4 bg-medical-teal text-white text-center rounded-xl font-medium">
+                    Request Appointment
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center pt-24 pb-12 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 z-10">
+                    <div class="reveal-element animate-fade-up stagger-1 mb-6">
+                        <span class="inline-block px-4 py-1.5 rounded-full bg-medical-teal/5 border border-medical-teal/10 text-medical-teal text-xs font-semibold tracking-widest uppercase">
+                            New York Medical Practice
+                        </span>
+                    </div>
+                    <h1 class="reveal-element animate-fade-up stagger-2 font-display text-6xl md:text-8xl leading-[1.1] mb-8 tracking-tight">
+                        Healthcare designed <br/><span class="italic text-accent-gold">around your life.</span>
+                    </h1>
+                    <p class="reveal-element animate-fade-up stagger-3 text-lg md:text-xl text-medical-slate/70 max-w-xl mb-10 leading-relaxed">
+                        Modern medicine meets personalized attention. We prioritize time, environment, and human connection to redefine your health journey in New York.
+                    </p>
+                    <div class="reveal-element animate-fade-up stagger-4 flex flex-wrap gap-4">
+                        <a href="#contact" class="px-8 py-4 bg-medical-teal text-white rounded-xl font-medium hover:bg-medical-slate transition-all duration-300 flex items-center gap-2">
+                            Meet Our Doctors <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#services" class="px-8 py-4 bg-white border border-medical-slate/10 rounded-xl font-medium hover:border-medical-teal transition-all duration-300">
+                            Our Services
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative perspective-1000 hidden lg:block">
+                    <div id="hero-card" class="hero-tilt relative z-10 w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl transition-transform duration-200 ease-out">
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1200" alt="Modern medical office" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-medical-teal/40 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8 glass-panel p-6 rounded-2xl">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-accent-gold/20 flex items-center justify-center">
+                                    <i data-lucide="map-pin" class="text-accent-gold w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-widest font-bold text-medical-teal">Location</p>
+                                    <p class="font-display text-xl text-medical-slate">New York, USA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-12 -right-12 w-64 h-64 bg-accent-gold/10 rounded-full blur-3xl animate-pulse"></div>
+                    <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-medical-teal/5 rounded-full blur-2xl"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-32 px-6 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                    <div class="max-w-2xl">
+                        <h2 class="font-display text-5xl md:text-6xl mb-6">Comprehensive Care</h2>
+                        <p class="text-lg text-medical-slate/70">Our practice offers a range of medical services tailored to the unique pace of New York life.</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-display text-8xl text-medical-teal/5 font-bold italic">01</span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="service-card group p-10 rounded-3xl border border-medical-slate/5 bg-medical-ivory/30 hover:bg-white hover:shadow-xl transition-all duration-500">
+                        <div class="service-icon w-14 h-14 bg-medical-teal rounded-2xl flex items-center justify-center text-white mb-8 transition-all duration-500">
+                            <i data-lucide="heart-pulse" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-display text-3xl mb-4">Primary Care</h3>
+                        <p class="text-medical-slate/70 leading-relaxed mb-6">Comprehensive wellness exams and chronic disease management with a focus on long-term vitality.</p>
+                        <ul class="space-y-3 text-sm font-medium">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-gold"></i> Annual Physicals</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-gold"></i> Health Screenings</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="service-card group p-10 rounded-3xl border border-medical-slate/5 bg-medical-ivory/30 hover:bg-white hover:shadow-xl transition-all duration-500">
+                        <div class="service-icon w-14 h-14 bg-medical-teal rounded-2xl flex items-center justify-center text-white mb-8 transition-all duration-500">
+                            <i data-lucide="zap" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-display text-3xl mb-4">Urgent Concerns</h3>
+                        <p class="text-medical-slate/70 leading-relaxed mb-6">Same-day appointments for acute illnesses and injuries, ensuring you get back to your life quickly.</p>
+                        <ul class="space-y-3 text-sm font-medium">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-gold"></i> Rapid Diagnostics</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-gold"></i> Acute Treatment</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="service-card group p-10 rounded-3xl border border-medical-slate/5 bg-medical-ivory/30 hover:bg-white hover:shadow-xl transition-all duration-500">
+                        <div class="service-icon w-14 h-14 bg-medical-teal rounded-2xl flex items-center justify-center text-white mb-8 transition-all duration-500">
+                            <i data-lucide="brain-circuit" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-display text-3xl mb-4">Mental Health</h3>
+                        <p class="text-medical-slate/70 leading-relaxed mb-6">Integrated behavioral health support to manage stress, anxiety, and overall emotional well-being.</p>
+                        <ul class="space-y-3 text-sm font-medium">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-gold"></i> Counseling</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-accent-gold"></i> Stress Management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-32 px-6 relative">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+                <div class="order-2 lg:order-1 relative">
+                    <div class="relative rounded-3xl overflow-hidden aspect-square shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000" alt="Doctor in NYC" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 glass-panel p-8 rounded-3xl max-w-xs hidden md:block">
+                        <p class="font-display text-2xl mb-2 italic">"Patient-Centered Care"</p>
+                        <p class="text-sm text-medical-slate/60">Our philosophy is simple: listen first, treat second. We provide the time and space you need.</p>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 class="font-display text-5xl md:text-6xl mb-8">One Medical is <br/><span class="text-medical-teal">Redefining the Visit.</span></h2>
+                    <p class="text-lg text-medical-slate/70 mb-8 leading-relaxed">
+                        Located in New York, we recognized that the traditional medical experience was broken. Long waits, rushed appointments, and sterile environments don't promote healing.
+                    </p>
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-6 h-6 rounded-full bg-medical-teal/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-medical-teal"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-medical-slate">Appointments that start on time</h4>
+                                <p class="text-medical-slate/60 text-sm">We value your time as much as your health.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 w-6 h-6 rounded-full bg-medical-teal/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="coffee" class="w-3.5 h-3.5 text-medical-teal"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-medical-slate">Calming office environments</h4>
+                                <p class="text-medical-slate/60 text-sm">Experience tranquility in our boutique medical spaces.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#contact" class="inline-flex items-center gap-3 font-semibold text-medical-teal border-b-2 border-medical-teal/20 pb-1 hover:border-medical-teal transition-all">
+                        Learn more about our approach <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Experience (Interactive) -->
+        <section id="experience" class="py-32 px-6 bg-medical-teal text-medical-ivory overflow-hidden relative">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent"></div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-20">
+                    <h2 class="font-display text-5xl md:text-7xl mb-6">The Signature Experience</h2>
+                    <p class="text-medical-ivory/60 max-w-2xl mx-auto">A seamless blend of high-touch service and high-tech convenience.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="p-8 rounded-3xl border border-white/10 hover:bg-white/5 transition-colors cursor-default">
+                        <i data-lucide="calendar-days" class="w-10 h-10 mb-6 text-accent-gold"></i>
+                        <h4 class="text-xl font-display mb-3">Seamless Scheduling</h4>
+                        <p class="text-sm text-white/50">Book online or via our dedicated portal with ease.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl border border-white/10 hover:bg-white/5 transition-colors cursor-default">
+                        <i data-lucide="message-square" class="w-10 h-10 mb-6 text-accent-gold"></i>
+                        <h4 class="text-xl font-display mb-3">Direct Messaging</h4>
+                        <p class="text-sm text-white/50">Secure communication with your care team for peace of mind.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl border border-white/10 hover:bg-white/5 transition-colors cursor-default">
+                        <i data-lucide="pill" class="w-10 h-10 mb-6 text-accent-gold"></i>
+                        <h4 class="text-xl font-display mb-3">Quick Rx Renewals</h4>
+                        <p class="text-sm text-white/50">Streamlined prescription management at your fingertips.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl border border-white/10 hover:bg-white/5 transition-colors cursor-default">
+                        <i data-lucide="video" class="w-10 h-10 mb-6 text-accent-gold"></i>
+                        <h4 class="text-xl font-display mb-3">Virtual Options</h4>
+                        <p class="text-sm text-white/50">Access care from home when a visit isn't necessary.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Section -->
+        <section class="py-24 px-6 border-b border-medical-slate/5">
+            <div class="max-w-7xl mx-auto text-center">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-medical-teal/40 mb-12 italic">Recognized for Excellence in Patient Experience</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+                    <div class="flex justify-center"><i data-lucide="shield-check" class="w-12 h-12"></i></div>
+                    <div class="flex justify-center"><i data-lucide="activity" class="w-12 h-12"></i></div>
+                    <div class="flex justify-center"><i data-lucide="medal" class="w-12 h-12"></i></div>
+                    <div class="flex justify-center"><i data-lucide="heart" class="w-12 h-12"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-32 px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="w-16 h-1 bg-accent-gold/20 mx-auto mb-12"></div>
+                <h2 class="font-display text-4xl italic text-medical-slate/40">
+                    Customer Reviews Coming Soon
+                </h2>
+                <div class="w-16 h-1 bg-accent-gold/20 mx-auto mt-12"></div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-32 px-6 bg-medical-slate text-medical-ivory">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-display text-5xl mb-16 text-center">Common Inquiries</h2>
+                <div class="space-y-4">
+                    <details class="group border-b border-white/10 pb-6">
+                        <summary class="list-none flex justify-between items-center cursor-pointer font-display text-2xl hover:text-accent-gold transition-colors">
+                            What should I bring to my first visit?
+                            <i data-lucide="plus" class="w-6 h-6 transition-transform group-open:rotate-45"></i>
+                        </summary>
+                        <div class="mt-6 text-white/60 leading-relaxed">
+                            Please bring a valid photo ID, your current insurance information, and a list of any medications or supplements you are currently taking. Arriving 10 minutes early allows for a smooth check-in process.
+                        </div>
+                    </details>
+                    <details class="group border-b border-white/10 pb-6">
+                        <summary class="list-none flex justify-between items-center cursor-pointer font-display text-2xl hover:text-accent-gold transition-colors">
+                            Do you accept major insurance providers?
+                            <i data-lucide="plus" class="w-6 h-6 transition-transform group-open:rotate-45"></i>
+                        </summary>
+                        <div class="mt-6 text-white/60 leading-relaxed">
+                            We work with a broad range of major insurance networks in New York. Please contact our administrative office to confirm your specific plan's coverage.
+                        </div>
+                    </details>
+                    <details class="group border-b border-white/10 pb-6">
+                        <summary class="list-none flex justify-between items-center cursor-pointer font-display text-2xl hover:text-accent-gold transition-colors">
+                            How do I access my medical records?
+                            <i data-lucide="plus" class="w-6 h-6 transition-transform group-open:rotate-45"></i>
+                        </summary>
+                        <div class="mt-6 text-white/60 leading-relaxed">
+                            Patients can securely access their records, lab results, and visit summaries through our patient portal at any time.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-32 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-20">
+                    <div>
+                        <h2 class="font-display text-6xl mb-8">Let's prioritize <br/><span class="italic">your health.</span></h2>
+                        <div class="space-y-8 mt-12">
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-full bg-medical-teal flex items-center justify-center text-white">
+                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-widest text-medical-teal">Our Practice</p>
+                                    <p class="text-lg">[Business Address], New York</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-full bg-medical-teal flex items-center justify-center text-white">
+                                    <i data-lucide="phone" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-widest text-medical-teal">Connect</p>
+                                    <p class="text-lg">[Phone Number]</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-full bg-medical-teal flex items-center justify-center text-white">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-widest text-medical-teal">Inquiries</p>
+                                    <p class="text-lg">[Email Address]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-10 rounded-3xl">
+                        <form onsubmit="return false;" class="space-y-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold text-medical-slate/60">First Name</label>
+                                    <input type="text" class="w-full bg-white/50 border-b border-medical-slate/20 py-3 focus:outline-none focus:border-medical-teal transition-colors" placeholder="Jane">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold text-medical-slate/60">Last Name</label>
+                                    <input type="text" class="w-full bg-white/50 border-b border-medical-slate/20 py-3 focus:outline-none focus:border-medical-teal transition-colors" placeholder="Doe">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-medical-slate/60">Email Address</label>
+                                <input type="email" class="w-full bg-white/50 border-b border-medical-slate/20 py-3 focus:outline-none focus:border-medical-teal transition-colors" placeholder="jane@example.com">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-medical-slate/60">Preferred Service</label>
+                                <select class="w-full bg-white/50 border-b border-medical-slate/20 py-3 focus:outline-none focus:border-medical-teal transition-colors appearance-none">
+                                    <option>Primary Care</option>
+                                    <option>Urgent Visit</option>
+                                    <option>Mental Health Consultation</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="pt-6">
+                                <button type="submit" class="w-full py-4 bg-medical-teal text-white rounded-xl font-medium hover:bg-medical-slate transition-all shadow-lg hover:shadow-xl active:scale-[0.98]">
+                                    Request Consultation
+                                </button>
+                                <p class="text-center text-[10px] mt-4 text-medical-slate/40 italic">Demo form only — no data will be sent.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-24 px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-display text-4xl md:text-6xl mb-12">Ready for a better <span class="text-accent-gold italic">healthcare experience?</span></h2>
+                <a href="#contact" class="px-12 py-5 bg-medical-teal text-white rounded-full text-lg font-medium hover:bg-medical-slate transition-all inline-block">
+                    Join One Medical New York
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-medical-slate/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-medical-teal rounded-full flex items-center justify-center text-white">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="font-display text-xl font-semibold">One Medical</span>
+            </div>
+            
+            <div class="flex gap-8 text-sm text-medical-slate/60">
+                <p>&copy; 2024 One Medical New York</p>
+                <a href="#" class="hover:text-medical-teal transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-medical-teal transition-colors">Terms of Care</a>
+            </div>
+
+            <div class="flex gap-6">
+                <a href="#" class="w-10 h-10 rounded-full border border-medical-slate/10 flex items-center justify-center hover:bg-medical-teal hover:text-white transition-all">
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full border border-medical-slate/10 flex items-center justify-center hover:bg-medical-teal hover:text-white transition-all">
+                    <i data-lucide="linkedin" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const close = document.getElementById('drawer-close');
+        const overlay = document.getElementById('drawer-overlay');
+        const drawer = document.getElementById('mobile-drawer');
+        const links = document.querySelectorAll('.drawer-link');
+
+        const toggleMenu = (show) => {
+            drawer.style.transform = show ? 'translateX(0)' : 'translateX(100%)';
+            document.body.style.overflow = show ? 'hidden' : 'auto';
+        };
+
+        btn.addEventListener('click', () => toggleMenu(true));
+        close.addEventListener('click', () => toggleMenu(false));
+        overlay.addEventListener('click', () => toggleMenu(false));
+        links.forEach(l => l.addEventListener('click', () => toggleMenu(false)));
+
+        // Reveal Animations on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-up');
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+
+        // Hero Parallax & Cursor Sheen
+        const heroCard = document.getElementById('hero-card');
+        const sheen = document.getElementById('sheen');
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Cursor Sheen Update
+            sheen.style.setProperty('--x', `${mouseX}px`);
+            sheen.style.setProperty('--y', `${mouseY}px`);
+            sheen.style.opacity = '1';
+        });
+
+        function updateParallax() {
+            if (window.innerWidth > 1024) { // Only on desktop
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                
+                currentX += (mouseX - centerX - currentX) * 0.05;
+                currentY += (mouseY - centerY - currentY) * 0.05;
+
+                const rotateX = -currentY * 0.01;
+                const rotateY = currentX * 0.01;
+
+                if (heroCard) {
+                    heroCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${rotateX * 2}px)`;
+                }
+            }
+            requestAnimationFrame(updateParallax);
+        }
+
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            updateParallax();
+        }
+
+        // Hide sheen when mouse leaves
+        document.addEventListener('mouseleave', () => {
+            sheen.style.opacity = '0';
+        });
+    </script>
+</body>
+</html>

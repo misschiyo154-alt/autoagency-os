@@ -1,5 +1,37 @@
 [
   {
+    "business_name": "EmèlleMD",
+    "business_type": "doctor",
+    "location": "New York, USA",
+    "slug": "em-llemd",
+    "url": "/em-llemd/",
+    "created_at": "2026-08-12T15:03:26"
+  },
+  {
+    "business_name": "One Medical",
+    "business_type": "doctor",
+    "location": "New York, USA",
+    "slug": "one-medical",
+    "url": "/one-medical/",
+    "created_at": "2026-08-12T15:01:57"
+  },
+  {
+    "business_name": "Robert Lechtenberg, M.D.",
+    "business_type": "doctor",
+    "location": "New York, USA",
+    "slug": "robert-lechtenberg-m-d",
+    "url": "/robert-lechtenberg-m-d/",
+    "created_at": "2026-08-12T15:01:15"
+  },
+  {
+    "business_name": "Marie-France Conde Pediatrics",
+    "business_type": "doctor",
+    "location": "New York, USA",
+    "slug": "marie-france-conde-pediatrics",
+    "url": "/marie-france-conde-pediatrics/",
+    "created_at": "2026-08-12T15:00:37"
+  },
+  {
     "business_name": "Lenox Health Greenwich Village",
     "business_type": "hospital",
     "location": "New York, USA",

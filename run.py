@@ -7,6 +7,7 @@ import time
 import argparse
 import subprocess
 from pathlib import Path
+from datetime import datetime
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -24,231 +25,257 @@ GIT_PUSHER = BASE_DIR / "08-scripts" / "git_push.py"
 REDIRECT_UPDATER = BASE_DIR / "08-scripts" / "update_redirects.py"
 EMAIL_GENERATOR = BASE_DIR / "04-emails" / "generate_email.py"
 APPROVAL_FILE = BASE_DIR / "09-history" / "pending_approval.json"
-AGENCY_URL = "https://vickywebagency.pages.dev/"
+AGENCY_URL = os.getenv("AGENCY_URL", "https://fda9a12a.autoagency-os.pages.dev/").rstrip("/") + "/"
 
-parser = argparse.ArgumentParser(description="AutoAgencyOS Full Pipeline")
+parser = argparse.ArgumentParser(description="AutoAgencyOS full multi-lead pipeline")
 parser.add_argument("--quantity", type=int, default=5)
 parser.add_argument("--business-type", type=str, default="businesses")
 parser.add_argument("--location", type=str, default="")
 parser.add_argument("--generate-website", action="store_true")
+parser.add_argument("--generate-email", action="store_true")
 parser.add_argument("--git-push", action="store_true")
 parser.add_argument("--deploy", action="store_true")
-parser.add_argument("--generate-email", action="store_true")
-parser.add_argument("--approval-required", action="store_true", help="Wait for Telegram /approve before publish")
-parser.add_argument("--no-approval", action="store_true", help="Explicitly bypass approval for local testing")
+parser.add_argument("--approval-required", action="store_true")
+parser.add_argument("--no-approval", action="store_true")
 parser.add_argument("--approval-timeout", type=int, default=1800)
 args = parser.parse_args()
 
-quantity = max(1, min(args.quantity, 500))
-business_type = (args.business_type or "businesses").strip()
-location = (args.location or "").strip()
-
-# Production publishing requires approval unless explicitly bypassed.
-approval_required = (args.approval_required or (args.git_push or args.deploy)) and not args.no_approval
+quantity = max(1, min(args.quantity, 50))
+business_type = (args.business_type or os.getenv("DEFAULT_BUSINESS_TYPE", "restaurants")).strip()
+location = (args.location or os.getenv("DEFAULT_LOCATION", "New York, USA")).strip()
+approval_required = args.approval_required and not args.no_approval
 
 
 def log(message=""):
     print(str(message), flush=True)
 
 
-def run_script(script_path, input_text=None, extra_args=None, timeout=1800):
-    script_path = Path(script_path)
-    if not script_path.exists():
-        log(f"[ERROR] Script not found: {script_path}")
-        return False, ""
-    command = [PYTHON, str(script_path)]
-    if extra_args:
-        command.extend(str(x) for x in extra_args)
-    log("\n" + "=" * 70)
-    log(f"Running: {script_path.name}")
-    log("=" * 70)
-    env = os.environ.copy()
-    env["PYTHONIOENCODING"] = "utf-8"
-    env["PYTHONUTF8"] = "1"
-    try:
-        process = subprocess.run(
-            command, cwd=str(BASE_DIR), input=input_text, text=True,
-            encoding="utf-8", errors="replace", stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT, env=env, timeout=timeout
-        )
-        output = process.stdout or ""
-        if output:
-            for line in output.splitlines():
-                log(line)
-        if process.returncode != 0:
-            log(f"[ERROR] {script_path.name} exited with code {process.returncode}")
-            return False, output
-        log(f"[OK] {script_path.name} completed.")
-        return True, output
-    except subprocess.TimeoutExpired:
-        log(f"[ERROR] {script_path.name} timed out.")
-        return False, ""
-    except KeyboardInterrupt:
-        log("[STOPPED] Process cancelled by user.")
-        return False, ""
-    except Exception as error:
-        log(f"[ERROR] Could not execute {script_path.name}: {error}")
-        return False, ""
+def slugify(name):
+    slug = (name or "").lower().strip().replace("&", "and")
+    slug = re.sub(r"[^a-z0-9]+", "-", slug)
+    return slug.strip("-")
 
 
 def read_leads():
     if not LEADS_FILE.exists():
         return []
     try:
-        with open(LEADS_FILE, "r", newline="", encoding="utf-8-sig") as f:
+        with open(LEADS_FILE, "r", newline="", encoding="utf-8") as f:
             return list(csv.DictReader(f))
-    except Exception as error:
-        log(f"[ERROR] Could not read leads.csv: {error}")
+    except Exception as exc:
+        log(f"[ERROR] Could not read leads.csv: {exc}")
         return []
 
 
-def slugify(name):
-    slug = (name or "").lower().strip().replace("&", "and")
-    return re.sub(r"[^a-z0-9]+", "-", slug).strip("-")
+def write_leads(rows):
+    fields = [
+        "Business Name", "Business Type", "Location", "Email",
+        "Website", "Phone", "OSM URL", "Demo URL", "Status"
+    ]
+    existing = set()
+    for row in rows:
+        existing.update(row.keys())
+    fields = [x for x in fields if x in existing or x in rows[0]] if rows else fields
+    with open(LEADS_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
 
 
-def write_pending_approval(lead, demo_url):
-    APPROVAL_FILE.parent.mkdir(parents=True, exist_ok=True)
+def run_script(script_path, extra_args=None, timeout=1800):
+    script_path = Path(script_path)
+    if not script_path.exists():
+        log(f"[ERROR] Script not found: {script_path}")
+        return False, ""
+    command = [PYTHON, str(script_path)] + [str(x) for x in (extra_args or [])]
+    log("\n" + "=" * 72)
+    log("Running: " + " ".join(command))
+    log("=" * 72)
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
+    try:
+        result = subprocess.run(
+            command,
+            cwd=str(BASE_DIR),
+            text=True,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=timeout,
+            env=env,
+        )
+        output = (result.stdout or "") + (result.stderr or "")
+        if output:
+            log(output[-12000:])
+        return result.returncode == 0, output
+    except subprocess.TimeoutExpired:
+        log("[ERROR] Process timed out.")
+        return False, "timeout"
+    except Exception as exc:
+        log(f"[ERROR] Process failed: {exc}")
+        return False, str(exc)
+
+
+def write_pending_approval(items):
     payload = {
         "status": "WAITING_APPROVAL",
-        "created_at": time.time(),
-        "business_name": lead.get("Business Name", ""),
-        "business_type": lead.get("Business Type", business_type),
-        "location": lead.get("Location", location),
-        "demo_url": demo_url or AGENCY_URL,
+        "created_at": datetime.now().isoformat(timespec="seconds"),
         "agency_url": AGENCY_URL,
+        "items": items,
     }
-    APPROVAL_FILE.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    APPROVAL_FILE.parent.mkdir(parents=True, exist_ok=True)
+    APPROVAL_FILE.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     return payload
 
 
 def wait_for_approval(payload):
-    log("\n" + "=" * 70)
-    log("APPROVAL REQUIRED BEFORE PRODUCTION PUBLISH")
-    log("=" * 70)
-    log(f"Business : {payload['business_name']}")
-    log(f"Agency   : {AGENCY_URL}")
-    log("Telegram: /approve to publish, /reject to cancel")
-    log(f"Timeout : {args.approval_timeout // 60} minutes")
-    log("Waiting for approval...")
-    deadline = time.time() + max(60, args.approval_timeout)
+    deadline = time.time() + args.approval_timeout
+    log("\n🟡 Waiting for Telegram approval...")
+    log("Use /approve all or /approve 1 3 5, or /reject.")
     while time.time() < deadline:
         try:
-            if APPROVAL_FILE.exists():
-                current = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
-                status = str(current.get("status", "")).upper()
-                if status == "APPROVED":
-                    log("[APPROVAL] Approved by Boss.")
-                    return True
-                if status == "REJECTED":
-                    log("[APPROVAL] Rejected by Boss.")
-                    return False
+            current = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
         except Exception:
-            pass
+            time.sleep(2)
+            continue
+        status = str(current.get("status", "")).upper()
+        if status in {"APPROVED", "REJECTED"}:
+            return status == "APPROVED"
+        if status == "PARTIAL_APPROVED":
+            # Selected items can be sent by Aira. Continue so deployment can happen once.
+            return True
         time.sleep(2)
-    log("[APPROVAL] Timed out. Nothing was published.")
+    log("[ERROR] Approval timeout reached.")
     return False
 
 
-log("\n" + "=" * 70)
-log("AUTOAGENCYOS FULL PIPELINE")
-log("=" * 70)
+log("=" * 72)
+log("AUTOAGENCYOS — FULL MULTI-LEAD PIPELINE")
 log(f"Quantity      : {quantity}")
-log(f"Business Type : {business_type}")
+log(f"Business type : {business_type}")
 log(f"Location      : {location or 'default'}")
 log(f"Agency URL    : {AGENCY_URL}")
-log(f"Approval      : {'REQUIRED' if approval_required else 'BYPASSED'}")
-log("=" * 70)
+log("=" * 72)
 
 # 1. SEARCH
-log("\n[1/6] LEAD SEARCH")
-scrape_ok, _ = run_script(SCRAPER, input_text=f"{business_type}\n{location}\n")
-if not scrape_ok:
+log("\n[1/6] FIND FRESH LEADS")
+ok, _ = run_script(SCRAPER, ["--quantity", quantity, "--business-type", business_type, "--location", location])
+if not ok:
     sys.exit(1)
-rows = read_leads()
-if not rows:
-    log("[ERROR] No leads found. Pipeline stopped before enrichment.")
-    sys.exit(1)
-
-# Respect requested quantity.
-fields = list(rows[0].keys())
-rows = rows[:quantity]
-with open(LEADS_FILE, "w", newline="", encoding="utf-8") as f:
-    writer = csv.DictWriter(f, fieldnames=fields)
-    writer.writeheader(); writer.writerows(rows)
-log(f"[OK] {len(rows)} leads selected.")
 
 # 2. ENRICH
-log("\n[2/6] LEAD ENRICHMENT")
-enrich_ok, _ = run_script(ENRICHER)
-if not enrich_ok:
+log("\n[2/6] ENRICH LEADS")
+ok, _ = run_script(ENRICHER)
+if not ok:
     sys.exit(1)
-leads = read_leads()
+
+leads = read_leads()[:quantity]
 if not leads:
-    log("[ERROR] No leads available after enrichment.")
-    sys.exit(1)
-lead = leads[0]
-lead_name = (lead.get("Business Name") or lead.get("Name") or "").strip()
-lead_type = (lead.get("Business Type") or business_type).strip()
-lead_location = (lead.get("Location") or location).strip()
-if not lead_name:
-    log("[ERROR] First lead has no business name.")
+    log("[ERROR] No leads found.")
     sys.exit(1)
 
-# 3. WEBSITE
-log("\n[3/6] WEBSITE GENERATION")
-if args.generate_website:
-    website_ok, website_output = run_script(WEBSITE_GENERATOR, extra_args=[lead_name, lead_type, lead_location])
-    if not website_ok:
-        sys.exit(1)
-else:
-    log("[SKIP] Website generation disabled.")
+# 3. GENERATE ALL WEBSITES + EMAILS
+log("\n[3/6] GENERATE WEBSITE + EMAIL FOR EVERY LEAD")
+items = []
+for index, lead in enumerate(leads, 1):
+    name = (lead.get("Business Name") or "").strip()
+    btype = (lead.get("Business Type") or business_type).strip()
+    loc = (lead.get("Location") or location).strip()
+    if not name:
+        continue
+    slug = slugify(name)
+    demo_url = f"{AGENCY_URL}{slug}/"
+    lead["Demo URL"] = demo_url
+    lead["Status"] = "GENERATING"
+    log(f"\n[{index}/{len(leads)}] {name}")
+    if args.generate_website:
+        ok, _ = run_script(WEBSITE_GENERATOR, [name, btype, loc])
+        if not ok:
+            lead["Status"] = "WEBSITE_FAILED"
+            continue
+    if args.generate_email:
+        ok, _ = run_script(EMAIL_GENERATOR, [name, btype, loc, AGENCY_URL])
+        if not ok:
+            lead["Status"] = "EMAIL_FAILED"
+            continue
+    lead["Status"] = "WAITING_APPROVAL" if approval_required else "EMAIL_READY"
+    items.append({
+        "index": index,
+        "business_name": name,
+        "business_type": btype,
+        "location": loc,
+        "email": (lead.get("Email") or "").strip(),
+        "slug": slug,
+        "demo_url": demo_url,
+        "email_file": f"04-emails/generated/{slug}.txt",
+        "approval": "PENDING" if approval_required else "APPROVED",
+    })
 
-# 4. EMAIL DRAFT (always uses permanent agency URL)
-log("\n[4/6] EMAIL GENERATION")
-if args.generate_email:
-    email_ok, _ = run_script(EMAIL_GENERATOR, extra_args=[lead_name, lead_type, lead_location, AGENCY_URL])
-    if not email_ok:
-        log("[WARNING] Email generation failed; continuing.")
-else:
-    log("[SKIP] Email generation disabled.")
+write_leads(leads)
+if not items:
+    log("[ERROR] No lead completed website/email generation.")
+    sys.exit(1)
 
-# 5. APPROVAL + DEPLOY CONFIG
-if approval_required and (args.git_push or args.deploy):
-    payload = write_pending_approval(lead, AGENCY_URL)
+# 4. APPROVAL
+if approval_required:
+    payload = write_pending_approval(items)
     if not wait_for_approval(payload):
-        try: APPROVAL_FILE.unlink(missing_ok=True)
-        except Exception: pass
-        log("Pipeline stopped safely. No GitHub/Cloudflare publish occurred.")
+        for lead in leads:
+            if lead.get("Status") == "WAITING_APPROVAL":
+                lead["Status"] = "REJECTED"
+        write_leads(leads)
+        log("No approved leads. Nothing was published/emailed.")
         sys.exit(0)
+    try:
+        payload = json.loads(APPROVAL_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        payload = payload
 
-log("\n[5/6] DEPLOY CONFIG")
+# 5. SEND ONLY APPROVED OUTREACH
+approved_indexes = []
+if approval_required:
+    approved_indexes = [int(item.get("index")) for item in payload.get("items", []) if str(item.get("approval", "")).upper() == "APPROVED"]
+else:
+    approved_indexes = [int(item.get("index")) for item in items]
+log(f"\n[5/7] SEND APPROVED EMAILS: {approved_indexes or 'none'}")
+for idx in approved_indexes:
+    ok, _ = run_script(BASE_DIR / "04-emails" / "send_email.py", ["--index", idx])
+    if not ok:
+        log(f"[WARNING] Email send failed for lead #{idx}; continuing.")
+
+# 6. DEPLOY WEBSITE DEMOS
+log("\n[6/7] PREPARE AGENCY DEMOS")
 if args.deploy:
-    deploy_ok, _ = run_script(REDIRECT_UPDATER)
-    if not deploy_ok:
+    ok, _ = run_script(REDIRECT_UPDATER)
+    if not ok:
         sys.exit(1)
 else:
     log("[SKIP] Deploy config disabled.")
 
-# 6. GITHUB PUSH; Cloudflare Pages should auto-deploy from this push.
-log("\n[6/6] GITHUB PUSH / CLOUDFLARE TRIGGER")
+# 7. PUSH EVERYTHING GENERATED — website demos are previews; approval controls outreach.
+log("\n[7/7] GITHUB PUSH / CLOUDFLARE")
 if args.git_push:
-    git_ok, _ = run_script(GIT_PUSHER)
-    if not git_ok:
+    ok, _ = run_script(GIT_PUSHER)
+    if not ok:
         sys.exit(1)
 else:
     log("[SKIP] Git push disabled.")
 
-try: APPROVAL_FILE.unlink(missing_ok=True)
-except Exception: pass
+# Mark approval file as complete while retaining item choices for Aira/email sender.
+try:
+    final = json.loads(APPROVAL_FILE.read_text(encoding="utf-8")) if APPROVAL_FILE.exists() else {}
+    final["status"] = "READY_TO_SEND"
+    final["completed_at"] = datetime.now().isoformat(timespec="seconds")
+    APPROVAL_FILE.write_text(json.dumps(final, indent=2, ensure_ascii=False), encoding="utf-8")
+except Exception:
+    pass
 
-log("\n" + "=" * 70)
-log("AUTOAGENCYOS PIPELINE FINISHED")
-log("=" * 70)
-log(f"Lead        : {lead_name}")
-log(f"Agency URL  : {AGENCY_URL}")
-log(f"Demo route  : {AGENCY_URL}{slugify(lead_name)}/")
-log("Old demos   : PRESERVED")
-log("Latest demo : UPDATED")
-log("Cloudflare  : Git push triggered deployment if Pages is connected to this repo")
-log("=" * 70)
+log("\n" + "=" * 72)
+log("AUTOAGENCYOS PIPELINE READY")
+log(f"Generated demos : {len(items)}")
+log(f"Agency URL      : {AGENCY_URL}")
+log("Approval        : Telegram controlled")
+log("Old demos       : preserved")
+log("New demos       : added to agency portfolio")
+log("=" * 72)

@@ -1,4 +1,4 @@
 @echo off
 cd /d C:\AutoAgencyOS
-call .venv\Scripts\activate.bat
-python telegram_bot.py
+if not exist ".venv\Scripts\python.exe" exit /b 1
+start "Aira" /min cmd /c ".venv\Scripts\python.exe telegram_bot.py >> aira.log 2>&1"
